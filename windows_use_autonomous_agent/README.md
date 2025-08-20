@@ -22,6 +22,46 @@
 
 **Windows-Use** is a powerful automation agent that interact directly with the Windows at GUI layer. It bridges the gap between AI Agents and the Windows OS to perform tasks such as opening apps, clicking buttons, typing, executing shell commands, and capturing UI state all without relying on traditional computer vision models. Enabling any LLM to perform computer automation instead of relying on specific models for it.
 
+## ✨ New Features
+
+### 🎤 Voice Input & TTS
+- **Speech-to-Text (STT)** with Whisper integration
+- **Voice Activity Detection (VAD)** for hands-free operation
+- **Push-to-talk** functionality
+- **Lightweight TTS** using Piper with Indonesian language support
+- **Fallback to Windows SAPI** for text-to-speech
+
+### 🧠 Indonesian Language Support
+- **Grammar-based Intent Parser** for Indonesian commands
+- **Direct command mapping** without LLM processing for faster response
+- **Context-aware routing** between different processing backends
+
+### 📊 Office Automation
+- **Excel Automation** via COM (pywin32)
+  - Workbook and worksheet management
+  - Cell operations and data manipulation
+  - Chart insertion and formatting
+- **Word Automation** via COM
+  - Document creation and editing
+  - Text formatting and styling
+  - PDF export functionality
+- **PowerPoint Automation** via COM
+  - Slide creation and management
+  - Content insertion and editing
+  - Presentation export
+
+### 🔒 Security & Safety
+- **Guardrails Engine** for action validation
+- **Human-in-the-Loop (HITL)** approval system
+- **Rate limiting** and security policies
+- **Action logging** and audit trails
+
+### 📈 Observability
+- **Structured JSON logging** with context tracking
+- **Automatic screenshot capture** for debugging
+- **Performance metrics** and monitoring
+- **Session management** and error tracking
+
 ## 🛠️Installation Guide
 
 ### **Prerequisites**
@@ -44,6 +84,14 @@ Or with pip:
 pip install windows-use
 ```
 
+**Install additional dependencies for new features:**
+
+```bash
+pip install -r requirements.txt
+```
+
+**Note:** For Office automation features, ensure Microsoft Office is installed on your system.
+
 ## ⚙️Basic Usage
 
 ```python
@@ -59,6 +107,52 @@ agent = Agent(llm=llm,use_vision=True)
 query=input("Enter your query: ")
 agent_result=agent.invoke(query=query)
 print(agent_result.content)
+```
+
+### 🎤 Voice Input Usage
+
+```python
+from windows_use.tools.voice_input import VoiceInput
+
+# Initialize voice input with push-to-talk
+voice_input = VoiceInput()
+voice_input.setup_push_to_talk(key='space')
+
+# Start listening
+text = voice_input.listen_with_push_to_talk()
+print(f"You said: {text}")
+```
+
+### 🔊 TTS Usage
+
+```python
+from windows_use.tools.tts_piper import TTSPiper
+
+# Initialize TTS
+tts = TTSPiper()
+
+# Speak text in Indonesian
+tts.speak("Halo, saya adalah asisten AI Anda")
+```
+
+### 📊 Office Automation Usage
+
+```python
+from windows_use.office import ExcelHandler, WordHandler
+
+# Excel automation
+excel = ExcelHandler()
+excel.open_excel()
+workbook = excel.create_workbook()
+excel.write_cell(workbook, 'Sheet1', 'A1', 'Hello World')
+excel.save_workbook(workbook, 'output.xlsx')
+
+# Word automation
+word = WordHandler()
+word.open_word()
+doc = word.create_document()
+word.write_text(doc, 'This is automated text')
+word.save_document(doc, 'output.docx')
 ```
 
 ## 🤖 Run Agent
