@@ -632,3 +632,20 @@ Pasang fallback chain di tingkat agent (bukan hanya adapter).
  llm/ensemble.py: majority vote untuk langkah berisiko (hapus/format).
 
  evolve/judge_dual.py: dua judge (DeepSeek + Claude) → jika tidak sepakat, minta konfirmasi user.
+ Buatkan sistem voice AI dengan karakteristik berikut:
+
+1. Suara default "Jarvis" seperti dalam film Iron Man, dengan kemampuan untuk:
+   - Mengubah nama voice AI kapan saja sesuai kebutuhan pengguna
+   - Mendukung penggunaan dual bahasa (Indonesia dan Inggris) secara native
+   - Memahami dan merespons percakapan campuran kedua bahasa
+
+2. Antarmuka dashboard yang memenuhi kriteria:
+   - Desain intuitif dan mudah dipahami oleh pengguna awam
+   - Menyediakan kontrol dasar untuk berinteraksi dengan voice AI
+   - Tampilan visual yang sederhana namun fungsional
+
+3. Implementasi suara menggunakan salah satu opsi berikut:
+   - Clone dari repository  (jika dianggap solusi terbaik)
+   - Memanfaatkan instalasi Voice.ai yang sudah ada di D:\Voice.ai
+
+Pilih metode implementasi suara yang paling optimal berdasarkan pertimbangan teknis dan kualitas output. Sistem harus berjalan stabil dengan latency minimal dan kualitas suara yang jelas.
