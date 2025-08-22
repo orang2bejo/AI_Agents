@@ -54,6 +54,18 @@ tqdm>=4.66.0
 datetime>=5.2
 json-logging>=1.3.0
 
+# Self-Evolving Agent & Machine Learning
+scikit-learn>=1.3.0
+pandas>=2.1.0
+joblib>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Windows System Tools
+psutil>=5.9.0
+wmi>=1.5.1
+subprocess32>=3.5.4
+
 # Development & Testing
 pytest>=7.4.0
 pytest-asyncio>=0.21.0

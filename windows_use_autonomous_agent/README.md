@@ -62,6 +62,20 @@
 - **Performance metrics** and monitoring
 - **Session management** and error tracking
 
+### 🔧 Windows System Tools
+- **Package Management** via winget integration
+- **PowerShell Cmdlet Execution** with safety whitelists
+- **Process Management** for system monitoring and control
+- **Network Operations** for connectivity and diagnostics
+- **System Information** retrieval and analysis
+
+### 🧬 Self-Evolving Agent
+- **Performance Evaluation** with automated metrics collection
+- **Behavioral Reflection** for pattern analysis and insights
+- **Adaptive Mutations** for continuous improvement
+- **Experience Memory Store** with SQLite backend
+- **Evolution Engine** for orchestrated self-improvement cycles
+
 ## 🛠️Installation Guide
 
 ### **Prerequisites**
@@ -155,6 +169,57 @@ word.write_text(doc, 'This is automated text')
 word.save_document(doc, 'output.docx')
 ```
 
+### 🔧 Windows System Tools Usage
+
+```python
+from windows_use.tools.winget import WingetManager
+from windows_use.tools.ps_shell import PowerShellManager
+from windows_use.tools.process import ProcessManager
+
+# Package management
+winget = WingetManager()
+packages = winget.search_package("notepad")
+winget.install_package("Microsoft.WindowsNotepad")
+
+# PowerShell operations
+ps = PowerShellManager()
+result = ps.execute_command("Get-Process")
+system_info = ps.get_system_info()
+
+# Process management
+proc_mgr = ProcessManager()
+processes = proc_mgr.list_processes()
+top_processes = proc_mgr.get_top_processes_by_cpu()
+```
+
+### 🧬 Self-Evolving Agent Usage
+
+```python
+from windows_use.evolution import EvolutionEngine, EvolutionConfig
+from windows_use.evolution.memory import ExperienceType
+
+# Initialize evolution engine
+config = EvolutionConfig(evaluation_interval=1800)  # 30 minutes
+engine = EvolutionEngine(config)
+
+# Start evolution
+await engine.start()
+
+# Record experiences
+await engine.record_experience(
+    experience_type=ExperienceType.TASK_EXECUTION,
+    context="User requested file search",
+    action="Executed search command",
+    outcome="Found 15 files in 2.3 seconds",
+    success=True,
+    confidence=0.9
+)
+
+# Get insights
+insights = await engine.get_insights()
+print(f"Success rate: {insights['performance']['success_rate']}")
+```
+
 ## 🤖 Run Agent
 
 You can use the following to run from a script:
@@ -184,11 +249,38 @@ Talk to your computer. Watch it get things done.
 
 ### 🤖 Agent Intelligence
 
-* [ ] **Integrate memory** : allow the agent to remember past interactions made by the user.
+* [x] **Integrate memory** : allow the agent to remember past interactions made by the user.
 * [ ] **Optimize token usage** : implement strategies like Ally Tree compression and prompt engineering to reduce overhead.
 * [ ] **Simulate advanced human-like input** : enable accurate and naturalistic mouse & keyboard interactions across apps.
 * [ ] **Support for local LLMs** : local models with near-parity performance to cloud-based APIs (e.g., Mistral, LLaMA, etc.).
 * [ ] **Improve reasoning and planning** : enhance the agent's ability to break down and sequence complex tasks.
+
+### 🎤 Voice & Language Features
+
+* [x] **Voice Input Integration** : Speech-to-Text with Whisper and VAD support
+* [x] **Text-to-Speech** : Lightweight TTS with Piper and Indonesian language support
+* [x] **Indonesian Language Processing** : Grammar-based intent parser for local commands
+* [ ] **Multi-language Support** : Expand to other languages beyond Indonesian
+* [ ] **Voice Command Optimization** : Improve accuracy and response time
+
+### 🔧 System Integration
+
+* [x] **Windows System Tools** : Package management, PowerShell integration, process control
+* [x] **Office Automation** : Complete COM integration for Excel, Word, PowerPoint
+* [x] **Security & Safety** : Guardrails engine with HITL approval system
+* [x] **Observability** : Structured logging, screenshots, performance metrics
+* [ ] **Registry Management** : Safe Windows registry operations
+* [ ] **Service Management** : Windows service control and monitoring
+
+### 🧬 Self-Evolution
+
+* [x] **Performance Evaluation** : Automated metrics collection and analysis
+* [x] **Behavioral Reflection** : Pattern analysis and insight generation
+* [x] **Adaptive Mutations** : Continuous behavior improvement
+* [x] **Experience Memory** : SQLite-based experience storage and retrieval
+* [x] **Evolution Engine** : Orchestrated self-improvement cycles
+* [ ] **Advanced Learning** : Machine learning integration for pattern recognition
+* [ ] **Predictive Adaptation** : Proactive behavior adjustments
 
 ### 🌳 Ally Tree Optimization
 
