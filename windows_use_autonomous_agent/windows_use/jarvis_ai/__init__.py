@@ -1,82 +1,80 @@
-"""Jarvis Voice AI Module
+"""Jarvis AI Module
 
-This module implements a sophisticated Voice AI system with Jarvis-like characteristics,
-featuring dual language support (Indonesian/English), intelligent conversation management,
-and an intuitive dashboard interface.
-
-Key Features:
-- Jarvis-inspired personality and response patterns
-- Dual language support (Indonesian/English) with seamless switching
-- Advanced conversation context management
-- Intelligent task routing and execution
-- Voice-optimized responses with natural speech patterns
-- Real-time dashboard with voice visualization
-- Adaptive learning from user interactions
-- Proactive assistance and suggestions
+Jarvis-like Voice AI system with dual language support (Indonesian/English),
+conversation management, and intuitive dashboard interface.
 
 Sub-modules:
-- personality: Jarvis personality engine and response generation
-- conversation: Conversation management and context tracking
+- personality: Jarvis personality and response generation
+- conversation: Conversation context and dialog management
 - language_manager: Dual language support and translation
-- voice_interface: Voice input/output coordination
-- dashboard: Real-time dashboard and visualization
-- task_coordinator: Task routing and execution management
-- learning_engine: Adaptive learning and personalization
+- voice_interface: Voice input/output interface
+- dashboard: Graphical user interface and monitoring
+- task_coordinator: Task scheduling and coordination
+- learning_engine: Machine learning and adaptation
 """
 
-# Import main classes for easy access
-try:
-    from .personality import JarvisPersonality, PersonalityConfig
-except ImportError:
-    JarvisPersonality = PersonalityConfig = None
-
-try:
-    from .conversation import ConversationManager, ConversationContext
-except ImportError:
-    ConversationManager = ConversationContext = None
-
-try:
-    from .language_manager import LanguageManager, LanguageConfig
-except ImportError:
-    LanguageManager = LanguageConfig = None
-
-try:
-    from .voice_interface import VoiceInterface, VoiceConfig
-except ImportError:
-    VoiceInterface = VoiceConfig = None
-
-try:
-    from .dashboard import JarvisDashboard, DashboardConfig
-except ImportError:
-    JarvisDashboard = DashboardConfig = None
-
-try:
-    from .task_coordinator import TaskCoordinator, TaskConfig
-except ImportError:
-    TaskCoordinator = TaskConfig = None
-
-try:
-    from .learning_engine import LearningEngine, LearningConfig
-except ImportError:
-    LearningEngine = LearningConfig = None
-
-try:
-    from .jarvis_core import JarvisAI, JarvisConfig
-except ImportError:
-    JarvisAI = JarvisConfig = None
+from .personality import (
+    JarvisPersonality, PersonalityTrait, ResponseTone, Language as PersonalityLanguage,
+    PersonalityState, PersonalityConfig
+)
+from .conversation import (
+    ConversationManager, MessageType, ConversationState, Language as ConversationLanguage,
+    ConversationMessage, ConversationTurn, ConversationContext, ConversationConfig
+)
+from .language_manager import (
+    LanguageManager, Language, LanguageConfidence, LanguageDetectionResult,
+    TranslationResult, LanguageConfig
+)
+from .voice_interface import (
+    VoiceInterface, VoiceState, InputMode, TTSEngine, STTEngine,
+    VoiceCommand, VoiceResponse, VoiceConfig
+)
+from .dashboard import (
+    JarvisDashboard, DashboardTheme, SystemStatus, WidgetType,
+    DashboardMetrics, LogEntry, DashboardConfig, VoiceVisualizer, MetricsChart
+)
+from .task_coordinator import (
+    TaskCoordinator, TaskType, TaskStatus, TaskPriority, ExecutionMode,
+    Task, TaskResult, TaskDependency, TaskConfig, TaskQueue
+)
+from .learning_engine import (
+    LearningEngine, LearningType, ModelType, DataType,
+    LearningData, ModelMetrics, UserProfile, LearningConfig,
+    FeatureExtractor, ModelManager, DataManager, UserProfileManager
+)
 
 __all__ = [
-    'JarvisPersonality', 'PersonalityConfig',
-    'ConversationManager', 'ConversationContext',
-    'LanguageManager', 'LanguageConfig',
-    'VoiceInterface', 'VoiceConfig',
-    'JarvisDashboard', 'DashboardConfig',
-    'TaskCoordinator', 'TaskConfig',
-    'LearningEngine', 'LearningConfig',
-    'JarvisAI', 'JarvisConfig'
+    # Personality
+    'JarvisPersonality', 'PersonalityTrait', 'ResponseTone', 'PersonalityLanguage',
+    'PersonalityState', 'PersonalityConfig',
+    
+    # Conversation
+    'ConversationManager', 'MessageType', 'ConversationState', 'ConversationLanguage',
+    'ConversationMessage', 'ConversationTurn', 'ConversationContext', 'ConversationConfig',
+    
+    # Language
+    'LanguageManager', 'Language', 'LanguageConfidence', 'LanguageDetectionResult',
+    'TranslationResult', 'LanguageConfig',
+    
+    # Voice Interface
+    'VoiceInterface', 'VoiceState', 'InputMode', 'TTSEngine', 'STTEngine',
+    'VoiceCommand', 'VoiceResponse', 'VoiceConfig',
+    
+    # Dashboard
+    'JarvisDashboard', 'DashboardTheme', 'SystemStatus', 'WidgetType',
+    'DashboardMetrics', 'LogEntry', 'DashboardConfig', 'VoiceVisualizer', 'MetricsChart',
+    
+    # Task Coordination
+    'TaskCoordinator', 'TaskType', 'TaskStatus', 'TaskPriority', 'ExecutionMode',
+    'Task', 'TaskResult', 'TaskDependency', 'TaskConfig', 'TaskQueue',
+    
+    # Learning Engine
+    'LearningEngine', 'LearningType', 'ModelType', 'DataType',
+    'LearningData', 'ModelMetrics', 'UserProfile', 'LearningConfig',
+    'FeatureExtractor', 'ModelManager', 'DataManager', 'UserProfileManager'
 ]
 
-# Version info
-__version__ = '1.0.0'
-__author__ = 'Windows Use Autonomous Agent'
-__description__ = 'Jarvis Voice AI System with Dual Language Support'
+# Module metadata
+__version__ = "1.0.0"
+__author__ = "Jarvis AI Development Team"
+__description__ = "Advanced Voice AI Assistant with Jarvis-like capabilities"

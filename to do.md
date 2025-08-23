@@ -957,4 +957,27 @@ Review dan bersihkan semua dependensi yang tidak digunakan dalam aplikasi. Pasti
 Saat pertama kali dijalankan, aplikasi harus meminta admin untuk merekam suaranya sebagai identifikasi. Setelah itu, jika ada pengguna lain yang memberikan perintah melalui suara, sistem akan memverifikasi terlebih dahulu apakah suara tersebut berasal dari admin atau bukan. 
 
 Jika perintah diberikan oleh non-admin, sistem hanya akan menjalankan perintah yang sesuai dengan hak akses yang telah ditetapkan oleh admin sebelumnya. Pastikan pembatasan hak akses ini diterapkan secara konsisten.
+Design a comprehensive and intuitive dashboard UI that effectively displays key metrics, data visualizations, and navigation elements. The dashboard should feature:
+
+1. A clean, modern layout with fully responsive design that adapts to all screen sizes
+2. Clearly organized, logically grouped sections for different data categories with proper labeling
+3. Interactive, customizable charts/graphs (line, bar, pie) with tooltips and zoom functionality
+4. Prominent, well-labeled action buttons/controls for quick access to core functions
+5. A consistent, accessible color scheme and clear typography hierarchy following WCAG guidelines
+6. Real-time data updates with visual indicators for fresh/changed data
+7. Drag-and-drop customizable widgets and layout options to accommodate user preferences
+
+Ensure the UI follows current UX best practices for usability, accessibility, and performance optimization.
+
+Buat sebuah dashboard terpisah di luar folder Jarvis AI yang menampilkan dan mengelola semua fitur agent yang tersedia dalam sistem. Dashboard ini harus mencakup:
+
+1. Tampilan terpusat yang menampilkan semua fungsi agent secara komprehensif dalam satu antarmuka
+2. Kemampuan manajemen penuh termasuk pembuatan, konfigurasi, dan monitoring seluruh agent
+3. Antarmuka yang intuitif dengan navigasi logis dan petunjuk yang jelas untuk semua level pengguna
+4. Akses instan ke semua fitur agent melalui shortcut yang terorganisir.
+
+Pastikan dashboard dirancang dengan:
+- Tata letak yang terstruktur dengan pengelompokan fungsi yang logis
+- Performa tinggi yang mampu menangani operasi multi-agent secara efisien
+- Sistem navigasi hierarkis dengan breadcrumb dan pencarian untuk kemudahan pengelolaan fitur
 Buatkan dokumen panduan pengguna dan petunjuk instalasi yang mudah dipahami oleh pengguna awam. Sertakan langkah-langkah detail beserta solusi alternatif jika fitur 1 klik tidak berfungsi, termasuk cara melakukan instalasi manual jika diperlukan. Pastikan dokumen menggunakan bahasa yang sederhana dan dilengkapi dengan ilustrasi/screenshot untuk memandu pengguna.
