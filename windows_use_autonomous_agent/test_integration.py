@@ -40,7 +40,7 @@ def test_web_components():
         print("✓ Browser Automation components imported successfully")
         
         # Test web search
-        from windows_use.web import WebSearchEngine
+        from windows_use.web import SearchEngine
         print("✓ Web Search components imported successfully")
         
         return True

@@ -833,7 +833,6 @@ def create_voice_command_task(
     return coordinator.create_task(
         name=f"Voice Command: {command_text[:50]}",
         executor=handler,
-        executor=command_text,
         task_type=TaskType.VOICE_COMMAND,
         priority=priority,
         metadata={'command_text': command_text}
@@ -917,9 +916,8 @@ if __name__ == "__main__":
         # Regular tasks
         for i in range(5):
             task = coordinator.create_task(
-                name=f"Task {i+1}",
-                executor=example_task,
                 name=f"task_{i+1}",
+                executor=example_task,
                 delay=random.uniform(0.5, 2.0),
                 priority=TaskPriority(random.randint(1, 3))
             )
@@ -929,10 +927,9 @@ if __name__ == "__main__":
         # Async tasks
         for i in range(3):
             task = coordinator.create_task(
-                name=f"Async Task {i+1}",
-                executor=example_async_task,
                 name=f"async_task_{i+1}",
-delay=random.uniform(0.5, 1.5),
+                executor=example_async_task,
+                delay=random.uniform(0.5, 1.5),
                 priority=TaskPriority.HIGH
             )
             tasks.append(task)
@@ -942,12 +939,6 @@ delay=random.uniform(0.5, 1.5),
         failing_task_obj = coordinator.create_task(
             name="Failing Task",
             executor=failing_task,
-k            priority=TaskPriority.NORMAL)
-            name="Failing Task",
-            executor=failing_task,
-            name="Failing Task",
-            executor=failing_task,
-name="failing_task"
             priority=TaskPriority.NORMAL
         )
         tasks.append(failing_task_obj)
