@@ -20,35 +20,31 @@
 
 <br>
 
-**Windows-Use** is a powerful automation agent that interact directly with the Windows at GUI layer. It bridges the gap between AI Agents and the Windows OS to perform tasks such as opening apps, clicking buttons, typing, executing shell commands, and capturing UI state all without relying on traditional computer vision models. Enabling any LLM to perform computer automation instead of relying on specific models for it.
+**Jarvis AI** is a powerful autonomous agent that combines Windows automation with advanced AI capabilities. Built on the Windows-Use foundation, it features a fully integrated AI system with voice control, office automation, learning capabilities, and comprehensive Windows system integration. The system bridges the gap between AI Agents and Windows OS through both GUI interaction and direct API integration.
 
-## ✨ New Features
+## ✨ Integrated Features
 
-### 🎤 Voice Input & TTS
-- **Speech-to-Text (STT)** with Whisper integration
-- **Voice Activity Detection (VAD)** for hands-free operation
-- **Push-to-talk** functionality
-- **Lightweight TTS** using Piper with Indonesian language support
-- **Fallback to Windows SAPI** for text-to-speech
+### 🤖 Jarvis AI Core System
+- **Unified AI Package** - All components integrated into `jarvis_ai` module
+- **Personality Engine** - Adaptive AI personality with learning capabilities
+- **Conversation Manager** - Context-aware dialogue management
+- **Task Coordinator** - Intelligent task scheduling and execution
+- **Learning Engine** - Machine learning models for continuous improvement
+- **Multi-Provider LLM Support** - OpenAI, Anthropic, Google, and local models
 
-### 🧠 Indonesian Language Support
-- **Grammar-based Intent Parser** for Indonesian commands
-- **Direct command mapping** without LLM processing for faster response
-- **Context-aware routing** between different processing backends
+### 🎤 Voice & Language Processing
+- **Voice Interface** - Complete STT/TTS integration with Indonesian support
+- **Language Manager** - Multi-language processing and translation
+- **Intent Recognition** - Advanced command understanding and routing
+- **Push-to-Talk** functionality with customizable hotkeys
+- **Voice Activity Detection** for hands-free operation
 
-### 📊 Office Automation
-- **Excel Automation** via COM (pywin32)
-  - Workbook and worksheet management
-  - Cell operations and data manipulation
-  - Chart insertion and formatting
-- **Word Automation** via COM
-  - Document creation and editing
-  - Text formatting and styling
-  - PDF export functionality
-- **PowerPoint Automation** via COM
-  - Slide creation and management
-  - Content insertion and editing
-  - Presentation export
+### 📊 Office & System Integration
+- **Office Automation** - Complete Excel, Word, PowerPoint control via COM
+- **Windows System Tools** - Package management, PowerShell, process control
+- **Web Integration** - Search engines and web scraping capabilities
+- **File Management** - Advanced file operations and organization
+- **Security Framework** - Guardrails and Human-in-the-Loop approval system
 
 ### 🔒 Security & Safety
 - **Guardrails Engine** for action validation
@@ -76,157 +72,172 @@
 - **Experience Memory Store** with SQLite backend
 - **Evolution Engine** for orchestrated self-improvement cycles
 
-## 🛠️Installation Guide
+## 🛠️ Installation Guide
 
 ### **Prerequisites**
 
 - Python 3.12 or higher
 - [UV](https://github.com/astral-sh/uv) (or `pip`)
-- Windows 10 or 11
+- Windows 10/11 (required for COM automation)
+- Microphone and speakers (for voice features)
 
 ### **Installation Steps**
 
-**Install using `uv`:**
+**1. Clone the repository:**
 
 ```bash
-uv pip install windows-use
-````
-
-Or with pip:
-
-```bash
-pip install windows-use
+git clone <repository-url>
+cd advanced_ai_agents
 ```
 
-**Install additional dependencies for new features:**
+**2. Install Jarvis AI package:**
 
 ```bash
+cd windows_use_autonomous_agent
 pip install -r requirements.txt
+```
+
+**3. Install the integrated Jarvis AI package:**
+
+```bash
+pip install -e .
 ```
 
 **Note:** For Office automation features, ensure Microsoft Office is installed on your system.
 
-## ⚙️Basic Usage
+## ⚙️ Basic Usage
+
+### **Quick Start with Jarvis AI**
 
 ```python
-# main.py
-from langchain_google_genai import ChatGoogleGenerativeAI
-from windows_use.agent import Agent
+# Run the integrated Jarvis AI system
+python jarvis_main.py
+```
+
+### **Using Jarvis AI Components**
+
+```python
+from jarvis_ai import JarvisAI, VoiceInterface, TaskCoordinator
 from dotenv import load_dotenv
 
 load_dotenv()
 
-llm=ChatGoogleGenerativeAI(model='gemini-2.0-flash')
-agent = Agent(llm=llm,use_vision=True)
-query=input("Enter your query: ")
-agent_result=agent.invoke(query=query)
-print(agent_result.content)
+# Initialize Jarvis AI
+jarvis = JarvisAI()
+
+# Start voice interface
+voice = VoiceInterface()
+voice.start_listening()
+
+# Execute tasks
+task_coordinator = TaskCoordinator()
+result = task_coordinator.execute_task("open excel and create a new workbook")
+print(result)
 ```
 
-### 🎤 Voice Input Usage
+### 🎤 Voice Control Usage
 
 ```python
-from windows_use.tools.voice_input import VoiceInput
+from jarvis_ai import VoiceInterface
 
-# Initialize voice input with push-to-talk
-voice_input = VoiceInput()
-voice_input.setup_push_to_talk(key='space')
+# Initialize voice interface
+voice = VoiceInterface()
 
-# Start listening
-text = voice_input.listen_with_push_to_talk()
-print(f"You said: {text}")
+# Setup push-to-talk (default: space key)
+voice.setup_push_to_talk()
+
+# Start voice interaction
+voice.start_listening()
+# Say: "Buka Excel dan buat workbook baru"
 ```
 
-### 🔊 TTS Usage
+### 🔊 Text-to-Speech Usage
 
 ```python
-from windows_use.tools.tts_piper import TTSPiper
+from jarvis_ai.voice import TTSManager
 
-# Initialize TTS
-tts = TTSPiper()
+# Initialize TTS with Indonesian support
+tts = TTSManager()
 
-# Speak text in Indonesian
-tts.speak("Halo, saya adalah asisten AI Anda")
+# Speak in Indonesian
+tts.speak("Halo, saya Jarvis AI, asisten virtual Anda")
 ```
 
-### 📊 Office Automation Usage
+### 📊 Office Automation with Jarvis AI
 
 ```python
-from windows_use.office import ExcelHandler, WordHandler
+from jarvis_ai.office import OfficeAutomation
 
-# Excel automation
-excel = ExcelHandler()
-excel.open_excel()
-workbook = excel.create_workbook()
-excel.write_cell(workbook, 'Sheet1', 'A1', 'Hello World')
-excel.save_workbook(workbook, 'output.xlsx')
+# Initialize office automation
+office = OfficeAutomation()
 
-# Word automation
-word = WordHandler()
-word.open_word()
-doc = word.create_document()
-word.write_text(doc, 'This is automated text')
-word.save_document(doc, 'output.docx')
+# Excel operations
+office.excel.create_workbook()
+office.excel.write_data('A1', 'Hello Jarvis AI')
+office.excel.save_as('jarvis_report.xlsx')
+
+# Word operations
+office.word.create_document()
+office.word.add_text('Laporan dibuat oleh Jarvis AI')
+office.word.save_as('jarvis_document.docx')
 ```
 
-### 🔧 Windows System Tools Usage
+### 🔧 Windows System Tools with Jarvis AI
 
 ```python
-from windows_use.tools.winget import WingetManager
-from windows_use.tools.ps_shell import PowerShellManager
-from windows_use.tools.process import ProcessManager
+from jarvis_ai.system import SystemManager
+
+# Initialize system manager
+system = SystemManager()
 
 # Package management
-winget = WingetManager()
-packages = winget.search_package("notepad")
-winget.install_package("Microsoft.WindowsNotepad")
+system.winget.search("notepad")
+system.winget.install("Microsoft.WindowsNotepad")
 
 # PowerShell operations
-ps = PowerShellManager()
-result = ps.execute_command("Get-Process")
-system_info = ps.get_system_info()
+result = system.powershell.execute("Get-Process")
+system_info = system.powershell.get_system_info()
 
 # Process management
-proc_mgr = ProcessManager()
-processes = proc_mgr.list_processes()
-top_processes = proc_mgr.get_top_processes_by_cpu()
+processes = system.process.list_all()
+top_cpu = system.process.get_top_by_cpu()
 ```
 
-### 🧬 Self-Evolving Agent Usage
+### 🧬 Learning & Evolution with Jarvis AI
 
 ```python
-from windows_use.evolution import EvolutionEngine, EvolutionConfig
-from windows_use.evolution.memory import ExperienceType
+from jarvis_ai import LearningEngine
 
-# Initialize evolution engine
-config = EvolutionConfig(evaluation_interval=1800)  # 30 minutes
-engine = EvolutionEngine(config)
+# Initialize learning engine
+learning = LearningEngine()
 
-# Start evolution
-await engine.start()
-
-# Record experiences
-await engine.record_experience(
-    experience_type=ExperienceType.TASK_EXECUTION,
-    context="User requested file search",
-    action="Executed search command",
-    outcome="Found 15 files in 2.3 seconds",
-    success=True,
-    confidence=0.9
-)
+# Train models
+learning.train_command_classifier()
+learning.update_preference_clusters()
+learning.optimize_responses()
 
 # Get insights
-insights = await engine.get_insights()
-print(f"Success rate: {insights['performance']['success_rate']}")
+insights = learning.get_performance_insights()
+print(f"Learning progress: {insights}")
 ```
 
-## 🤖 Run Agent
+## 🤖 Run Jarvis AI
 
-You can use the following to run from a script:
+You can run Jarvis AI in multiple ways:
 
+**1. Full Jarvis AI System:**
 ```bash
-python main.py
-Enter your query: <YOUR TASK>
+python jarvis_main.py
+```
+
+**2. Voice-only mode:**
+```bash
+python -c "from jarvis_ai import VoiceInterface; VoiceInterface().start_listening()"
+```
+
+**3. Interactive mode:**
+```bash
+python -c "from jarvis_ai import JarvisAI; jarvis = JarvisAI(); jarvis.interactive_mode()"
 ```
 
 ---

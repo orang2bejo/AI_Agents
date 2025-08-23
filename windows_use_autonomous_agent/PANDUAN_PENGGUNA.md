@@ -378,7 +378,7 @@ Jika semua solusi di atas tidak berhasil:
 ## 🆘 Bantuan dan Dukungan
 
 ### Dokumentasi Tambahan
-- **README.md** - Informasi teknis detail
+- **../README.md** - Informasi teknis detail
 - **SECURITY_EVOLUTION.md** - Panduan keamanan
 - **examples/** - Contoh penggunaan
 

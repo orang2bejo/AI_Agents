@@ -2,7 +2,7 @@
 name = "windows-use"
 version = "0.1.31"
 description = "An AI Agent that interacts with Windows OS at GUI level."
-readme = "README.md"
+readme = "../README.md"
 authors = [
     { name = "Jeomon George", email = "jeogeoalukka@gmail.com" }
 ]
