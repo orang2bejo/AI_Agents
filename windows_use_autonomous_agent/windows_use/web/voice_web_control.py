@@ -562,7 +562,7 @@ class VoiceWebController:
             for pattern in pattern_list[:1]:  # Take first pattern as example
                 # Remove regex syntax for user-friendly display
                 example = pattern.replace(r'\s+', ' ').replace('(.+)', '[target]')
-                example = example.replace(r'\', '')
+                example = example.replace(r'\\', '')
                 commands.append(example)
         
         return commands

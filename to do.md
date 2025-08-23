@@ -649,3 +649,312 @@ Pasang fallback chain di tingkat agent (bukan hanya adapter).
    - Memanfaatkan instalasi Voice.ai yang sudah ada di D:\Voice.ai
 
 Pilih metode implementasi suara yang paling optimal berdasarkan pertimbangan teknis dan kualitas output. Sistem harus berjalan stabil dengan latency minimal dan kualitas suara yang jelas.
+To-Do List Tambahan – Web Form Automation (RPA)
+1) Browser Automation Layer
+
+ Tambah web/browser.py (Playwright)
+
+Launch (Chromium/Edge), profil user terpisah, persistent session.
+
+Opsi headful (tampak) & headless (terjadwal).
+
+Hook untuk human-like delays & scrolling.
+
+ Tambah web/selector_utils.py
+
+Strategi selector: get_by_label, get_by_placeholder, role=*, CSS/XPath fallback.
+
+Otomatis retry saat DOM dinamis.
+
+2) Form Filler Engine
+
+ web/form_filler.py
+
+API: fill_form(url, schema: FormSchema, data: dict, steps: list[Action]).
+
+Aksi umum: click, type, select, check, upload, wait_for_nav, assert_text, download.
+
+Penanganan date-picker, mask angka, iframe.
+
+ web/field_mapper.py
+
+Pemetaan field berbasis label/aria-label/placeholder/name/id dengan fallback heuristik.
+
+Cache selector (per situs versi) di memory/routes_store.py.
+
+3) Template & Data Binding
+
+ web/templates/ekinerja_daily.json (contoh)
+
+Skema: daftar langkah + selector + validasi.
+
+ web/templates/laporan_keu_qX.json
+
+ data_bindings/
+
+Transformasi dari Excel/CSV → dict field (mis. tanggal, jam, uraian, nilai).
+
+ Integrasi Office COM: baca Excel sumber → kirim ke form_filler.
+
+4) Voice & Intent untuk Web
+
+ nlu/grammar_web_id.py
+
+“Isi e-Kinerja hari ini 8 jam, uraian ‘Pelayanan loket’”
+
+“Unggah laporan keuangan Q3”
+
+“Simpan bukti PDF”
+
+ Router: intent web_fill → form_filler.
+
+5) Keamanan & Kredensial
+
+ security/credentials.py
+
+Integrasi Windows Credential Manager (baca saat login).
+
+Mode login manual (HITL): agent pause saat halaman login.
+
+ security/policy_web.py
+
+Allowlist domain (mis. *.go.id, *.asn.*), block unknown.
+
+Confirm before submit (opsi: preview ringkasan field).
+
+6) Observabilitas & Audit
+
+ obs/audit_trail.py
+
+Log JSON: timestamp, URL, field yang diisi (nilai disamarkan untuk data sensitif), hasil validasi.
+
+ obs/snapshots.py
+
+Screenshot before/after submit, simpan tanda terima/nomor tiket.
+
+ reports/web_runs/
+
+Arsip bukti pengiriman per hari/bulan.
+
+7) Penanganan Edge Case
+
+ web/anti_automation_handling.md
+
+CAPTCHA → stop & minta intervensi; tidak ada bypass.
+
+Session timeout → auto-relogin (jika kredensial aman tersedia).
+
+File upload via input tersembunyi → gunakan set_input_files.
+
+ recovery/retry_policy.py
+
+Retry idempoten, backoff, resume from step.
+
+8) Evaluasi & Demo
+
+ eval/tasks/web_form_demo.py
+
+Site dummy (mis. example web form) untuk CI test: isi, validasi, submit, unduh bukti.
+
+ examples/web_fill_ekinerja.py
+
+Alur: buka → login (manual/credman) → isi → validasi → submit → simpan PDF.
+
+ docs/cookbook.md
+
+“Isi e-Kinerja harian dari voice atau Excel.”
+0) Fondasi Mode & Switching
+
+ modes/manager.py
+
+Enum: ASSISTIVE, SEMI_AUTO, FULL_AUTO
+
+API: get_mode(), set_mode(mode), event on_mode_change
+
+ nlu/grammar_mode_id.py (voice intents)
+
+“mode bantuan/assistive”, “mode semi otomatis”, “mode penuh otomatis”, “kembali ke assistive”
+
+ Integrasi ke agent loop
+
+Injector current_mode yang mempengaruhi perilaku submit/konfirmasi/scheduling
+
+ Persistensi mode (per user/profil)
+
+config/profile.json: { "default_mode": "ASSISTIVE" }
+
+1) Mode ASSISTIVE (HITL sepenuhnya)
+
+Tujuan: Agent mengisi & menyiapkan, kamu yang menekan “Kirim”.
+
+Fungsional
+
+ web/form_filler.py: jalankan semua langkah kecuali submit
+
+ ui/preview_panel: tampilkan ringkasan field + diff & validasi
+
+ Voice intents:
+
+“tinjau isian”, “perbaiki field [nama] jadi [nilai]”, “kirim sekarang”
+
+ Safety
+
+Always-confirm sebelum submit; blok aksi destruktif
+
+Audit
+
+ obs/audit_trail.py: log JSON isian (mask data sensitif), SS sebelum/ sesudah
+
+Acceptance
+
+ Dari suara: “isi e-Kinerja 8 jam, uraian Pelayanan Loket” → preview muncul → “kirim” → submit + simpan bukti ekinerja-YYYY-MM-DD.pdf
+
+2) Mode SEMI-AUTO (terjadwal & OTP manual)
+
+Tujuan: Agent otomatis sampai login/OTP, lanjut otomatis setelah OTP diisi.
+
+Fungsional
+
+ scheduler/jobs.py: job harian/mingguan (RRULE)
+
+ security/credentials.py: integrasi Windows Credential Manager (username), OTP tetap manual
+
+ web/session_keeper.py: persist cookie; auto-relogin jika kadaluarsa
+
+ Flow: buka → isi → pause di login/OTP → lanjut → preview singkat → kirim
+
+Voice & Dashboard
+
+ Perintah suara: “jadwalkan e-Kinerja tiap hari jam 16:30”, “jalan sekarang”
+
+ Toggle dashboard: ON/OFF jadwal; tombol “Lanjutkan setelah OTP”
+
+Acceptance
+
+ Job otomatis mulai, berhenti di halaman OTP, setelah OTP diinput → agent lanjut isi, preview, submit, simpan bukti
+
+3) Mode FULL-AUTO (bila ToS/aturan sistem memperbolehkan)
+
+Tujuan: End-to-end tanpa intervensi (tanpa CAPTCHA/OTP atau via SSO/cred aman).
+
+Fungsional
+
+ security/credentials.py: opsi auto-login (CredMan/SSO)
+
+ web/form_filler.py: auto-submit (skip preview, tetap validasi internal)
+
+ policy/auto_guard.py: guardrails—allowlist domain, limiter jam jalan, deadman switch
+
+Pemantauan
+
+ obs/healthcheck.py: watchdog + retry/resume; minidump saat gagal
+
+ reports/web_runs/: arsip tanda terima/bukti & nomor tiket
+
+Acceptance
+
+ Tugas batch (mis. unggah laporan keuangan Q3) selesai tanpa intervensi, bukti tersimpan, log bersih
+
+4) Dashboard 1-Klik (untuk user awam)
+
+Sederhana, ringan, dan bisa portable. Opsi: Electron + FastAPI, atau PySide6 (Qt) standalone.
+
+Tampilan Utama
+
+ Tombol Besar “Aktifkan AI (1-Klik)”
+
+Start semua servis (STT/TTS, router LLM, scheduler, web module)
+
+ Pemilih Mode (radio/segmented): Assistive / Semi-Auto / Full-Auto
+
+ Perintah Cepat:
+
+“Isi e-Kinerja Hari Ini”, “Unggah Laporan Keuangan”, “Mulai Bot SEAL 30 menit”
+
+ Status & Log (ringkas): indikator online, task running, error terakhir
+
+ Kredensial & Keamanan
+
+Panel set Credential Manager (simpan/tes), allowlist domain
+
+ Jadwal
+
+Tabel job: nama, waktu, mode, tombol ON/OFF
+
+ Bukti & Arsip
+
+Daftar PDF/SS terakhir + tombol “Buka Folder”
+
+Teknis
+
+ ui/app.py (backend FastAPI) + ui/frontend/ (Electron/Qt)
+
+ services/launcher.py: start/stop komponen (STT, TTS, LLM router, scheduler)
+
+ tray_icon (opsional): quick toggle mic, mode, panic/stop all
+
+Acceptance
+
+ User awam bisa klik 1 tombol → agent siap dengar & jalan; pilih mode; jalankan task preset; lihat bukti/riwayat
+
+5) Voice Switching & Shortcut
+
+ Voice intents: “aktifkan AI”, “nonaktifkan AI”, “ganti ke semi-otomatis”, “mode penuh otomatis”, “panic stop”
+
+ Hotkey global:
+
+Push-to-talk, Panic (matikan semua input/aksi), Buka Dashboard
+
+6) Preset Tugas (Library Task untuk Awam)
+
+ tasks_library/ JSON template: ekinerja_daily.json, laporan_keu_qX.json, web_download_bukti.json
+
+ Binding data dari Excel/CSV: data_bindings/*.py
+
+ Di dashboard: dropdown “Pilih tugas” + isian minimal (tanggal/jam/uraian/file)
+
+7) Keamanan & Etika
+
+ SECURITY_MODES.md: jelaskan perilaku tiap mode, batasan, dan konsekuensi
+
+ Full-Auto default OFF; aktifkan hanya per-tugas & domain terdaftar
+
+ CAPTCHA/OTP: tidak dibypass; Semi-Auto berhenti dan minta intervensi
+
+8) Observabilitas & Recovery
+
+ Log terpadu (logs/app.jsonl), tag mode & task_id
+
+ Rekap harian otomatis (reports/daily-summary.md)
+
+ Resume-from-step: jika gagal di langkah N, lanjut dari N setelah perbaikan
+
+9) Distribusi & 1-Klik Start
+
+ Packager: PyInstaller/Briefcase untuk EXE; atau Electron builder
+
+ Profile Wizard pertama kali: set mic, model LLM (Ollama lokal / campuran), kredensial, default mode
+
+ Autostart Opsional: shortcut di Startup; tray app aktif saat boot
+
+Ringkas Alur Suara yang Didukung
+
+“Aktifkan AI” → layanan jalan, dashboard minim tampil
+
+“Mode semi otomatis” → set_mode(SEMI_AUTO)
+
+“Isi e-Kinerja 8 jam uraian Pelayanan Loket, kirim”
+
+Assistive: isi → preview → “kirim”
+
+Semi-Auto: kalau perlu OTP, pause & minta OTP → lanjut → preview singkat → kirim
+
+Full-Auto: langsung submit (jika domain di allowlist & login tersedia)
+
+“Panic stop” → hentikan semua input/aksi/job
+Review dan bersihkan semua dependensi yang tidak digunakan dalam aplikasi. Pastikan aplikasi berfungsi dengan optimal saat pertama kali dijalankan. 
+
+Saat pertama kali dijalankan, aplikasi harus meminta admin untuk merekam suaranya sebagai identifikasi. Setelah itu, jika ada pengguna lain yang memberikan perintah melalui suara, sistem akan memverifikasi terlebih dahulu apakah suara tersebut berasal dari admin atau bukan. 
+
+Jika perintah diberikan oleh non-admin, sistem hanya akan menjalankan perintah yang sesuai dengan hak akses yang telah ditetapkan oleh admin sebelumnya. Pastikan pembatasan hak akses ini diterapkan secara konsisten.
+Buatkan dokumen panduan pengguna dan petunjuk instalasi yang mudah dipahami oleh pengguna awam. Sertakan langkah-langkah detail beserta solusi alternatif jika fitur 1 klik tidak berfungsi, termasuk cara melakukan instalasi manual jika diperlukan. Pastikan dokumen menggunakan bahasa yang sederhana dan dilengkapi dengan ilustrasi/screenshot untuk memandu pengguna.
