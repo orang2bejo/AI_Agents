@@ -1,0 +1,436 @@
+# 🤖 Panduan Pengguna Jarvis AI
+
+## Selamat Datang di Jarvis AI!
+
+Jarvis AI adalah asisten pintar yang dapat membantu Anda mengendalikan komputer Windows menggunakan suara dan teks. Dengan Jarvis AI, Anda dapat:
+
+- 🗣️ Memberikan perintah dengan suara
+- 📝 Mengotomatisasi tugas Microsoft Office (Excel, Word, PowerPoint)
+- 🌐 Mencari informasi di internet
+- 💻 Mengendalikan sistem Windows
+- 📊 Belajar dari kebiasaan Anda untuk memberikan bantuan yang lebih baik
+
+---
+
+## 📋 Daftar Isi
+
+1. [Persyaratan Sistem](#persyaratan-sistem)
+2. [Instalasi Cepat (1-Klik)](#instalasi-cepat-1-klik)
+3. [Instalasi Manual](#instalasi-manual)
+4. [Pengaturan Awal](#pengaturan-awal)
+5. [Cara Menggunakan](#cara-menggunakan)
+6. [Fitur Utama](#fitur-utama)
+7. [Perintah Suara](#perintah-suara)
+8. [Mengatasi Masalah](#mengatasi-masalah)
+9. [Tips dan Trik](#tips-dan-trik)
+10. [Bantuan dan Dukungan](#bantuan-dan-dukungan)
+
+---
+
+## 💻 Persyaratan Sistem
+
+### Minimum:
+- Windows 10 atau Windows 11
+- RAM: 4 GB (8 GB direkomendasikan)
+- Ruang disk: 2 GB kosong
+- Koneksi internet (untuk fitur online)
+- Mikrofon (untuk perintah suara)
+- Speaker atau headphone
+
+### Direkomendasikan:
+- Processor: Intel i5 atau AMD Ryzen 5 (generasi terbaru)
+- RAM: 8 GB atau lebih
+- SSD untuk performa lebih cepat
+- Mikrofon berkualitas baik
+
+### Software yang Diperlukan:
+- Python 3.8 atau lebih baru
+- Microsoft Office (untuk fitur otomatisasi Office)
+- Browser web modern (Chrome, Firefox, Edge)
+
+---
+
+## ⚡ Instalasi Cepat (1-Klik)
+
+### Langkah 1: Download Installer
+1. Buka folder proyek Jarvis AI
+2. Cari file `install_jarvis.bat` atau `setup.exe`
+3. Klik kanan pada file → "Run as administrator"
+
+### Langkah 2: Ikuti Wizard Instalasi
+1. Pilih bahasa: **Indonesia** atau **English**
+2. Pilih lokasi instalasi (default: `C:\Program Files\Jarvis AI`)
+3. Centang "Install dependencies automatically"
+4. Klik **"Install"**
+5. Tunggu proses instalasi selesai (5-10 menit)
+
+### Langkah 3: Verifikasi Instalasi
+1. Buka Command Prompt atau PowerShell
+2. Ketik: `jarvis --version`
+3. Jika muncul nomor versi, instalasi berhasil!
+
+---
+
+## 🔧 Instalasi Manual
+
+> **Catatan:** Gunakan metode ini jika instalasi 1-klik tidak berfungsi
+
+### Langkah 1: Install Python
+1. Download Python dari [python.org](https://python.org)
+2. Pilih versi 3.8 atau lebih baru
+3. **PENTING:** Centang "Add Python to PATH" saat instalasi
+4. Klik "Install Now"
+
+### Langkah 2: Download Jarvis AI
+1. Download atau clone repository Jarvis AI
+2. Ekstrak ke folder pilihan Anda (contoh: `D:\Jarvis AI`)
+
+### Langkah 3: Install Dependencies
+1. Buka Command Prompt sebagai Administrator
+2. Navigasi ke folder Jarvis AI:
+   ```cmd
+   cd "D:\Jarvis AI\advanced_ai_agents\windows_use_autonomous_agent"
+   ```
+3. Install dependencies:
+   ```cmd
+   pip install -r requirements.txt
+   ```
+
+### Langkah 4: Setup Environment
+1. Salin file `.env-example` menjadi `.env`
+2. Edit file `.env` dengan text editor:
+   ```
+   # API Keys (opsional)
+   OPENAI_API_KEY=your_openai_key_here
+   ANTHROPIC_API_KEY=your_anthropic_key_here
+   
+   # Pengaturan Bahasa
+   DEFAULT_LANGUAGE=id
+   
+   # Pengaturan Suara
+   VOICE_ENABLED=true
+   TTS_ENABLED=true
+   ```
+
+### Langkah 5: Test Instalasi
+1. Jalankan test:
+   ```cmd
+   python test_integration.py
+   ```
+2. Jika semua test passed, instalasi berhasil!
+
+---
+
+## ⚙️ Pengaturan Awal
+
+### Konfigurasi Suara (Pertama Kali)
+1. Jalankan Jarvis AI:
+   ```cmd
+   python windows_use\jarvis_main.py
+   ```
+2. Ikuti panduan setup suara:
+   - Rekam suara Anda untuk identifikasi admin
+   - Test mikrofon dan speaker
+   - Pilih bahasa default (Indonesia/English)
+
+### Pengaturan API Keys (Opsional)
+Untuk fitur AI yang lebih canggih:
+1. Daftar di [OpenAI](https://openai.com) atau [Anthropic](https://anthropic.com)
+2. Dapatkan API key
+3. Masukkan ke file `.env`
+
+### Pengaturan Office Integration
+1. Pastikan Microsoft Office terinstall
+2. Buka Excel/Word/PowerPoint sekali untuk aktivasi
+3. Jarvis AI akan otomatis mendeteksi Office
+
+---
+
+## 🚀 Cara Menggunakan
+
+### Mode Teks
+1. Buka Command Prompt atau PowerShell
+2. Navigasi ke folder Jarvis AI
+3. Jalankan:
+   ```cmd
+   python windows_use\jarvis_main.py
+   ```
+4. Ketik perintah Anda dan tekan Enter
+
+### Mode Suara
+1. Jalankan Jarvis AI
+2. Tekan tombol **Space** untuk mulai berbicara
+3. Ucapkan perintah Anda dengan jelas
+4. Lepas tombol **Space** untuk mengirim perintah
+
+### Mode GUI (Antarmuka Grafis)
+1. Jalankan:
+   ```cmd
+   python windows_use\gui\main_window.py
+   ```
+2. Gunakan tombol dan menu yang tersedia
+
+---
+
+## 🎯 Fitur Utama
+
+### 1. Otomatisasi Microsoft Office
+
+#### Excel:
+- Membuat sheet baru
+- Mengisi data ke sel
+- Membuat grafik
+- Format kolom dan baris
+- Menyimpan file
+
+**Contoh perintah:**
+- "Buat sheet baru bernama Laporan"
+- "Isi sel A1 dengan Pendapatan Q3"
+- "Format kolom B sebagai persentase"
+
+#### Word:
+- Mengganti teks
+- Menambah heading
+- Menyimpan sebagai PDF
+- Format dokumen
+
+**Contoh perintah:**
+- "Ganti semua kata 'lama' dengan 'baru'"
+- "Tambah heading 'Pendahuluan'"
+- "Simpan sebagai PDF"
+
+#### PowerPoint:
+- Menambah slide baru
+- Edit judul slide
+- Export ke PDF
+- Mengatur layout
+
+**Contoh perintah:**
+- "Tambah slide baru"
+- "Ubah judul slide menjadi 'Kesimpulan'"
+- "Export presentasi ke PDF"
+
+### 2. Pencarian Web
+- Mencari informasi di Google
+- Membuka website
+- Download file
+- Scraping data
+
+**Contoh perintah:**
+- "Cari tutorial Python"
+- "Buka website github.com"
+- "Download file dari link ini"
+
+### 3. Kontrol Sistem Windows
+- Membuka aplikasi
+- Mengelola file dan folder
+- Install software via winget
+- Monitor sistem
+
+**Contoh perintah:**
+- "Buka Notepad"
+- "Install 7-Zip"
+- "Buat folder baru bernama Proyek"
+
+### 4. Pembelajaran Adaptif
+- Mengingat preferensi Anda
+- Menyarankan aksi berdasarkan pola
+- Optimasi performa otomatis
+
+---
+
+## 🗣️ Perintah Suara
+
+### Perintah Dasar
+- **"Jarvis"** - Aktivasi
+- **"Berhenti"** - Stop current task
+- **"Bantuan"** - Tampilkan help
+- **"Keluar"** - Exit aplikasi
+
+### Perintah Office
+- **"Excel, buat sheet baru"**
+- **"Word, ganti [kata lama] dengan [kata baru]"**
+- **"PowerPoint, tambah slide"**
+- **"Simpan file"**
+- **"Tutup aplikasi"**
+
+### Perintah Sistem
+- **"Buka [nama aplikasi]"**
+- **"Install [nama software]"**
+- **"Buat folder [nama]"**
+- **"Hapus file [nama]"**
+
+### Perintah Web
+- **"Cari [kata kunci]"**
+- **"Buka website [URL]"**
+- **"Download [link]"**
+
+### Tips Perintah Suara:
+1. Bicara dengan jelas dan tidak terlalu cepat
+2. Gunakan jeda sejenak antara kata
+3. Hindari suara latar yang bising
+4. Jika tidak dikenali, coba ulangi dengan kata yang berbeda
+
+---
+
+## 🔧 Mengatasi Masalah
+
+### Masalah Umum dan Solusi
+
+#### 1. Jarvis AI Tidak Bisa Dijalankan
+
+**Gejala:** Error saat menjalankan `python jarvis_main.py`
+
+**Solusi:**
+1. Pastikan Python terinstall:
+   ```cmd
+   python --version
+   ```
+2. Install ulang dependencies:
+   ```cmd
+   pip install -r requirements.txt --force-reinstall
+   ```
+3. Periksa file `.env` sudah ada dan benar
+
+#### 2. Mikrofon Tidak Terdeteksi
+
+**Gejala:** Perintah suara tidak berfungsi
+
+**Solusi:**
+1. Periksa mikrofon di Windows Settings:
+   - Settings → Privacy → Microphone
+   - Pastikan "Allow apps to access microphone" ON
+2. Test mikrofon di aplikasi lain (Voice Recorder)
+3. Restart Jarvis AI
+
+#### 3. Office Automation Tidak Berfungsi
+
+**Gejala:** Error saat mengontrol Excel/Word/PowerPoint
+
+**Solusi:**
+1. Pastikan Office terinstall dan teraktivasi
+2. Buka Office sekali secara manual
+3. Install pywin32:
+   ```cmd
+   pip install pywin32
+   ```
+4. Jalankan sebagai Administrator
+
+#### 4. Koneksi Internet Bermasalah
+
+**Gejala:** Fitur pencarian web tidak berfungsi
+
+**Solusi:**
+1. Periksa koneksi internet
+2. Periksa firewall/antivirus
+3. Coba gunakan VPN jika ada blocking
+
+#### 5. Performa Lambat
+
+**Gejala:** Jarvis AI merespons lambat
+
+**Solusi:**
+1. Tutup aplikasi lain yang tidak perlu
+2. Gunakan SSD jika memungkinkan
+3. Tambah RAM jika kurang dari 8GB
+4. Gunakan model AI lokal yang lebih ringan
+
+### Instalasi Ulang (Reset)
+
+Jika semua solusi di atas tidak berhasil:
+
+1. **Backup data penting** (file .env, learning_data/)
+2. Hapus folder Jarvis AI
+3. Download ulang dari repository
+4. Ikuti panduan instalasi manual
+5. Restore file backup
+
+---
+
+## 💡 Tips dan Trik
+
+### Optimasi Performa
+1. **Gunakan SSD** untuk instalasi Jarvis AI
+2. **Tutup aplikasi** yang tidak diperlukan saat menggunakan Jarvis
+3. **Update Windows** secara berkala
+4. **Bersihkan disk** secara rutin
+
+### Keamanan
+1. **Jangan share API keys** dengan orang lain
+2. **Backup file .env** secara berkala
+3. **Gunakan antivirus** yang terpercaya
+4. **Update Jarvis AI** secara berkala
+
+### Produktivitas
+1. **Pelajari perintah suara** yang sering digunakan
+2. **Buat shortcut** untuk perintah kompleks
+3. **Gunakan mode batch** untuk tugas berulang
+4. **Manfaatkan fitur learning** untuk personalisasi
+
+### Kustomisasi
+1. **Edit file config** untuk mengubah pengaturan
+2. **Tambah perintah custom** di folder scripts/
+3. **Ubah voice model** sesuai preferensi
+4. **Sesuaikan UI theme** di pengaturan
+
+---
+
+## 🆘 Bantuan dan Dukungan
+
+### Dokumentasi Tambahan
+- **README.md** - Informasi teknis detail
+- **SECURITY_EVOLUTION.md** - Panduan keamanan
+- **examples/** - Contoh penggunaan
+
+### Komunitas dan Support
+- **GitHub Issues** - Laporkan bug atau request fitur
+- **Discord/Telegram** - Chat dengan komunitas
+- **Email Support** - Untuk bantuan teknis
+
+### Troubleshooting Lanjutan
+Jika masalah masih berlanjut:
+
+1. **Aktifkan debug mode:**
+   ```cmd
+   python jarvis_main.py --debug
+   ```
+
+2. **Periksa log file:**
+   - Lokasi: `jarvis_ai.log`
+   - Cari error messages
+
+3. **Buat issue report:**
+   - Sertakan log file
+   - Jelaskan langkah reproduksi
+   - Sebutkan spesifikasi sistem
+
+### Kontak
+- **Email:** support@jarvis-ai.com
+- **GitHub:** [Repository Link]
+- **Discord:** [Server Link]
+
+---
+
+## 📝 Catatan Penting
+
+### Privasi dan Keamanan
+- Jarvis AI tidak mengirim data pribadi tanpa izin
+- Rekaman suara disimpan lokal (tidak di cloud)
+- API keys disimpan terenkripsi
+- Selalu backup data penting
+
+### Lisensi dan Penggunaan
+- Jarvis AI gratis untuk penggunaan personal
+- Tidak boleh digunakan untuk aktivitas ilegal
+- Respect terms of service dari API providers
+
+### Update dan Maintenance
+- Periksa update secara berkala
+- Backup sebelum update major version
+- Baca changelog untuk fitur baru
+
+---
+
+**Selamat menggunakan Jarvis AI! 🚀**
+
+*Dokumen ini akan terus diperbarui seiring dengan perkembangan fitur baru.*
