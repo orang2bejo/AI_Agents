@@ -75,6 +75,21 @@ requests>=2.31.0
 pyyaml>=6.0.1
 hashlib-compat>=1.0.1
 
+# Web Search & Browser Automation
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+selenium>=4.15.0
+playwright>=1.40.0
+requests-html>=0.10.0
+html2text>=2020.1.16
+readability-lxml>=0.8.1
+googlesearch-python>=1.2.3
+duckduckgo-search>=3.9.0
+urllib3>=2.0.0
+user-agent>=0.1.10
+fake-useragent>=1.4.0
+robotparser>=1.0.0
+
 # Development & Testing
 pytest>=7.4.0
 pytest-asyncio>=0.21.0
