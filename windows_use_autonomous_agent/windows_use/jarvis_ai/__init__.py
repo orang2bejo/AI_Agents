@@ -42,6 +42,10 @@ from .learning_engine import (
     LearningData, ModelMetrics, UserProfile, LearningConfig,
     FeatureExtractor, ModelManager, DataManager, UserProfileManager
 )
+from .agent_manager import (
+    AgentManager, BaseAgent, AgentTask, AgentCapability, AgentMetrics,
+    AgentType, AgentStatus, TaskPriority, TaskStatus
+)
 
 __all__ = [
     # Personality
@@ -71,7 +75,11 @@ __all__ = [
     # Learning Engine
     'LearningEngine', 'LearningType', 'ModelType', 'DataType',
     'LearningData', 'ModelMetrics', 'UserProfile', 'LearningConfig',
-    'FeatureExtractor', 'ModelManager', 'DataManager', 'UserProfileManager'
+    'FeatureExtractor', 'ModelManager', 'DataManager', 'UserProfileManager',
+    
+    # Agent Management
+    'AgentManager', 'BaseAgent', 'AgentTask', 'AgentCapability', 'AgentMetrics',
+    'AgentType', 'AgentStatus', 'TaskPriority', 'TaskStatus'
 ]
 
 # Module metadata

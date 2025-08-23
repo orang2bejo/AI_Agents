@@ -43,12 +43,26 @@ try:
 except ImportError:
     BrowserAutomation = BrowserConfig = BrowserType = AutomationFramework = None
 
+try:
+    from .web_form_automation import (
+        WebFormAutomation, AutomationMode, FormFieldType, ActionType, 
+        AutomationStatus, FormField, AutomationAction, FormTemplate, 
+        AutomationSession, RPAConfig
+    )
+except ImportError:
+    WebFormAutomation = AutomationMode = FormFieldType = ActionType = None
+    AutomationStatus = FormField = AutomationAction = FormTemplate = None
+    AutomationSession = RPAConfig = None
+
 __all__ = [
     'SearchEngine', 'SearchConfig', 'SearchResult', 'SearchType',
     'HTMLParser', 'ContentExtractor', 'ExtractedContent', 'ParsingConfig',
     'VoiceWebController', 'VoiceWebConfig', 'VoiceCommand', 'Language',
     'WebScraper', 'ScrapingConfig', 'ScrapingResult',
-    'BrowserAutomation', 'BrowserConfig', 'BrowserType', 'AutomationFramework'
+    'BrowserAutomation', 'BrowserConfig', 'BrowserType', 'AutomationFramework',
+    'WebFormAutomation', 'AutomationMode', 'FormFieldType', 'ActionType',
+    'AutomationStatus', 'FormField', 'AutomationAction', 'FormTemplate',
+    'AutomationSession', 'RPAConfig'
 ]
 
 # Version info

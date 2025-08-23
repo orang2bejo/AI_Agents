@@ -51,6 +51,29 @@ try:
         ConfirmationType
     )
     
+    # Voice Authentication components
+    try:
+        from .voice_authentication import (
+            VoiceAuthenticator,
+            AuthenticationLevel,
+            VoiceAuthStatus,
+            PermissionType,
+            VoiceProfile,
+            UserPermissions,
+            AuthSession,
+            VoiceAuthConfig
+        )
+    except ImportError:
+        # Voice authentication dependencies not available
+        VoiceAuthenticator = None
+        AuthenticationLevel = None
+        VoiceAuthStatus = None
+        PermissionType = None
+        VoiceProfile = None
+        UserPermissions = None
+        AuthSession = None
+        VoiceAuthConfig = None
+    
     SECURITY_AVAILABLE = True
 except ImportError as e:
     logging.warning(f"Security modules not available: {e}")
@@ -319,7 +342,16 @@ __all__ = [
     "RateLimitEntry",
     "create_security_manager",
     "get_security_capabilities",
-    "SECURITY_AVAILABLE"
+    "SECURITY_AVAILABLE",
+    # Voice Authentication
+    "VoiceAuthenticator",
+    "AuthenticationLevel",
+    "VoiceAuthStatus",
+    "PermissionType",
+    "VoiceProfile",
+    "UserPermissions",
+    "AuthSession",
+    "VoiceAuthConfig"
 ]
 
 # Package metadata
