@@ -62,9 +62,9 @@ class ConversationMessage:
 @dataclass
 class ConversationTurn:
     """A complete conversation turn (user input + Jarvis response)"""
+    user_message: ConversationMessage
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.now)
-    user_message: ConversationMessage
     jarvis_response: Optional[ConversationMessage] = None
     context_used: Dict[str, Any] = field(default_factory=dict)
     task_executed: Optional[str] = None
