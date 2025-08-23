@@ -25,9 +25,17 @@ try:
     from selenium.webdriver.chrome.options import Options as ChromeOptions
     from selenium.webdriver.firefox.options import Options as FirefoxOptions
     from selenium.webdriver.edge.options import Options as EdgeOptions
+    from selenium.common.exceptions import TimeoutException, NoSuchElementException
     SELENIUM_AVAILABLE = True
 except ImportError:
     SELENIUM_AVAILABLE = False
+    # Create dummy classes for when Selenium is not available
+    class By:
+        CSS_SELECTOR = "css"
+        XPATH = "xpath"
+        ID = "id"
+        CLASS_NAME = "class"
+        TAG_NAME = "tag"
 
 try:
     from playwright.async_api import async_playwright, Browser, Page

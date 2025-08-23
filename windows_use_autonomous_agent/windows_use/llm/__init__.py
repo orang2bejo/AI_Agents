@@ -12,6 +12,10 @@ Key Components:
 - Tool calling normalization
 """
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 from .base import LLMProvider, LLMResponse, LLMMessage
 from .registry import ModelRegistry, MODEL_CATALOG
 from .router import LLMRouter
@@ -37,9 +41,24 @@ try:
 except ImportError as e:
     logger.warning(f"Failed to import new LLM provider components: {e}")
 
+# Import model registry components
+try:
+    from .model_registry import (
+        ModelRegistry as NewModelRegistry,
+        ModelInfo,
+        ModelCapability,
+        ModelTier,
+        ModelStatus,
+        ModelPricing,
+        ModelLimits,
+        MODEL_CATALOG as NEW_MODEL_CATALOG
+    )
+except ImportError as e:
+    logger.warning(f"Failed to import model registry components: {e}")
+
 __all__ = [
     'LLMProvider',
-    'LLMResponse', 
+    'LLMResponse',
     'LLMMessage',
     'ModelRegistry',
     'MODEL_CATALOG',
@@ -57,5 +76,13 @@ __all__ = [
     'ResponseFormat',
     'create_openai_provider',
     'create_anthropic_provider',
-    'create_ollama_provider'
+    'create_ollama_provider',
+    'NewModelRegistry',
+    'ModelInfo',
+    'ModelCapability',
+    'ModelTier',
+    'ModelStatus',
+    'ModelPricing',
+    'ModelLimits',
+    'NEW_MODEL_CATALOG'
 ]
