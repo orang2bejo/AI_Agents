@@ -222,7 +222,7 @@ class ModelManager:
         elif model_type == ModelType.LOGISTIC_REGRESSION:
             model = LogisticRegression(**kwargs)
         elif model_type == ModelType.KMEANS_CLUSTERING:
-            n_clusters = kwargs.get('n_clusters', 5)
+            n_clusters = kwargs.pop('n_clusters', 5)
             model = KMeans(n_clusters=n_clusters, random_state=42, **kwargs)
         else:
             raise ValueError(f"Unsupported model type: {model_type}")

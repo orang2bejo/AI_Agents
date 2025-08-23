@@ -1,0 +1,36 @@
+2025-08-24 04:28:11,657 - JarvisAI - INFO - Jarvis AI Main Controller initialized
+2025-08-24 04:28:11,657 - JarvisAI - INFO - Initializing Jarvis AI System...
+2025-08-24 04:28:11,657 - jarvis_ai.personality - INFO - Jarvis personality engine initialized
+2025-08-24 04:28:11,657 - jarvis_ai.conversation - INFO - Conversation manager initialized with session eaf767b6-dc2a-4f1c-91d2-bf709688963a
+2025-08-24 04:28:11,657 - jarvis_ai.language_manager - INFO - Language manager initialized
+2025-08-24 04:28:11,657 - jarvis_ai.voice_interface - INFO - Voice interface initialized
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Task Coordinator initialized
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Task coordinator loop started
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Task scheduler loop started
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Task cleanup loop started
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Task Coordinator started
+2025-08-24 04:28:11,950 - jarvis_ai.learning_engine - INFO - Created model: command_classifier (naive_bayes)
+2025-08-24 04:28:11,950 - JarvisAI - ERROR - Initialization failed: sklearn.cluster._kmeans.KMeans() got multiple values for keyword argument 'n_clusters'
+2025-08-24 04:28:11,950 - root - ERROR - System error: sklearn.cluster._kmeans.KMeans() got multiple values for keyword argument 'n_clusters'
+2025-08-24 04:28:11,950 - JarvisAI - INFO - Shutting down Jarvis AI System...
+2025-08-24 04:28:11,950 - jarvis_ai.task_coordinator - INFO - Stopping Task Coordinator...
+2025-08-24 04:28:12,071 - jarvis_ai.task_coordinator - INFO - Task coordinator loop stopped
+2025-08-24 04:28:12,971 - jarvis_ai.task_coordinator - INFO - Task scheduler loop stopped
+2025-08-24 04:28:17,979 - jarvis_ai.task_coordinator - INFO - Task Coordinator stopped
+2025-08-24 04:37:14,701 - JarvisAI - INFO - Jarvis AI Main Controller initialized
+2025-08-24 04:37:14,701 - JarvisAI - INFO - Initializing Jarvis AI System...
+2025-08-24 04:37:14,701 - jarvis_ai.personality - INFO - Jarvis personality engine initialized
+2025-08-24 04:37:14,701 - jarvis_ai.conversation - INFO - Conversation manager initialized with session 772aca31-a58a-4abd-bbcb-734dd6c1b5a9
+2025-08-24 04:37:14,710 - jarvis_ai.language_manager - INFO - Language manager initialized
+2025-08-24 04:37:14,710 - jarvis_ai.voice_interface - INFO - Voice interface initialized
+2025-08-24 04:37:14,712 - jarvis_ai.task_coordinator - INFO - Task Coordinator initialized
+2025-08-24 04:37:14,713 - jarvis_ai.task_coordinator - INFO - Task coordinator loop started
+2025-08-24 04:37:14,714 - jarvis_ai.task_coordinator - INFO - Task scheduler loop started
+2025-08-24 04:37:14,714 - jarvis_ai.task_coordinator - INFO - Task cleanup loop started
+2025-08-24 04:37:14,715 - jarvis_ai.task_coordinator - INFO - Task Coordinator started
+2025-08-24 04:37:14,717 - jarvis_ai.learning_engine - INFO - Created model: command_classifier (naive_bayes)
+2025-08-24 04:37:14,717 - jarvis_ai.learning_engine - INFO - Created model: preference_clusters (kmeans_clustering)
+2025-08-24 04:37:14,717 - jarvis_ai.learning_engine - INFO - Created model: response_optimizer (logistic_regression)
+2025-08-24 04:37:14,718 - jarvis_ai.learning_engine - INFO - Learning Engine initialized
+2025-08-24 04:37:14,719 - jarvis_ai.learning_engine - INFO - Learning training loop started
+2025-08-24 04:37:14,719 - jarvis_ai.learning_engine - INFO - Learning Engine started

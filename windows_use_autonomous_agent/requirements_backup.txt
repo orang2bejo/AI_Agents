@@ -1,0 +1,144 @@
+# Core dependencies
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+python-multipart>=0.0.6
+flask>=2.3.3
+flask-socketio>=5.3.6
+flask-cors>=4.0.0
+werkzeug>=2.3.7
+
+# Voice Input & Audio Processing
+whisper>=1.1.10
+vosk>=0.3.45
+pyaudio>=0.2.11
+numpy>=1.24.0
+scipy>=1.11.0
+librosa>=0.10.1
+soundfile>=0.12.1
+webrtcvad>=2.0.10
+speechrecognition>=3.10.0
+sounddevice>=0.4.6
+
+# Text-to-Speech
+piper-tts>=1.2.0
+pyttsx3>=2.90
+comtypes>=1.2.0
+
+# Office Automation
+pywin32>=306
+openpyxl>=3.1.2
+python-docx>=0.8.11
+python-pptx>=0.6.21
+
+# Natural Language Processing
+spacy>=3.7.0
+nltk>=3.8.1
+regex>=2023.10.3
+
+# Security & Validation
+cryptography>=41.0.0
+jsonschema>=4.19.0
+requests>=2.31.0
+pyjwt>=2.8.0
+bcrypt>=4.1.0
+passlib>=1.7.4
+pyjwt>=2.8.0
+bcrypt>=4.1.0
+passlib>=1.7.4
+
+# Observability & Monitoring
+Pillow>=10.0.0
+psutil>=5.9.0
+watchdog>=3.0.0
+gputil>=1.4.0
+loguru>=0.7.0
+prometheus-client>=0.19.0
+
+# System Integration
+win32gui>=221
+win32api>=221
+win32con>=221
+win32clipboard>=221
+
+# Utilities
+python-dotenv>=1.0.0
+click>=8.1.0
+colorama>=0.4.6
+tqdm>=4.66.0
+datetime>=5.2
+json-logging>=1.3.0
+rich>=13.7.0
+configparser>=6.0.0
+toml>=0.10.2
+rich>=13.7.0
+loguru>=0.7.2
+configparser>=6.0.0
+toml>=0.10.2
+
+# Self-Evolving Agent & Machine Learning
+scikit-learn>=1.3.0
+pandas>=2.1.0
+joblib>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Windows System Tools
+psutil>=5.9.0
+wmi>=1.5.1
+subprocess32>=3.5.4
+
+# Multi-Provider LLM
+openai>=1.3.0
+google-generativeai>=0.3.0
+anthropic>=0.7.0
+groq>=0.4.0
+requests>=2.31.0
+pyyaml>=6.0.1
+hashlib-compat>=1.0.1
+transformers>=4.36.0
+torch>=2.1.0
+tensorflow>=2.15.0
+
+# Web Search & Browser Automation
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+selenium>=4.15.0
+playwright>=1.40.0
+requests-html>=0.10.0
+html2text>=2020.1.16
+readability-lxml>=0.8.1
+googlesearch-python>=1.2.3
+duckduckgo-search>=3.9.0
+urllib3>=2.0.0
+user-agent>=0.1.10
+fake-useragent>=1.4.0
+robotparser>=1.0.0
+
+# Development & Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+black>=23.9.0
+flake8>=6.1.0
+mypy>=1.6.0
+
+# Database Support
+sqlalchemy>=2.0.23
+alembic>=1.13.1
+
+# Async Support
+aiohttp>=3.9.0
+aiofiles>=23.2.0
+httpx>=0.25.0
+websockets>=12.0
+
+# Async & Network Support
+aiohttp>=3.9.0
+aiofiles>=23.2.0
+httpx>=0.25.0
+websockets>=12.0
+
+# Monitoring & Metrics
+prometheus-client>=0.19.0
+gputil>=1.4.0

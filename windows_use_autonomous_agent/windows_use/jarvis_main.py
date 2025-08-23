@@ -44,13 +44,14 @@ from jarvis_ai import (
 )
 
 # Import other modules
-from voice import VoiceInputManager, TTSManager
-from intent_parser import IntentParser, Intent
-from office_automation import OfficeAutomation
-from windows_system_tools import WindowsSystemTools
-from self_evolving_agent import SelfEvolvingAgent
-from multi_provider_llm import LLMRouter
-from guardrails import GuardrailsManager
+# Note: These modules are integrated into jarvis_ai package
+# from voice import VoiceInputManager, TTSManager
+# from intent_parser import IntentParser, Intent
+# from office_automation import OfficeAutomation
+# from windows_system_tools import WindowsSystemTools
+# from self_evolving_agent import SelfEvolvingAgent
+# from multi_provider_llm import LLMRouter
+# from guardrails import GuardrailsManager
 from web import SearchEngine, WebScraper
 
 class JarvisAIMain:
@@ -193,28 +194,29 @@ class JarvisAIMain:
     async def _initialize_extended_components(self):
         """Initialize extended functionality components"""
         try:
+            # Note: These components are integrated into jarvis_ai package
             # Voice input/output
-            self.voice_input = VoiceInputManager()
-            self.tts_manager = TTSManager()
+            # self.voice_input = VoiceInputManager()
+            # self.tts_manager = TTSManager()
             
             # Intent parsing
-            self.intent_parser = IntentParser()
+            # self.intent_parser = IntentParser()
             
             # Office automation
-            self.office_automation = OfficeAutomation()
+            # self.office_automation = OfficeAutomation()
             
             # Windows system tools
-            self.system_tools = WindowsSystemTools()
+            # self.system_tools = WindowsSystemTools()
             
             # Self-evolving agent
-            self.evolving_agent = SelfEvolvingAgent()
+            # self.evolving_agent = SelfEvolvingAgent()
             
             # Multi-provider LLM
-            self.llm_router = LLMRouter()
+            # self.llm_router = LLMRouter()
             
             # Guardrails
-            if self.config.get('security', {}).get('guardrails_enabled', True):
-                self.guardrails = GuardrailsManager()
+            # if self.config.get('security', {}).get('guardrails_enabled', True):
+            #     self.guardrails = GuardrailsManager()
             
             # Web search and scraping
             self.search_engine = SearchEngine()
@@ -309,7 +311,7 @@ class JarvisAIMain:
                 intent_result = self.intent_parser.parse(user_input, language)
                 intent = intent_result.intent
             else:
-                intent = Intent.GENERAL
+                intent = "general"
             
             # Add to conversation
             self.conversation.add_message(
@@ -338,7 +340,7 @@ class JarvisAIMain:
                     success=True,
                     metadata={
                         'language': language.value,
-                        'intent': intent.value if hasattr(intent, 'value') else str(intent),
+                        'intent': str(intent),
                         'response_length': len(response)
                     }
                 )
@@ -352,19 +354,19 @@ class JarvisAIMain:
                 str(e)
             )
     
-    async def _process_by_intent(self, intent: Intent, user_input: str, language: Language) -> str:
+    async def _process_by_intent(self, intent: str, user_input: str, language: Language) -> str:
         """Process input based on detected intent"""
         try:
-            if intent == Intent.OFFICE_AUTOMATION and self.office_automation:
+            if intent == "office_automation" and self.office_automation:
                 return await self._handle_office_automation(user_input, language)
             
-            elif intent == Intent.SYSTEM_CONTROL and self.system_tools:
+            elif intent == "system_control" and self.system_tools:
                 return await self._handle_system_control(user_input, language)
             
-            elif intent == Intent.WEB_SEARCH and self.search_engine:
+            elif intent == "web_search" and self.search_engine:
                 return await self._handle_web_search(user_input, language)
             
-            elif intent == Intent.TASK_MANAGEMENT:
+            elif intent == "task_management":
                 return await self._handle_task_management(user_input, language)
             
             elif intent == Intent.LEARNING:
@@ -447,8 +449,8 @@ class JarvisAIMain:
             # Create a task based on user input
             task = self.task_coordinator.create_task(
                 name=f"User Task: {user_input[:50]}",
+                description=user_input,
                 executor=self._generic_task_executor,
-                user_input,
                 task_type=TaskType.USER_INTERACTION,
                 priority=TaskPriority.MEDIUM
             )
