@@ -174,8 +174,8 @@ def test_component_functionality():
         
         config = RPAConfig(
             headless=True,
-            timeout=30,
-            retry_attempts=3
+            timeout=30000,
+            retry_on_failure=True
         )
         
         # Note: We don't actually initialize the browser to avoid dependencies
@@ -185,9 +185,9 @@ def test_component_functionality():
         from windows_use.security.voice_authentication import VoiceAuthConfig
         
         auth_config = VoiceAuthConfig(
-            sample_rate=16000,
-            duration=3.0,
-            threshold=0.8
+            audio_sample_rate=16000,
+            enrollment_duration=3.0,
+            verification_threshold=0.8
         )
         print("✓ Voice Authentication configuration created successfully")
         
