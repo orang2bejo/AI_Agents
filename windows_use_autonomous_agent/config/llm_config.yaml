@@ -1,0 +1,238 @@
+# Multi-Provider LLM Configuration
+# Konfigurasi untuk berbagai provider LLM
+
+# Provider configurations
+providers:
+  ollama:
+    name: "ollama"
+    enabled: true
+    priority: 1
+    base_url: "http://localhost:11434"
+    api_key_env: "OLLAMA_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "llama3.2:3b"
+      - "llama3.2:1b"
+      - "qwen2.5:7b"
+      - "gemma2:2b"
+    default_model: "llama3.2:3b"
+  
+  gemini:
+    name: "gemini"
+    enabled: true
+    priority: 2
+    api_key_env: "GEMINI_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "gemini-1.5-pro"
+      - "gemini-1.5-flash"
+      - "gemini-1.0-pro"
+    default_model: "gemini-1.5-flash"
+  
+  anthropic:
+    name: "anthropic"
+    enabled: true
+    priority: 3
+    api_key_env: "ANTHROPIC_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "claude-3-5-sonnet-20241022"
+      - "claude-3-5-haiku-20241022"
+      - "claude-3-haiku-20240307"
+    default_model: "claude-3-5-haiku-20241022"
+  
+  groq:
+    name: "groq"
+    enabled: true
+    priority: 4
+    api_key_env: "GROQ_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "llama-3.1-70b-versatile"
+      - "llama-3.1-8b-instant"
+      - "mixtral-8x7b-32768"
+      - "gemma2-9b-it"
+    default_model: "llama-3.1-8b-instant"
+  
+  deepseek:
+    name: "deepseek"
+    enabled: true
+    priority: 5
+    api_key_env: "DEEPSEEK_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "deepseek-chat"
+      - "deepseek-coder"
+    default_model: "deepseek-chat"
+  
+  qwen:
+    name: "qwen"
+    enabled: true
+    priority: 6
+    api_key_env: "QWEN_API_KEY"
+    timeout: 30
+    max_retries: 3
+    models:
+      - "qwen2.5-72b-instruct"
+      - "qwen2.5-32b-instruct"
+      - "qwen2.5-14b-instruct"
+      - "qwen2.5-7b-instruct"
+    default_model: "qwen2.5-7b-instruct"
+
+# Routing policies
+routing:
+  default_policy: "offline_first"
+  policies:
+    offline_first:
+      description: "Prioritize local/offline models"
+      prefer_local: true
+      max_cost_per_request: 0.01
+      max_latency_ms: 5000
+    
+    cost_optimized:
+      description: "Minimize cost per request"
+      prefer_local: false
+      max_cost_per_request: 0.005
+      max_latency_ms: 10000
+    
+    speed_optimized:
+      description: "Minimize response latency"
+      prefer_local: false
+      max_cost_per_request: 0.05
+      max_latency_ms: 1000
+    
+    quality_optimized:
+      description: "Maximize response quality"
+      prefer_local: false
+      max_cost_per_request: 0.10
+      max_latency_ms: 15000
+    
+    balanced:
+      description: "Balance cost, speed, and quality"
+      prefer_local: false
+      max_cost_per_request: 0.02
+      max_latency_ms: 3000
+
+# Task-specific routing
+task_routing:
+  planning:
+    preferred_providers: ["anthropic", "gemini", "qwen"]
+    min_context_length: 32768
+    require_tools: false
+  
+  execution:
+    preferred_providers: ["groq", "deepseek", "ollama"]
+    min_context_length: 8192
+    require_tools: true
+  
+  coding:
+    preferred_providers: ["deepseek", "anthropic", "qwen"]
+    min_context_length: 16384
+    require_tools: true
+  
+  analysis:
+    preferred_providers: ["gemini", "anthropic", "qwen"]
+    min_context_length: 32768
+    require_tools: false
+  
+  creative:
+    preferred_providers: ["anthropic", "gemini", "qwen"]
+    min_context_length: 16384
+    require_tools: false
+  
+  tool_use:
+    preferred_providers: ["anthropic", "gemini", "groq"]
+    min_context_length: 8192
+    require_tools: true
+  
+  vision:
+    preferred_providers: ["gemini", "anthropic"]
+    min_context_length: 8192
+    require_vision: true
+  
+  general:
+    preferred_providers: ["ollama", "groq", "deepseek"]
+    min_context_length: 4096
+    require_tools: false
+
+# Fallback configuration
+fallback:
+  enabled: true
+  max_attempts: 3
+  retry_delay_seconds: 1
+  escalation_order:
+    - "ollama"
+    - "groq"
+    - "deepseek"
+    - "gemini"
+    - "anthropic"
+    - "qwen"
+
+# Caching configuration
+caching:
+  enabled: true
+  ttl_seconds: 3600
+  max_cache_size: 1000
+  cache_streaming: false
+  cache_tool_calls: false
+
+# Logging configuration
+logging:
+  log_requests: true
+  log_responses: false
+  log_errors: true
+  log_performance: true
+  log_level: "INFO"
+
+# Rate limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 60
+  requests_per_hour: 1000
+  burst_limit: 10
+
+# Security settings
+security:
+  validate_api_keys: true
+  sanitize_inputs: true
+  filter_outputs: false
+  max_input_length: 100000
+  max_output_length: 50000
+
+# Performance monitoring
+monitoring:
+  enabled: true
+  track_latency: true
+  track_costs: true
+  track_errors: true
+  track_usage: true
+  alert_on_failures: true
+  alert_threshold: 5
+
+# Default request configuration
+defaults:
+  temperature: 0.7
+  top_p: 0.9
+  max_tokens: 4096
+  stream: false
+  timeout_seconds: 30
+  response_format: "text"
+
+# Language-specific settings
+language_settings:
+  indonesian:
+    preferred_providers: ["qwen", "gemini", "anthropic"]
+    system_prompt: "Anda adalah asisten AI yang membantu dalam bahasa Indonesia dengan sopan dan informatif."
+  
+  english:
+    preferred_providers: ["anthropic", "gemini", "groq"]
+    system_prompt: "You are a helpful AI assistant that provides accurate and informative responses."
+  
+  multilingual:
+    preferred_providers: ["qwen", "gemini", "anthropic"]
+    system_prompt: "You are a multilingual AI assistant. Respond in the same language as the user's query."
