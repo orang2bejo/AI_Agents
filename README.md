@@ -321,7 +321,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Contributions are welcome! Please check the [CONTRIBUTING](CONTRIBUTING) file for setup and development workflow.
 
-Made with ❤️ by [Jeomon George](https://github.com/Jeomon)
+Made with ❤️ by [Jeomon George](https://github.com/Jeomon) and [Orangbejo](https://github.com/Orangbejo)
 
 ---
 
@@ -329,7 +329,7 @@ Made with ❤️ by [Jeomon George](https://github.com/Jeomon)
 
 ```bibtex
 @software{
-  author       = {George, Jeomon},
+  author       = {George, Jeomon and Orangbejo, },
   title        = {Windows-Use: Enable AI to control Windows OS},
   year         = {2025},
   publisher    = {GitHub},
