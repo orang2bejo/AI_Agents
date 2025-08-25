@@ -240,10 +240,8 @@ class JarvisAIMain:
         
         try:
             # Start conversation session
-            language = Language.ENGLISH if self.config.get('language', 'english').lower() == 'english' else Language.INDONESIAN
-            self.session_id = self.conversation.start_session(
-                user_id=self.current_user,
-                language=language
+            self.session_id = self.conversation.start_conversation(
+                user_name=self.current_user
             )
             
             # Start dashboard if available
@@ -257,21 +255,19 @@ class JarvisAIMain:
             self.is_running = True
             
             # Welcome message
+            from jarvis_ai.language_manager import Language
+            default_language = Language.ENGLISH
             welcome_msg = self.personality.generate_greeting(
-                language,
-                self.current_user
+                default_language
             )
             
-            self.conversation.add_message(
-                self.session_id,
-                MessageType.ASSISTANT,
-                welcome_msg,
-                language
+            self.conversation.add_user_message(
+                welcome_msg
             )
             
             # Speak welcome if voice is available
             if self.voice_interface and self.voice_interface.is_available():
-                self.voice_interface.speak(welcome_msg, language)
+                self.voice_interface.speak(welcome_msg, default_language)
             
             print(f"\n🤖 Jarvis: {welcome_msg}\n")
             
@@ -564,7 +560,7 @@ class JarvisAIMain:
         
         # Goodbye message
         if self.personality:
-            goodbye_msg = self.personality.generate_completion_response(
+            goodbye_msg = self.personality.generate_completion_message(
                 Language.ENGLISH,
                 "session"
             )

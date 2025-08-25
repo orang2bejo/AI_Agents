@@ -31,6 +31,8 @@
 - **Task Coordinator** - Intelligent task scheduling and execution
 - **Learning Engine** - Machine learning models for continuous improvement
 - **Multi-Provider LLM Support** - OpenAI, Anthropic, Google, and local models
+- **Dashboard Interface** - Real-time monitoring and control panel with GUI
+- **Self-Evolution** - Continuous improvement and adaptation capabilities
 
 ### 🎤 Voice & Language Processing
 - **Voice Interface** - Complete STT/TTS integration with Indonesian support
@@ -38,6 +40,8 @@
 - **Intent Recognition** - Advanced command understanding and routing
 - **Push-to-Talk** functionality with customizable hotkeys
 - **Voice Activity Detection** for hands-free operation
+- **Voice Authentication** - Security system based on voice recognition
+- **Voice Web Control** - Navigate and interact with web using voice commands
 
 ### 📊 Office & System Integration
 - **Office Automation** - Complete Excel, Word, PowerPoint control via COM
@@ -45,6 +49,8 @@
 - **Web Integration** - Search engines and web scraping capabilities
 - **File Management** - Advanced file operations and organization
 - **Security Framework** - Guardrails and Human-in-the-Loop approval system
+- **System Monitoring** - Real-time system metrics and performance tracking
+- **Process Management** - Advanced process control and monitoring
 
 ### 🔒 Security & Safety
 - **Guardrails Engine** for action validation
@@ -322,6 +328,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Contributions are welcome! Please check the [CONTRIBUTING](CONTRIBUTING) file for setup and development workflow.
 
 Made with ❤️ by [Jeomon George](https://github.com/Jeomon) and [Orangbejo](https://github.com/Orangbejo)
+
+## 👨‍💻 Author
+
+**Orangbejo**
+- GitHub: [https://github.com/Orangbejo](https://github.com/Orangbejo)
+- Trae URL: [https://trae.ai/@orangbejo](https://trae.ai/@orangbejo)
 
 ---
 
