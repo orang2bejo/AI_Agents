@@ -6,7 +6,7 @@ Author-email: Jeomon George <jeogeoalukka@gmail.com>
 License-Expression: MIT
 Project-URL: homepage, https://github.com/CursorTouch
 Keywords: windows,agent,ai,desktop,ai agent,automation
-Requires-Python: >=3.12
+Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 Requires-Dist: fuzzywuzzy>=0.18.0
 Requires-Dist: humancursor>=1.1.5
