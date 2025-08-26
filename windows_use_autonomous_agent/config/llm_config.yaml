@@ -83,6 +83,42 @@ providers:
       - "qwen2.5-14b-instruct"
       - "qwen2.5-7b-instruct"
     default_model: "qwen2.5-7b-instruct"
+  
+  openrouter:
+    name: "openrouter"
+    enabled: true
+    priority: 7
+    base_url: "https://openrouter.ai/api/v1"
+    api_key_env: "OPENROUTER_API_KEY"
+    timeout: 60
+    max_retries: 3
+    models:
+      # OpenAI models via OpenRouter
+      - "openai/gpt-4o"
+      - "openai/gpt-4o-mini"
+      - "openai/gpt-3.5-turbo"
+      # Anthropic models via OpenRouter
+      - "anthropic/claude-3-5-sonnet"
+      - "anthropic/claude-3-5-haiku"
+      - "anthropic/claude-3-haiku"
+      # Meta models via OpenRouter
+      - "meta-llama/llama-3.1-70b-instruct"
+      - "meta-llama/llama-3.1-8b-instruct"
+      # Google models via OpenRouter
+      - "google/gemini-pro-1.5"
+      - "google/gemini-flash-1.5"
+      # Other popular models
+      - "mistralai/mixtral-8x7b-instruct"
+      - "cohere/command-r-plus"
+    default_model: "openai/gpt-3.5-turbo"
+    features:
+      supports_tools: true
+      supports_vision: true
+      supports_streaming: true
+      supports_json_mode: true
+      unified_api: true
+      automatic_fallback: true
+      cost_optimization: true
 
 # Routing policies
 routing:
@@ -117,6 +153,13 @@ routing:
       prefer_local: false
       max_cost_per_request: 0.02
       max_latency_ms: 3000
+    
+    unified_access:
+      description: "Use OpenRouter for unified access to multiple models"
+      prefer_local: false
+      preferred_providers: ["openrouter"]
+      max_cost_per_request: 0.03
+      max_latency_ms: 5000
 
 # Task-specific routing
 task_routing:

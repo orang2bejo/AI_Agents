@@ -30,7 +30,7 @@
 - **Conversation Manager** - Context-aware dialogue management
 - **Task Coordinator** - Intelligent task scheduling and execution
 - **Learning Engine** - Machine learning models for continuous improvement
-- **Multi-Provider LLM Support** - OpenAI, Anthropic, Google, and local models
+- **Multi-Provider LLM Support** - OpenAI, Anthropic, Google, OpenRouter, and local models
 - **Dashboard Interface** - Real-time monitoring and control panel with GUI
 - **Self-Evolution** - Continuous improvement and adaptation capabilities
 
@@ -186,6 +186,32 @@ office.excel.save_as('jarvis_report.xlsx')
 office.word.create_document()
 office.word.add_text('Laporan dibuat oleh Jarvis AI')
 office.word.save_as('jarvis_document.docx')
+```
+
+### 🌐 OpenRouter API Integration
+
+```python
+from jarvis_ai.llm import create_openrouter_provider, LLMRouter
+
+# Initialize OpenRouter provider
+openrouter = create_openrouter_provider(
+    api_key="sk-or-v1-your-api-key",
+    model="openai/gpt-4o"  # Access 100+ models
+)
+
+# Use with LLM Router for automatic fallback
+router = LLMRouter()
+response = await router.generate_response(
+    messages=[{"role": "user", "content": "Hello from Jarvis AI!"}],
+    policy="unified_access"  # Prioritize OpenRouter
+)
+
+# Available models include:
+# - OpenAI: gpt-4o, gpt-4o-mini, gpt-3.5-turbo
+# - Anthropic: claude-3-5-sonnet, claude-3-5-haiku
+# - Meta: llama-3.1-70b-instruct, llama-3.1-8b-instruct
+# - Google: gemini-pro-1.5, gemini-flash-1.5
+# - And many more...
 ```
 
 ### 🔧 Windows System Tools with Jarvis AI

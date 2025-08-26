@@ -50,6 +50,7 @@ python scripts/jarvis_main.py
 - 📊 **Office Integration** - Word, Excel, PowerPoint automation
 - 🌐 **Web Automation** - Browser control & web scraping
 - 🧠 **AI Agent** - Intelligent task execution
+- 🤖 **Multi-Provider LLM** - OpenAI, Anthropic, Google, OpenRouter integration
 - 🔒 **Security** - Multi-level authentication & access control
 
 ## 📚 Documentation

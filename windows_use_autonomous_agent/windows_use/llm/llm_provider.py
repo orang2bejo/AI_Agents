@@ -36,6 +36,7 @@ class LLMProvider(Enum):
     AZURE_OPENAI = "azure_openai"
     COHERE = "cohere"
     HUGGINGFACE = "huggingface"
+    OPENROUTER = "openrouter"
 
 class MessageRole(Enum):
     """Message roles in conversation"""
@@ -389,6 +390,38 @@ class AnthropicProvider(BaseLLMProvider):
             self.logger.error(f"Anthropic streaming error: {e}")
             raise
 
+class OpenRouterProvider(OpenAIProvider):
+    """OpenRouter LLM provider - extends OpenAI provider with OpenRouter-specific configuration"""
+    
+    def _initialize_client(self):
+        """Initialize OpenRouter client with custom base URL and headers"""
+        self.client = openai.AsyncOpenAI(
+            api_key=self.config.api_key,
+            base_url="https://openrouter.ai/api/v1",
+            organization=self.config.organization,
+            timeout=self.config.timeout,
+            max_retries=self.config.max_retries,
+            default_headers={
+                "HTTP-Referer": "https://jarvis-ai.local",
+                "X-Title": "Jarvis AI Assistant",
+                **self.config.custom_headers
+            }
+        )
+    
+    async def generate_response(self, messages: List[LLMMessage], 
+                              **kwargs) -> LLMResponse:
+        """Generate response using OpenRouter API"""
+        response = await super().generate_response(messages, **kwargs)
+        # Update provider info to reflect OpenRouter
+        response.provider = LLMProvider.OPENROUTER
+        return response
+    
+    async def generate_stream(self, messages: List[LLMMessage], 
+                            **kwargs) -> AsyncGenerator[str, None]:
+        """Generate streaming response using OpenRouter API"""
+        async for chunk in super().generate_stream(messages, **kwargs):
+            yield chunk
+
 class OllamaProvider(BaseLLMProvider):
     """Ollama local LLM provider"""
     
@@ -639,12 +672,24 @@ def create_ollama_provider(model: str, base_url: str = "http://localhost:11434",
     )
     return OllamaProvider(config)
 
+def create_openrouter_provider(api_key: str, model: str = "openai/gpt-3.5-turbo", 
+                              **kwargs) -> OpenRouterProvider:
+    """Create OpenRouter provider"""
+    config = LLMConfig(
+        provider=LLMProvider.OPENROUTER,
+        model=model,
+        api_key=api_key,
+        **kwargs
+    )
+    return OpenRouterProvider(config)
+
 # Export main classes
 __all__ = [
     'LLMRouter',
     'BaseLLMProvider',
     'OpenAIProvider',
     'AnthropicProvider',
+    'OpenRouterProvider',
     'OllamaProvider',
     'LLMProvider',
     'LLMMessage',
@@ -654,5 +699,6 @@ __all__ = [
     'ResponseFormat',
     'create_openai_provider',
     'create_anthropic_provider',
+    'create_openrouter_provider',
     'create_ollama_provider'
 ]
