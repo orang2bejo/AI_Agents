@@ -58,14 +58,16 @@ Panduan ini akan membantu Anda menginstal Jarvis AI dengan mudah dan cepat. Kami
 
 > **Cocok untuk:** Pengguna pemula yang ingin instalasi cepat dan mudah
 
-### Langkah 1: Download Installer
+### Langkah 1: Lokasi File Installer
 
-1. **Download file installer:**
-   - Cari file `install_jarvis_auto.bat` di folder proyek
-   - Atau download dari: [Link Download]
+1. **File installer tersedia di:**
+   - File `install_jarvis_auto.bat` sudah tersedia di folder root proyek
+   - Lokasi: `windows_use_autonomous_agent\install_jarvis_auto.bat`
 
-2. **Simpan di lokasi yang mudah diakses:**
-   - Contoh: `C:\Downloads\install_jarvis_auto.bat`
+2. **Cara mengakses:**
+   - Buka folder proyek Jarvis AI
+   - Cari file `install_jarvis_auto.bat` di folder utama
+   - File ini akan menginstall semua dependencies secara otomatis
 
 ### Langkah 2: Jalankan Installer
 
