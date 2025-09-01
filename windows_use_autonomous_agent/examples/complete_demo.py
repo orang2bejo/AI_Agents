@@ -19,8 +19,8 @@ from windows_use.tools.voice_input import VoiceInput
 from windows_use.tools.tts_piper import TTSPiper
 
 # Indonesian Language Processing
-from windows_use.tools.grammar_id import IndonesianGrammar
-from windows_use.tools.router import CommandRouter
+# from windows_use.tools.grammar_id import IndonesianGrammar
+# from windows_use.tools.router import CommandRouter
 
 # Office Automation
 from windows_use.office.excel_handler import ExcelHandler
@@ -34,7 +34,7 @@ from windows_use.tools.process import ProcessManager
 from windows_use.tools.net import NetworkManager
 
 # Self-Evolving Agent
-from windows_use.evolution import EvolutionEngine, EvolutionConfig
+from windows_use.evolution import EvolutionEngine
 from windows_use.evolution.memory import ExperienceType
 from windows_use.evolution.config import ConfigManager
 

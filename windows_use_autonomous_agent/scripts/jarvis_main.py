@@ -33,7 +33,7 @@ from typing import Dict, Any, Optional
 sys.path.append(str(Path(__file__).parent))
 
 # Import all Jarvis AI modules
-from jarvis_ai import (
+from windows_use.jarvis_ai import (
     JarvisPersonality, PersonalityTrait, ResponseTone,
     ConversationManager, MessageType, Language,
     LanguageManager,

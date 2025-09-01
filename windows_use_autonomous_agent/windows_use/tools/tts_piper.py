@@ -15,9 +15,10 @@ import threading
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 
+import numpy as np
+
 try:
     import sounddevice as sd
-    import numpy as np
     import wave
 except ImportError as e:
     logging.warning(f"Audio dependencies not installed: {e}")

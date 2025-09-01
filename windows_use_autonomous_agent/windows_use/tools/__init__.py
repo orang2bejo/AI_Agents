@@ -9,8 +9,8 @@ from .voice_input import VoiceInput
 from .tts_piper import TTSPiper
 
 # Indonesian Language Processing
-from .grammar_id import IndonesianGrammar
-from .router import CommandRouter
+# from .grammar_id import IndonesianGrammar
+# from .router import CommandRouter
 
 # Windows System Tools
 from .winget import WingetManager
@@ -19,12 +19,12 @@ from .process import ProcessManager, ProcessInfo, ProcessAction
 from .net import NetworkManager
 
 # Security and Safety
-from .guardrails import GuardrailsEngine
-from .hitl import HITLManager
+# from .guardrails import GuardrailsEngine
+# from .hitl import HITLManager
 
 # Observability
-from .logger import setup_logger, get_logger
-from .screenshot import ScreenshotManager
+# from .logger import setup_logger, get_logger
+# from .screenshot import ScreenshotManager
 
 __all__ = [
     # Voice and Audio
