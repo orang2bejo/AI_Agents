@@ -1,13 +1,13 @@
-from windows_use.agent.tools.service import click_tool, type_tool, launch_tool, shell_tool, clipboard_tool, done_tool, shortcut_tool, scroll_tool, drag_tool, move_tool, key_tool, wait_tool, scrape_tool 
+from .tools.service import click_tool, type_tool, launch_tool, shell_tool, clipboard_tool, done_tool, shortcut_tool, scroll_tool, drag_tool, move_tool, key_tool, wait_tool, scrape_tool 
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from windows_use.agent.views import AgentState, AgentStep, AgentResult
-from windows_use.agent.utils import extract_agent_data, image_message
+from .views import AgentState, AgentStep, AgentResult
+from .utils import extract_agent_data, image_message
 from langchain_core.language_models.chat_models import BaseChatModel
-from windows_use.agent.registry.views import ToolResult
-from windows_use.agent.registry.service import Registry
-from windows_use.agent.prompt.service import Prompt
+from .registry.views import ToolResult
+from .registry.service import Registry
+from .prompt.service import Prompt
 from langchain_core.tools import BaseTool
-from windows_use.desktop import Desktop
+from ..desktop import Desktop
 from termcolor import colored
 import logging
 
@@ -105,4 +105,4 @@ class Agent:
             if self.agent_state.consecutive_failures >= 3:
                 logger.warning("Consecutive failures exceeded limit, stopping execution.")
                 return AgentResult(is_done=False, content=None, error="Consecutive failures exceeded limit.")
-            self.agent_step.increment_step()        
+            self.agent_step.increment_step()
