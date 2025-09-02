@@ -29,7 +29,6 @@ from .logging_config import (
     get_logger,
     log_performance,
     log_api_call,
-    logging_manager,
 )
 
 __all__ = [
@@ -55,5 +54,4 @@ __all__ = [
     'get_logger',
     'log_performance',
     'log_api_call',
-    'logging_manager',
 ]
