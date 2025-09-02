@@ -576,7 +576,7 @@ class JarvisAIMain:
             self.learning_engine.stop()
         
         if self.voice_interface:
-            self.voice_interface.cleanup()
+            await self.voice_interface.shutdown()
         
         if self.dashboard:
             self.dashboard.destroy()
