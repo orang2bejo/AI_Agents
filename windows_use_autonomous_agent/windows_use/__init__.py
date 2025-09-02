@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Import core modules with error handling
 try:
     from .agent import Agent as WindowsAgent
-    from .desktop import DesktopAutomation
+    from .desktop import Desktop as DesktopAutomation
     from .tools import ToolManager
     from .llm import LLMProvider
     
