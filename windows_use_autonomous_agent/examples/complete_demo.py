@@ -39,10 +39,10 @@ from windows_use.evolution.memory import ExperienceType
 from windows_use.evolution.config import ConfigManager
 
 # Security & Observability
-from windows_use.tools.guardrails import GuardrailsEngine
-from windows_use.tools.hitl import HITLManager
-from windows_use.tools.logger import setup_logger
-from windows_use.tools.screenshot import ScreenshotManager
+# from windows_use.tools.guardrails import GuardrailsEngine
+# from windows_use.tools.hitl import HITLManager
+# from windows_use.tools.logger import setup_logger
+# from windows_use.tools.screenshot import ScreenshotManager
 
 
 class CompleteDemo:
@@ -50,29 +50,31 @@ class CompleteDemo:
     
     def __init__(self):
         # Setup logging
-        self.logger = setup_logger("complete_demo")
+        import logging
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger("complete_demo")
         
         # Initialize components
         self.voice_input = VoiceInput()
         self.tts = TTSPiper()
-        self.grammar = IndonesianGrammar()
-        self.router = CommandRouter()
+        # self.grammar = IndonesianGrammar()
+        # self.router = CommandRouter()
         
-        # Office automation
-        self.excel = ExcelHandler()
-        self.word = WordHandler()
-        self.powerpoint = PowerPointHandler()
+        # Office automation (requires pywin32)
+        # self.excel = ExcelHandler()
+        # self.word = WordHandler()
+        # self.powerpoint = PowerPointHandler()
         
         # System tools
         self.winget = WingetManager()
-        self.powershell = PowerShellManager()
+        # self.powershell = PowerShellManager()
         self.process_mgr = ProcessManager()
         self.network = NetworkManager()
         
         # Security & Observability
-        self.guardrails = GuardrailsEngine()
-        self.hitl = HITLManager()
-        self.screenshot = ScreenshotManager()
+        # self.guardrails = GuardrailsEngine()
+        # self.hitl = HITLManager()
+        # self.screenshot = ScreenshotManager()
         
         # Evolution engine
         self.config_mgr = ConfigManager()

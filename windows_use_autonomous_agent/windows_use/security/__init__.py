@@ -48,6 +48,22 @@ try:
         HITLResult,
         ApprovalRequest,
         ApprovalStatus,
+    )
+    from .api_security import (
+        APIProvider,
+        APIKeyInfo,
+        APIKeyValidator,
+        APIKeyEncryption,
+        APIKeyManager,
+        api_key_manager,
+    )
+    from .input_validation import (
+        ValidationLevel,
+        InputType,
+        ValidationResult,
+        InputSanitizer,
+        InputValidator,
+        input_validator,
         ConfirmationType
     )
     
@@ -351,7 +367,21 @@ __all__ = [
     "VoiceProfile",
     "UserPermissions",
     "AuthSession",
-    "VoiceAuthConfig"
+    "VoiceAuthConfig",
+    # API Security
+    "APIProvider",
+    "APIKeyInfo",
+    "APIKeyValidator",
+    "APIKeyEncryption",
+    "APIKeyManager",
+    "api_key_manager",
+    # Input Validation
+    "ValidationLevel",
+    "InputType",
+    "ValidationResult",
+    "InputSanitizer",
+    "InputValidator",
+    "input_validator"
 ]
 
 # Package metadata

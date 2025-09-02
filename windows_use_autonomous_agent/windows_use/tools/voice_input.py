@@ -67,19 +67,29 @@ class VoiceInput:
     def _setup_components(self):
         """Setup Whisper dan VAD components"""
         try:
-            # Load Whisper model
-            logging.info(f"Loading Whisper model: {self.model_name}")
-            self.whisper_model = whisper.load_model(self.model_name)
+            # Check if whisper is available
+            if 'whisper' in globals():
+                # Load Whisper model
+                logging.info(f"Loading Whisper model: {self.model_name}")
+                self.whisper_model = whisper.load_model(self.model_name)
+            else:
+                logging.warning("Whisper not available, voice recognition disabled")
+                self.whisper_model = None
             
             # Setup VAD
-            self.vad = webrtcvad.Vad()
-            self.vad.set_mode(2)  # Aggressiveness mode
+            if 'webrtcvad' in globals():
+                self.vad = webrtcvad.Vad()
+                self.vad.set_mode(2)  # Aggressiveness mode
+            else:
+                logging.warning("WebRTC VAD not available, voice activity detection disabled")
+                self.vad = None
             
             logging.info("Voice components initialized successfully")
             
         except Exception as e:
             logging.error(f"Failed to setup voice components: {e}")
-            raise
+            self.whisper_model = None
+            self.vad = None
     
     def start_listening(self, mode: str = "vad") -> None:
         """Start listening untuk voice input

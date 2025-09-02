@@ -6,6 +6,7 @@ integrating STT, TTS, and voice activity detection.
 
 import asyncio
 import logging
+import os
 import threading
 import time
 from dataclasses import dataclass, field
@@ -14,6 +15,15 @@ from typing import Dict, List, Optional, Any, Callable, Union, Tuple
 
 import numpy as np
 from pydantic import BaseModel
+
+from ..utils.error_handling import (
+    dependency_manager,
+    require_dependency,
+    safe_import,
+    handle_errors,
+    ErrorContext,
+    DependencyError
+)
 
 logger = logging.getLogger(__name__)
 
@@ -171,31 +181,40 @@ class VoiceInterface:
     
     async def _initialize_audio(self):
         """Initialize audio recording and playback"""
-        try:
-            import pyaudio
+        with ErrorContext("audio initialization", ImportError, fallback=None) as ctx:
+            # Try PyAudio first
+            if dependency_manager.check_dependency('pyaudio'):
+                pyaudio = dependency_manager.get_module('pyaudio')
+                self.audio = pyaudio.PyAudio()
+                self.audio_backend = 'pyaudio'
+                
+                # Find suitable audio devices
+                self.input_device = self._find_input_device()
+                self.output_device = self._find_output_device()
+                
+                logger.info(f"PyAudio initialized - Input: {self.input_device}, Output: {self.output_device}")
+                return
             
-            self.audio = pyaudio.PyAudio()
+            # Fallback to sounddevice
+            if dependency_manager.check_dependency('sounddevice'):
+                await self._initialize_alternative_audio()
+                return
             
-            # Find suitable audio devices
-            self.input_device = self._find_input_device()
-            self.output_device = self._find_output_device()
-            
-            logger.info(f"Audio initialized - Input: {self.input_device}, Output: {self.output_device}")
-            
-        except ImportError:
-            logger.warning("PyAudio not available, using alternative audio backend")
-            # Fallback to alternative audio backend
-            await self._initialize_alternative_audio()
+            # No audio backend available
+            raise DependencyError(
+                "No audio backend available. Install pyaudio or sounddevice: "
+                "pip install pyaudio sounddevice"
+            )
     
     async def _initialize_alternative_audio(self):
         """Initialize alternative audio backend"""
-        try:
-            import sounddevice as sd
+        if dependency_manager.check_dependency('sounddevice'):
             self.audio_backend = 'sounddevice'
             logger.info("Using sounddevice as audio backend")
-        except ImportError:
-            logger.error("No suitable audio backend available")
-            raise RuntimeError("No audio backend available")
+        else:
+            raise DependencyError(
+                "Sounddevice not available. Install with: pip install sounddevice"
+            )
     
     async def _initialize_stt(self):
         """Initialize Speech-to-Text engine"""
@@ -208,44 +227,51 @@ class VoiceInterface:
     
     async def _initialize_whisper(self):
         """Initialize Whisper STT engine"""
-        try:
-            import whisper
+        if not dependency_manager.check_dependency('whisper', 'openai-whisper'):
+            raise DependencyError(
+                "Whisper not available. Install with: pip install openai-whisper"
+            )
+        
+        with ErrorContext("Whisper model loading") as ctx:
+            whisper = dependency_manager.get_module('whisper')
             
             # Load Whisper model
             model_size = "base"  # Can be configured
             self.whisper_model = whisper.load_model(model_size)
             
             logger.info(f"Whisper model '{model_size}' loaded")
-            
-        except ImportError:
-            logger.error("Whisper not available")
-            raise
-        except Exception as e:
-            logger.error(f"Failed to load Whisper model: {e}")
-            raise
+        
+        if ctx.error:
+            raise DependencyError(f"Failed to load Whisper model: {ctx.error}")
     
     async def _initialize_vosk(self):
         """Initialize Vosk STT engine"""
-        try:
-            import vosk
-            import json
+        if not dependency_manager.check_dependency('vosk'):
+            raise DependencyError(
+                "Vosk not available. Install with: pip install vosk"
+            )
+        
+        with ErrorContext("Vosk model loading") as ctx:
+            vosk = dependency_manager.get_module('vosk')
             
             # Load Vosk model (path should be configured)
             model_path = "models/vosk-model-small-id-0.22"  # Indonesian model
             if not os.path.exists(model_path):
                 model_path = "models/vosk-model-small-en-us-0.15"  # English fallback
             
+            if not os.path.exists(model_path):
+                raise DependencyError(
+                    f"Vosk model not found at {model_path}. "
+                    "Download models from https://alphacephei.com/vosk/models"
+                )
+            
             self.vosk_model = vosk.Model(model_path)
             self.vosk_recognizer = vosk.KaldiRecognizer(self.vosk_model, self.config.sample_rate)
             
             logger.info(f"Vosk model loaded from {model_path}")
-            
-        except ImportError:
-            logger.error("Vosk not available")
-            raise
-        except Exception as e:
-            logger.error(f"Failed to load Vosk model: {e}")
-            raise
+        
+        if ctx.error:
+            raise DependencyError(f"Failed to load Vosk model: {ctx.error}")
     
     async def _initialize_system_stt(self):
         """Initialize system STT engine"""

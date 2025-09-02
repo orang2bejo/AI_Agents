@@ -31,6 +31,10 @@ from typing import Dict, Any, Optional
 
 # Add current directory to path
 sys.path.append(str(Path(__file__).parent))
+sys.path.append(str(Path(__file__).parent.parent))
+
+# Import logging utilities
+from windows_use.utils import setup_logging, get_logger, logging_manager
 
 # Import all Jarvis AI modules
 from windows_use.jarvis_ai import (
@@ -123,19 +127,38 @@ class JarvisAIMain:
         }
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""
-        log_level = getattr(logging, self.config.get('log_level', 'INFO').upper())
-        
-        logging.basicConfig(
-            level=log_level,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.StreamHandler(sys.stdout),
-                logging.FileHandler('jarvis_ai.log')
-            ]
-        )
-        
-        return logging.getLogger('JarvisAI')
+        """Setup comprehensive logging configuration"""
+        try:
+            # Get log level from config
+            log_level = self.config.get('log_level', 'INFO').upper()
+            
+            # Setup logging using our comprehensive logging system
+            config_path = Path(__file__).parent.parent / 'config' / 'logging.yaml'
+            if config_path.exists():
+                setup_logging(config_file=str(config_path), log_level=log_level)
+            else:
+                # Fallback to programmatic setup
+                setup_logging(log_level=log_level, enable_file_logging=True)
+            
+            # Get logger for this module
+            logger = get_logger('JarvisAI')
+            logger.info(f"Logging system initialized with level: {log_level}")
+            
+            return logger
+            
+        except Exception as e:
+            # Fallback to basic logging if our system fails
+            logging.basicConfig(
+                level=getattr(logging, self.config.get('log_level', 'INFO').upper()),
+                format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                handlers=[
+                    logging.StreamHandler(sys.stdout),
+                    logging.FileHandler('logs/jarvis_ai_fallback.log')
+                ]
+            )
+            logger = logging.getLogger('JarvisAI')
+            logger.warning(f"Failed to setup comprehensive logging, using fallback: {e}")
+            return logger
     
     async def initialize(self):
         """Initialize all system components"""
