@@ -12,13 +12,15 @@ echo Installation started at %date% %time% > "%LOG_FILE%"
 
 :: Function to log errors
 :log_error
-echo [ERROR] %~1 | tee -a "%LOG_FILE%"
+echo [ERROR] %~1
+echo [ERROR] %~1 >> "%LOG_FILE%"
 set /a INSTALL_ERRORS+=1
 goto :eof
 
 :: Function to log info
 :log_info
-echo [INFO] %~1 | tee -a "%LOG_FILE%"
+echo [INFO] %~1
+echo [INFO] %~1 >> "%LOG_FILE%"
 goto :eof
 
 :: Check if Python is installed
