@@ -37,7 +37,65 @@
     "audio_channels": 1,
     "voice_activity_detection": true,
     "noise_reduction": true,
-    "echo_cancellation": true
+    "echo_cancellation": true,
+    "evi_enabled": false,
+    "evi_api_key": "",
+    "evi_voice_id": "default",
+    "evi_empathy_level": 0.7
+  },
+  "evi": {
+    "enabled": false,
+    "api_key": "",
+    "base_url": "https://api.hume.ai",
+    "voice_settings": {
+      "voice_id": "default",
+      "speed": 1.0,
+      "pitch": 1.0,
+      "volume": 1.0,
+      "empathy_level": 0.7,
+      "emotional_range": 0.8
+    },
+    "audio_settings": {
+      "sample_rate": 16000,
+      "channels": 1,
+      "format": "wav",
+      "chunk_size": 1024,
+      "buffer_size": 4096
+    },
+    "conversation_settings": {
+      "max_turn_duration": 30.0,
+      "silence_timeout": 3.0,
+      "interruption_sensitivity": 0.5,
+      "context_retention": true,
+      "emotion_tracking": true
+    },
+    "emotional_intelligence": {
+      "emotion_detection": true,
+      "emotion_response": true,
+      "empathy_adjustment": true,
+      "mood_tracking": true,
+      "emotional_memory": true,
+      "supported_emotions": [
+        "joy", "sadness", "anger", "fear", "surprise", "disgust",
+        "excitement", "contentment", "frustration", "anxiety",
+        "confidence", "confusion", "curiosity", "boredom"
+      ]
+    },
+    "performance": {
+      "timeout_seconds": 30,
+      "retry_attempts": 3,
+      "connection_pool_size": 5,
+      "max_concurrent_conversations": 3,
+      "rate_limit_per_minute": 100,
+      "cache_responses": false
+    },
+    "security": {
+      "validate_ssl": true,
+      "api_key_rotation": false,
+      "encrypt_audio": true,
+      "log_conversations": false,
+      "data_retention_hours": 24
+    }
   },
   "conversation": {
     "max_history_length": 100,

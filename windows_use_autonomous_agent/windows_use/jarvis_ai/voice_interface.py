@@ -25,6 +25,16 @@ from ..utils.error_handling import (
     DependencyError
 )
 
+# EVI Integration
+try:
+    from ..evi import EVIHandler, EVIConfig, ConversationState
+    EVI_AVAILABLE = True
+except ImportError:
+    EVI_AVAILABLE = False
+    EVIHandler = None
+    EVIConfig = None
+    ConversationState = None
+
 logger = logging.getLogger(__name__)
 
 class VoiceState(Enum):
@@ -48,12 +58,14 @@ class TTSEngine(Enum):
     PIPER = "piper"
     PYTTSX3 = "pyttsx3"
     SYSTEM = "system"
+    EVI = "evi"  # Hume AI EVI
 
 class STTEngine(Enum):
     """Speech-to-Text engines"""
     WHISPER = "whisper"
     VOSK = "vosk"
     SYSTEM = "system"
+    EVI = "evi"  # Hume AI EVI
 
 class Language(Enum):
     """Supported languages"""
@@ -87,6 +99,12 @@ class VoiceConfig(BaseModel):
     input_mode: InputMode = InputMode.VOICE_ACTIVATION
     stt_engine: STTEngine = STTEngine.WHISPER
     push_to_talk_key: str = "ctrl+space"
+    
+    # EVI settings
+    evi_enabled: bool = False
+    evi_api_key: str = ""
+    evi_voice_id: str = "default"
+    evi_empathy_level: str = "medium"
     
     # Output settings
     tts_engine: TTSEngine = TTSEngine.PIPER
@@ -129,6 +147,11 @@ class VoiceInterface:
         self.stt_engine = None
         self.tts_engine = None
         
+        # EVI integration
+        self.evi_handler = None
+        self.evi_config = None
+        self.evi_conversation_id = None
+        
         # Threading and async
         self.audio_thread = None
         self.processing_thread = None
@@ -165,6 +188,10 @@ class VoiceInterface:
             
             # Initialize TTS engine
             await self._initialize_tts()
+            
+            # Initialize EVI if enabled
+            if self.config.evi_enabled and EVI_AVAILABLE:
+                await self._initialize_evi()
             
             # Initialize VAD if enabled
             if self.config.vad_enabled:
@@ -628,7 +655,15 @@ class VoiceInterface:
     
     def _perform_stt(self, audio_data: np.ndarray) -> Tuple[str, float, Language]:
         """Perform speech-to-text conversion"""
-        if self.config.stt_engine == STTEngine.WHISPER:
+        if self.config.stt_engine == STTEngine.EVI:
+            # Convert numpy array to bytes for EVI
+            audio_bytes = audio_data.tobytes()
+            result = asyncio.run(self._evi_stt(audio_bytes))
+            if result and result != "[EVI_PROCESSING]":
+                return result, 1.0, self.config.default_language
+            else:
+                return "", 0.0, self.config.default_language
+        elif self.config.stt_engine == STTEngine.WHISPER:
             return self._whisper_stt(audio_data)
         elif self.config.stt_engine == STTEngine.VOSK:
             return self._vosk_stt(audio_data)
@@ -731,7 +766,9 @@ class VoiceInterface:
         try:
             start_time = time.time()
             
-            if self.config.tts_engine == TTSEngine.PIPER:
+            if self.config.tts_engine == TTSEngine.EVI:
+                audio_file = await self._evi_tts(text, language)
+            elif self.config.tts_engine == TTSEngine.PIPER:
                 audio_file = await self._piper_tts(text, language)
             elif self.config.tts_engine == TTSEngine.PYTTSX3:
                 audio_file = await self._pyttsx3_tts(text, language)
@@ -799,6 +836,153 @@ class VoiceInterface:
             logger.error(f"pyttsx3 TTS error: {e}")
             return None
     
+    async def _initialize_evi(self):
+        """Initialize Hume AI EVI integration"""
+        try:
+            if not EVI_AVAILABLE:
+                logger.warning("EVI not available, skipping initialization")
+                return
+            
+            if not self.config.evi_api_key:
+                logger.warning("EVI API key not provided, skipping initialization")
+                return
+            
+            # Create EVI configuration
+            self.evi_config = EVIConfig(
+                api_key=self.config.evi_api_key,
+                voice_id=self.config.evi_voice_id,
+                empathy_level=self.config.evi_empathy_level,
+                sample_rate=self.config.sample_rate,
+                channels=self.config.channels
+            )
+            
+            # Create EVI handler
+            self.evi_handler = EVIHandler(self.evi_config)
+            
+            # Set EVI callbacks
+            self.evi_handler.set_callbacks(
+                on_response=self._handle_evi_response,
+                on_audio_response=self._handle_evi_audio,
+                on_emotion_detected=self._handle_evi_emotion,
+                on_error=self._handle_evi_error
+            )
+            
+            logger.info("EVI integration initialized")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize EVI: {e}")
+            raise
+    
+    def _handle_evi_response(self, text: str, metadata: Dict[str, Any]):
+        """Handle text response from EVI"""
+        try:
+            # Create voice command from EVI response
+            command = VoiceCommand(
+                text=text,
+                confidence=metadata.get('confidence', 1.0),
+                language=Language.ENGLISH,  # EVI typically responds in English
+                metadata={'source': 'evi', **metadata}
+            )
+            
+            if self.on_command_received:
+                self.on_command_received(command)
+                
+            logger.debug(f"EVI response: {text[:50]}...")
+            
+        except Exception as e:
+            logger.error(f"Error handling EVI response: {e}")
+    
+    def _handle_evi_audio(self, audio_data: bytes):
+        """Handle audio response from EVI"""
+        try:
+            # Play audio response
+            if self.audio_player:
+                self.audio_player.play_audio(audio_data)
+            
+            logger.debug(f"Received EVI audio: {len(audio_data)} bytes")
+            
+        except Exception as e:
+            logger.error(f"Error handling EVI audio: {e}")
+    
+    def _handle_evi_emotion(self, emotions: Dict[str, float]):
+        """Handle emotion detection from EVI"""
+        try:
+            logger.debug(f"EVI emotions detected: {emotions}")
+            
+            # You can add emotion-based logic here
+            # For example, adjust response style based on detected emotions
+            
+        except Exception as e:
+            logger.error(f"Error handling EVI emotions: {e}")
+    
+    def _handle_evi_error(self, error: Exception):
+        """Handle EVI errors"""
+        logger.error(f"EVI error: {error}")
+        if self.on_error:
+            self.on_error(error)
+    
+    async def _evi_stt(self, audio_data: bytes) -> Optional[str]:
+        """Speech-to-text using EVI"""
+        try:
+            if not self.evi_handler:
+                return None
+            
+            # Send audio to EVI and wait for response
+            success = await self.evi_handler.send_audio(audio_data)
+            if success:
+                # EVI handles the response through callbacks
+                return "[EVI_PROCESSING]"
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"EVI STT error: {e}")
+            return None
+    
+    async def _evi_tts(self, text: str, language: Language) -> Optional[str]:
+        """Text-to-speech using EVI"""
+        try:
+            if not self.evi_handler:
+                return None
+            
+            # Send text to EVI
+            success = await self.evi_handler.send_text(text)
+            if success:
+                # EVI handles the audio response through callbacks
+                return "[EVI_PROCESSING]"
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"EVI TTS error: {e}")
+            return None
+    
+    async def start_evi_conversation(self) -> bool:
+        """Start EVI conversation"""
+        try:
+            if not self.evi_handler:
+                logger.warning("EVI not initialized")
+                return False
+            
+            self.evi_conversation_id = await self.evi_handler.start_conversation()
+            logger.info(f"Started EVI conversation: {self.evi_conversation_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to start EVI conversation: {e}")
+            return False
+    
+    async def end_evi_conversation(self):
+        """End EVI conversation"""
+        try:
+            if self.evi_handler and self.evi_conversation_id:
+                await self.evi_handler.end_conversation()
+                self.evi_conversation_id = None
+                logger.info("Ended EVI conversation")
+                
+        except Exception as e:
+            logger.error(f"Error ending EVI conversation: {e}")
+    
     async def _system_tts(self, text: str, language: Language) -> Optional[str]:
         """Generate speech using system TTS"""
         try:
@@ -845,6 +1029,15 @@ class VoiceInterface:
     async def shutdown(self):
         """Shutdown voice interface"""
         await self.stop_listening()
+        
+        # End EVI conversation if active
+        if self.evi_handler and self.evi_conversation_id:
+            await self.end_evi_conversation()
+        
+        # Cleanup EVI handler
+        if self.evi_handler:
+            await self.evi_handler.cleanup()
+            self.evi_handler = None
         
         # Cleanup audio resources
         if hasattr(self, 'audio'):

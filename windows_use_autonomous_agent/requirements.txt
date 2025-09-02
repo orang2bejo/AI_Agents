@@ -50,8 +50,13 @@ termcolor>=2.3.0
 # whisper>=1.1.10
 # vosk>=0.3.45
 # pyaudio>=0.2.11
-# sounddevice>=0.4.6
+sounddevice>=0.4.6
 # pyttsx3>=2.90
+
+# Hume AI EVI integration
+websockets>=11.0.0
+aiohttp>=3.8.0
+webrtcvad>=2.0.10
 
 # Office Automation (uncomment if Office features needed)
 # pywin32>=306
