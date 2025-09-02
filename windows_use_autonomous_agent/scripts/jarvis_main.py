@@ -34,10 +34,10 @@ sys.path.append(str(Path(__file__).parent))
 sys.path.append(str(Path(__file__).parent.parent))
 
 # Import logging utilities
-from windows_use.utils import setup_logging, get_logger, LoggingManager
+from src.windows_use.utils import setup_logging, get_logger, LoggingManager
 
 # Import all Jarvis AI modules
-from windows_use.jarvis_ai import (
+from src.windows_use.jarvis_ai import (
     JarvisPersonality, PersonalityTrait, ResponseTone,
     ConversationManager, MessageType, Language,
     LanguageManager,
@@ -46,8 +46,8 @@ from windows_use.jarvis_ai import (
     LearningEngine,
     JarvisDashboard, DashboardTheme
 )
-from windows_use.jarvis_ai.dashboard_launcher import DashboardLauncher
-from windows_use.jarvis_ai.personality import PersonalityConfig
+from src.windows_use.jarvis_ai.dashboard_launcher import DashboardLauncher
+from src.windows_use.jarvis_ai.personality import PersonalityConfig
 
 # Import other modules
 # Note: These modules are integrated into jarvis_ai package
@@ -58,7 +58,7 @@ from windows_use.jarvis_ai.personality import PersonalityConfig
 # from self_evolving_agent import SelfEvolvingAgent
 # from multi_provider_llm import LLMRouter
 # from guardrails import GuardrailsManager
-from windows_use.web import SearchEngine, WebScraper
+from src.windows_use.web import SearchEngine, WebScraper
 
 class JarvisAIMain:
     """Main Jarvis AI System Controller"""
