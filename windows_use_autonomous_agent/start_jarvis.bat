@@ -45,10 +45,6 @@ if exist "scripts\jarvis_main.py" (
     echo [INFO] Memulai Jarvis AI...
     echo.
     python scripts\jarvis_main.py
-) else if exist "scripts\main.py" (
-    echo [INFO] Memulai Jarvis AI...
-    echo.
-    python scripts\main.py
 ) else (
     echo [ERROR] Script utama tidak ditemukan!
     echo Mencari file Python yang tersedia...

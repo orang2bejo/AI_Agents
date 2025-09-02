@@ -43,14 +43,13 @@ Berisi semua dokumentasi proyek:
 - `SECURITY_EVOLUTION.md` - Dokumentasi keamanan dan evolusi
 
 ### 📁 examples/
-Berisi contoh penggunaan:
+Berisi contoh penggunaan dan demo script:
 - `complete_demo.py` - Demo lengkap fitur
 - `llm_demo.py` - Demo LLM integration
 
 ### 📁 scripts/
 Berisi script utama untuk menjalankan sistem:
 - `jarvis_main.py` - Script utama Jarvis AI
-- `main.py` - Script utama sistem
 
 ### 📁 tests/
 Berisi file testing:
@@ -193,8 +192,7 @@ Manifest file untuk packaging.
    # Menjalankan tanpa voice
    python scripts/jarvis_main.py --no-voice
    
-   # Menjalankan sistem utama
-   python scripts/main.py
+
    ```
 
 4. **Testing:**

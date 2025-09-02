@@ -27,7 +27,7 @@ python scripts/jarvis_main.py
 ├── 📂 config/          # Configuration files (.env, configs)
 ├── 📂 data/            # Data storage & logs
 ├── 📂 docs/            # 📚 Complete Documentation
-├── 📂 examples/        # Demo scripts & examples
+├── 📂 windows_use/examples/  # Demo scripts & examples
 ├── 📂 scripts/         # Main execution scripts
 ├── 📂 tests/           # Test suites
 ├── 📂 windows_use/     # 🧠 Core AI modules

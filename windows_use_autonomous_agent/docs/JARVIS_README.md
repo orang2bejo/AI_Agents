@@ -88,7 +88,7 @@ Jarvis AI is a comprehensive artificial intelligence system inspired by the fict
 
 3. **Run the demo**:
    ```bash
-   python examples/jarvis_demo.py
+   python windows_use/examples/jarvis_demo.py
    ```
 
 ---
@@ -438,7 +438,7 @@ For support, questions, or feature requests:
 - **Issues**: Create an issue on GitHub
 - **Discussions**: Use GitHub Discussions
 - **Documentation**: Check the wiki pages
-- **Examples**: See the `examples/` directory
+- **Examples**: See the `windows_use/examples/` directory
 
 ---
 
