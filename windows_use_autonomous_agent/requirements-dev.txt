@@ -61,15 +61,39 @@ types-PyYAML>=6.0.12
 watchdog>=3.0.0
 rich>=13.4.0
 click>=8.1.0
+tqdm>=4.65.0
+colorama>=0.4.6
+loguru>=0.7.0
 
-# API Development
+# API Development (for testing web features)
 fastapi>=0.100.0
 uvicorn>=0.23.0
 
-# Database Development
+# Database Development (for testing database features)
 sqlalchemy>=2.0.0
 alembic>=1.11.0
 
 # Async Development
 aiohttp>=3.8.0
 aiofiles>=23.1.0
+
+# Additional Development Dependencies
+# Moved from main requirements.txt:
+pyyaml>=6.0.0
+html2text>=2020.1.16
+python-multipart>=0.0.6
+
+# Optional LLM Providers for Development/Testing
+openai>=1.0.0
+
+# Browser automation for testing
+selenium>=4.15.0
+playwright>=1.40.0
+
+# Advanced ML for development
+torch>=2.1.0
+tensorflow>=2.15.0
+transformers>=4.36.0
+
+# Additional utilities for development
+pandas>=2.0.0

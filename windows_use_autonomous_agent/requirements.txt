@@ -11,6 +11,7 @@ scikit-learn>=1.3.0
 requests>=2.31.0
 beautifulsoup4>=4.12.0
 readability-lxml>=0.8.1
+aiohttp>=3.8.0
 
 # UI Automation & Desktop (Used)
 uiautomation>=2.0.0
@@ -34,29 +35,17 @@ matplotlib>=3.7.0
 # Utilities (Used)
 termcolor>=2.3.0
 
-# Removed unused dependencies:
-# - fastapi, uvicorn (web framework not used in current implementation)
-# - python-multipart, python-dotenv (not imported anywhere)
-# - langchain-google-genai, openai (specific LLM providers not directly imported)
-# - pandas (not used in current codebase)
-# - aiohttp (not used in current implementation)
-# - html2text (not imported)
-# - pyyaml (not imported)
-# - colorama, click, tqdm, rich, loguru (utility libraries not imported)
-# - pytest, pytest-asyncio, black, flake8 (development tools, should be in requirements-dev.txt)
+# Voice Processing (Used)
+sounddevice>=0.4.6
+websockets>=11.0.0
+webrtcvad>=2.0.10
 
-# Optional Dependencies (commented out - install only if needed)
-# Voice Processing (uncomment if voice features needed)
+# Optional Dependencies (install only if needed)
+# Voice Recognition (uncomment if voice features needed)
 # whisper>=1.1.10
 # vosk>=0.3.45
 # pyaudio>=0.2.11
-sounddevice>=0.4.6
 # pyttsx3>=2.90
-
-# Hume AI EVI integration
-websockets>=11.0.0
-aiohttp>=3.8.0
-webrtcvad>=2.0.10
 
 # Office Automation (uncomment if Office features needed)
 # pywin32>=306
@@ -77,6 +66,7 @@ webrtcvad>=2.0.10
 # google-generativeai>=0.3.0
 # anthropic>=0.7.0
 # groq>=0.4.0
+# openai>=1.0.0
 
 # Database (uncomment if needed)
 # sqlalchemy>=2.0.23
@@ -92,3 +82,15 @@ webrtcvad>=2.0.10
 # prometheus-client>=0.19.0
 # watchdog>=3.0.0
 # gputil>=1.4.0
+
+# Removed unused dependencies:
+# - python-dotenv (not imported anywhere)
+# - pandas (not used in current codebase)
+# - html2text (not actively used)
+# - pyyaml (not imported)
+# - colorama, click, tqdm, rich, loguru (utility libraries not imported)
+# - fastapi, uvicorn (web framework not used in current implementation)
+# - python-multipart (not imported anywhere)
+# - langchain-google-genai (specific LLM providers not directly imported)
+# Development tools moved to requirements-dev.txt:
+# - pytest, pytest-asyncio, black, flake8, mypy, etc.

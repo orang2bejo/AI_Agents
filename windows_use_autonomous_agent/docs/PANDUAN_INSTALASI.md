@@ -283,21 +283,35 @@ cd jarvis-ai
 
 ### Langkah 4: Install Dependencies
 
-1. **Install core dependencies:**
+1. **Install core dependencies (WAJIB):**
    ```cmd
    pip install -r requirements.txt
    ```
+   
+   **Dependencies yang terinstall:**
+   - AI & LLM: `langchain`, `pydantic`
+   - Data Processing: `numpy`, `scikit-learn`
+   - Web & HTTP: `requests`, `beautifulsoup4`, `aiohttp`
+   - Desktop Automation: `uiautomation`, `pyautogui`, `humancursor`
+   - Voice Processing: `sounddevice`, `websockets`, `webrtcvad`
+   - System: `psutil`, `termcolor`
 
-2. **Install optional dependencies:**
+2. **Install development dependencies (OPSIONAL):**
    ```cmd
-   # Untuk voice recognition
-   pip install speechrecognition pyaudio
+   pip install -r requirements-dev.txt
+   ```
    
-   # Untuk Office automation
-   pip install pywin32
-   
-   # Untuk web scraping
-   pip install selenium beautifulsoup4
+   **Dependencies yang terinstall:**
+   - Testing: `pytest`, `pytest-cov`, `pytest-asyncio`
+   - Code Quality: `black`, `flake8`, `mypy`, `pylint`
+   - Documentation: `sphinx`, `mkdocs`
+   - Optional Features: `openai`, `selenium`, `torch`, `pandas`
+
+3. **Verifikasi instalasi:**
+   ```cmd
+   pip list | findstr langchain
+   pip list | findstr numpy
+   pip list | findstr requests
    ```
 
 3. **Install development tools (opsional):**

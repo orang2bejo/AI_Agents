@@ -632,7 +632,7 @@ class JarvisAIMain:
             self.dashboard_launcher.shutdown()
         
         if self.dashboard:
-            self.dashboard.destroy()
+            self.dashboard.shutdown()
         
         # Save personality state
         if self.personality:

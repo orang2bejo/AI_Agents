@@ -39,29 +39,34 @@ Jarvis AI is a comprehensive artificial intelligence system inspired by the fict
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd advanced_ai_agents/windows_use_autonomous_agent/windows_use
+   cd advanced_ai_agents/windows_use_autonomous_agent
    ```
 
-2. **Install dependencies**:
+2. **Install core dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
+   
+   **Core packages installed:**
+   - AI & LLM: `langchain`, `pydantic`
+   - Desktop Automation: `uiautomation`, `pyautogui`, `humancursor`
+   - Voice Processing: `sounddevice`, `websockets`, `webrtcvad`
+   - Web & HTTP: `requests`, `beautifulsoup4`, `aiohttp`
+   - Data Processing: `numpy`, `scikit-learn`
 
-3. **Install additional voice dependencies**:
+3. **Install development dependencies (optional)**:
    ```bash
-   # For Whisper (recommended)
-   pip install openai-whisper
-   
-   # For Vosk (alternative)
-   pip install vosk
-   
-   # For Piper TTS
-   pip install piper-tts
+   pip install -r requirements-dev.txt
    ```
+   
+   **Development packages include:**
+   - Testing: `pytest`, `pytest-cov`, `pytest-asyncio`
+   - Code Quality: `black`, `flake8`, `mypy`, `pylint`
+   - Optional Features: `openai`, `selenium`, `torch`, `pandas`
 
-4. **Install Playwright browsers** (for web automation):
+4. **Verify installation**:
    ```bash
-   playwright install
+   python -c "import langchain, numpy, requests; print('✅ Core dependencies installed')"
    ```
 
 ### Basic Usage
