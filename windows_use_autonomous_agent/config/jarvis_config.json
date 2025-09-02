@@ -38,13 +38,13 @@
     "voice_activity_detection": true,
     "noise_reduction": true,
     "echo_cancellation": true,
-    "evi_enabled": false,
-    "evi_api_key": "",
+    "evi_enabled": true,
+    "evi_api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
     "evi_voice_id": "default",
     "evi_empathy_level": 0.7
   },
   "evi": {
-    "enabled": false,
+    "enabled": true,
     "api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
     "base_url": "https://api.hume.ai",
     "voice_settings": {

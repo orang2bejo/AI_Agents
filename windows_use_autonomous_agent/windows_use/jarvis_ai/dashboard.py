@@ -914,42 +914,66 @@ class JarvisDashboard:
                 time.sleep(1.0)
     
     def _update_metrics_display(self):
-        """Update metrics chart"""
+        """Update metrics chart (thread-safe)"""
         if self.metrics_chart and self.metrics_history:
-            latest_metrics = self.metrics_history[-1]
-            self.metrics_chart.add_metrics(latest_metrics)
+            def update_ui():
+                try:
+                    latest_metrics = self.metrics_history[-1]
+                    self.metrics_chart.add_metrics(latest_metrics)
+                except Exception as e:
+                    logger.error(f"Metrics display update error: {e}")
+            
+            # Schedule UI update in main thread
+            if self.root:
+                self.root.after(0, update_ui)
     
     def _update_status_indicators(self):
-        """Update status indicator colors"""
-        # This would be updated based on actual system status
-        for key, indicator in self.status_indicators.items():
-            # Placeholder logic
-            if self.system_status == SystemStatus.ONLINE:
-                color = self.colors['success']
-            elif self.system_status == SystemStatus.ERROR:
-                color = self.colors['error']
-            else:
-                color = self.colors['warning']
-            
-            indicator.configure(foreground=color)
+        """Update status indicator colors (thread-safe)"""
+        def update_ui():
+            try:
+                # This would be updated based on actual system status
+                for key, indicator in self.status_indicators.items():
+                    # Placeholder logic
+                    if self.system_status == SystemStatus.ONLINE:
+                        color = self.colors['success']
+                    elif self.system_status == SystemStatus.ERROR:
+                        color = self.colors['error']
+                    else:
+                        color = self.colors['warning']
+                    
+                    indicator.configure(foreground=color)
+            except Exception as e:
+                logger.error(f"Status indicators update error: {e}")
+        
+        # Schedule UI update in main thread
+        if self.root:
+            self.root.after(0, update_ui)
     
     def _update_summary_stats(self):
-        """Update summary statistics"""
+        """Update summary statistics (thread-safe)"""
         if self.metrics_history:
-            latest = self.metrics_history[-1]
+            def update_ui():
+                try:
+                    latest = self.metrics_history[-1]
+                    
+                    # Update stat labels if they exist
+                    if hasattr(self, 'stat_memory_usage'):
+                        self.stat_memory_usage.configure(text=f"{latest.memory_usage:.1f}%")
+                    
+                    if hasattr(self, 'stat_cpu_usage'):
+                        self.stat_cpu_usage.configure(text=f"{latest.cpu_usage:.1f}%")
+                    
+                    if hasattr(self, 'stat_commands_processed'):
+                        self.stat_commands_processed.configure(text=str(latest.voice_commands))
+                    
+                    if hasattr(self, 'stat_avg_response_time'):
+                        self.stat_avg_response_time.configure(text=f"{latest.response_time*1000:.0f}ms")
+                except Exception as e:
+                    logger.error(f"Summary stats update error: {e}")
             
-            # Update stat labels if they exist
-            if hasattr(self, 'stat_memory_usage'):
-                self.stat_memory_usage.configure(text=f"{latest.memory_usage:.1f}%")
-            
-            if hasattr(self, 'stat_cpu_usage'):
-                self.stat_cpu_usage.configure(text=f"{latest.cpu_usage:.1f}%")
-            
-            if hasattr(self, 'stat_commands_processed'):
-                self.stat_commands_processed.configure(text=str(latest.voice_commands))
-            
-            if hasattr(self, 'stat_avg_response_time'):
-                self.stat_avg_response_time.configure(text=f"{latest.response_time*1000:.0f}ms")
+            # Schedule UI update in main thread
+            if self.root:
+                self.root.after(0, update_ui)
     
     def add_metrics(self, metrics: DashboardMetrics):
         """Add new metrics data"""

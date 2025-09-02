@@ -134,8 +134,21 @@ class VoiceConfig(BaseModel):
 class VoiceInterface:
     """Main voice interface for Jarvis AI"""
     
-    def __init__(self, config: VoiceConfig = None):
+    def __init__(self, config: VoiceConfig = None, jarvis_config: dict = None):
         self.config = config or VoiceConfig()
+        self.jarvis_config = jarvis_config or {}
+        
+        # Update config from jarvis_config if provided
+        if jarvis_config:
+            voice_config = jarvis_config.get('voice', {})
+            evi_config = jarvis_config.get('evi', {})
+            
+            # Update voice settings
+            self.config.evi_enabled = voice_config.get('evi_enabled', False) or evi_config.get('enabled', False)
+            self.config.evi_api_key = voice_config.get('evi_api_key', '') or evi_config.get('api_key', '')
+            self.config.evi_voice_id = voice_config.get('evi_voice_id', 'default')
+            self.config.evi_empathy_level = voice_config.get('evi_empathy_level', 'medium')
+            
         self.state = VoiceState.IDLE
         
         # Audio components

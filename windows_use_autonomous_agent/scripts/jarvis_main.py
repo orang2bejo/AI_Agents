@@ -46,6 +46,8 @@ from windows_use.jarvis_ai import (
     LearningEngine,
     JarvisDashboard, DashboardTheme
 )
+from windows_use.jarvis_ai.dashboard_launcher import DashboardLauncher
+from windows_use.jarvis_ai.personality import PersonalityConfig
 
 # Import other modules
 # Note: These modules are integrated into jarvis_ai package
@@ -62,7 +64,19 @@ class JarvisAIMain:
     """Main Jarvis AI System Controller"""
     
     def __init__(self, config: Dict[str, Any] = None):
-        self.config = config or self._load_default_config()
+        # Load configuration from file first
+        self.config = self._load_jarvis_config()
+        
+        # Merge with default configuration
+        default_config = self._load_default_config()
+        for key, value in default_config.items():
+            if key not in self.config:
+                self.config[key] = value
+        
+        # Override with provided config
+        if config:
+            self.config.update(config)
+            
         self.logger = self._setup_logging()
         
         # Core AI components
@@ -73,6 +87,7 @@ class JarvisAIMain:
         self.task_coordinator = None
         self.learning_engine = None
         self.dashboard = None
+        self.dashboard_launcher = None
         
         # Extended functionality
         self.voice_input = None
@@ -93,6 +108,23 @@ class JarvisAIMain:
         self.shutdown_event = threading.Event()
         
         self.logger.info("Jarvis AI Main Controller initialized")
+    
+    def _load_jarvis_config(self) -> Dict[str, Any]:
+        """Load configuration from jarvis_config.json file"""
+        config_path = Path(__file__).parent.parent / 'config' / 'jarvis_config.json'
+        
+        if config_path.exists():
+            try:
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                    self.logger.info(f"Loaded configuration from {config_path}")
+                    return config
+            except Exception as e:
+                print(f"Error loading jarvis_config.json: {e}")
+                return {}
+        else:
+            print(f"Configuration file not found: {config_path}")
+            return {}
     
     def _load_default_config(self) -> Dict[str, Any]:
         """Load default configuration"""
@@ -182,8 +214,13 @@ class JarvisAIMain:
     
     async def _initialize_core_components(self):
         """Initialize core AI components"""
-        # Personality
-        self.personality = JarvisPersonality()
+        self.logger.info("Initializing core components...")
+        
+        # Initialize personality engine
+        self.logger.info("Initializing personality engine...")
+        personality_config = PersonalityConfig()
+        self.personality = JarvisPersonality(personality_config)
+        self.logger.info("Personality engine initialized")
         
         # Conversation management
         self.conversation = ConversationManager()
@@ -193,8 +230,10 @@ class JarvisAIMain:
         
         # Voice interface
         if self.config.get('voice_enabled', True):
-            self.voice_interface = VoiceInterface()
-            await asyncio.to_thread(self.voice_interface.initialize)
+            self.logger.info("Initializing voice interface...")
+            self.voice_interface = VoiceInterface(jarvis_config=self.config)
+            await self.voice_interface.initialize()
+            self.logger.info("Voice interface initialized")
         
         # Task coordination
         self.task_coordinator = TaskCoordinator()
@@ -205,13 +244,17 @@ class JarvisAIMain:
             self.learning_engine = LearningEngine()
             self.learning_engine.start()
         
-        # Dashboard
+        # Dashboard launcher
         if self.config.get('gui_enabled', True):
+            self.logger.info("Initializing dashboard launcher...")
             try:
-                self.dashboard = JarvisDashboard()
-                self.dashboard.apply_theme(DashboardTheme.DARK)
+                self.dashboard_launcher = DashboardLauncher(self.config)
+                # Launch dashboard (will show feature selection on first run)
+                await self.dashboard_launcher.launch()
+                self.dashboard = self.dashboard_launcher.dashboard
+                self.logger.info("Dashboard launcher initialized")
             except Exception as e:
-                self.logger.warning(f"Could not initialize dashboard: {e}")
+                self.logger.warning(f"Dashboard launcher initialization failed: {e}")
                 self.dashboard = None
     
     async def _initialize_extended_components(self):
@@ -269,11 +312,9 @@ class JarvisAIMain:
             
             # Start dashboard if available
             if self.dashboard:
-                dashboard_thread = threading.Thread(
-                    target=self._run_dashboard,
-                    daemon=True
-                )
-                dashboard_thread.start()
+                # Start dashboard updates in background thread
+                self.dashboard.start_updates()
+                # Dashboard GUI will be handled separately
             
             self.is_running = True
             
@@ -301,12 +342,20 @@ class JarvisAIMain:
             raise
     
     def _run_dashboard(self):
-        """Run dashboard in separate thread"""
+        """Run dashboard in main thread (thread-safe)"""
         try:
             if self.dashboard:
                 self.dashboard.run()
         except Exception as e:
             self.logger.error(f"Dashboard error: {e}")
+    
+    def show_dashboard(self):
+        """Show dashboard GUI in main thread"""
+        if self.dashboard:
+            # This should be called from main thread
+            self.dashboard.root.deiconify()  # Show window if hidden
+            self.dashboard.root.lift()       # Bring to front
+            self.dashboard.root.focus_force() # Give focus
     
     async def process_input(self, user_input: str, language: Language = None) -> str:
         """Process user input through the complete pipeline"""
@@ -578,8 +627,21 @@ class JarvisAIMain:
         if self.voice_interface:
             await self.voice_interface.shutdown()
         
+        # Stop dashboard launcher
+        if self.dashboard_launcher:
+            self.dashboard_launcher.shutdown()
+        
         if self.dashboard:
             self.dashboard.destroy()
+        
+        # Save personality state
+        if self.personality:
+            try:
+                config_dir = Path(__file__).parent.parent / 'config'
+                personality_state_path = config_dir / 'personality_state.json'
+                self.personality.save_personality_state(str(personality_state_path))
+            except Exception as e:
+                self.logger.warning(f"Could not save personality state: {e}")
         
         # Goodbye message
         if self.personality:
