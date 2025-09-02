@@ -15,6 +15,9 @@ from enum import Enum
 from typing import Dict, List, Optional, Any, Callable, Tuple
 from datetime import datetime, timedelta
 
+# Setup logger
+logger = logging.getLogger(__name__)
+
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import matplotlib.pyplot as plt

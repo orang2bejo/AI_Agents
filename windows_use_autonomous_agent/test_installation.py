@@ -17,11 +17,11 @@ def test_imports():
     
     try:
         # Test logging utilities
-        from windows_use.utils import setup_logging, get_logger, LoggingManager
+        from src.windows_use.utils import setup_logging, get_logger, LoggingManager
         print("✓ Logging utilities imported successfully")
         
         # Test Jarvis AI modules
-        from windows_use.jarvis_ai import (
+        from src.windows_use.jarvis_ai import (
             JarvisPersonality, PersonalityTrait, ResponseTone,
             ConversationManager, MessageType, Language,
             LanguageManager,
@@ -33,7 +33,7 @@ def test_imports():
         print("✓ Jarvis AI modules imported successfully")
         
         # Test web modules
-        from windows_use.web import SearchEngine, WebScraper
+        from src.windows_use.web import SearchEngine, WebScraper
         print("✓ Web modules imported successfully")
         
         return True
@@ -49,19 +49,19 @@ def test_basic_functionality():
     
     try:
         # Test personality creation
-        from windows_use.jarvis_ai import JarvisPersonality, PersonalityTrait, ResponseTone
+        from src.windows_use.jarvis_ai import JarvisPersonality, PersonalityTrait, ResponseTone
         personality = JarvisPersonality()
         greeting = personality.generate_greeting()
         print("✓ Personality system functional")
         
         # Test conversation manager
-        from windows_use.jarvis_ai import ConversationManager, MessageType
+        from src.windows_use.jarvis_ai import ConversationManager, MessageType
         conversation = ConversationManager()
         conversation.add_user_message("Hello")
         print("✓ Conversation manager functional")
         
         # Test task coordinator
-        from windows_use.jarvis_ai import TaskCoordinator, TaskType, TaskPriority
+        from src.windows_use.jarvis_ai import TaskCoordinator, TaskType, TaskPriority
         coordinator = TaskCoordinator()
         print("✓ Task coordinator functional")
         

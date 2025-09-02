@@ -1,5 +1,5 @@
-from windows_use.agent.tools.views import Click, Type, Launch, Scroll, Drag, Move, Shortcut, Key, Wait, Scrape,Done, Clipboard, Shell
-from windows_use.desktop import Desktop
+from .views import Click, Type, Launch, Scroll, Drag, Move, Shortcut, Key, Wait, Scrape,Done, Clipboard, Shell
+from ...desktop import Desktop
 from humancursor import SystemCursor
 from markdownify import markdownify
 from langchain.tools import tool
