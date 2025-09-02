@@ -45,7 +45,7 @@
   },
   "evi": {
     "enabled": false,
-    "api_key": "",
+    "api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
     "base_url": "https://api.hume.ai",
     "voice_settings": {
       "voice_id": "default",
