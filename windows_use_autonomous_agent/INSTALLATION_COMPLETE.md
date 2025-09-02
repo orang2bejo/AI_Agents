@@ -117,17 +117,20 @@ To enable Hume AI EVI features:
 
 ## Next Steps
 
-1. **Configure API Keys**: Set up any external service API keys
-2. **Customize Personality**: Adjust personality traits and responses
-3. **Test Voice Features**: Verify microphone and speaker setup
-4. **Explore Dashboard**: Monitor system performance and metrics
+1. **Hardware Optimization**: Review [Hardware Requirements Guide](docs/HARDWARE_REQUIREMENTS.md) for performance tuning
+2. **Configure API Keys**: Set up any external service API keys
+3. **Customize Personality**: Adjust personality traits and responses
+4. **Test Voice Features**: Verify microphone and speaker setup
+5. **Explore Dashboard**: Monitor system performance and metrics
 
 ## Support
 
 For issues or questions:
-1. Check the logs in the console output
-2. Run the test script to verify installation
-3. Review configuration files for any missing settings
+1. **Hardware Check**: Run hardware diagnostics from [Hardware Requirements Guide](docs/HARDWARE_REQUIREMENTS.md)
+2. Check the logs in the console output
+3. **Performance**: Check [Performance Monitoring Guide](PERFORMANCE.md) for optimization
+4. Run the test script to verify installation
+5. Review configuration files for any missing settings
 
 ---
 

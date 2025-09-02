@@ -54,14 +54,19 @@ python scripts/jarvis_main.py
 ├── 📂 tests/           # Test suites
 ├── 📂 windows_use/     # 🧠 Core AI modules
 │   ├── 📂 agent/       # AI agent logic
-│   ├── 📂 desktop/     # Desktop automation
+│   ├── 📂 desktop/     # Desktop automation & GUI dashboard
+│   ├── 📂 evi/         # Evolution Intelligence (self-evolving engine)
+│   ├── 📂 evolution/   # Evolution engine components
 │   ├── 📂 jarvis_ai/   # Main Jarvis AI engine
 │   ├── 📂 llm/         # Language model integration
 │   ├── 📂 nlu/         # Natural language understanding
+│   ├── 📂 observability/ # Monitoring and logging
 │   ├── 📂 office/      # Office automation (Word, Excel, etc.)
-│   ├── 📂 security/    # Security & authentication
+│   ├── 📂 security/    # Security guardrails & authentication
 │   ├── 📂 tools/       # Utility tools
-│   └── 📂 web/         # Web automation & scraping
+│   ├── 📂 tree/        # Decision tree components
+│   ├── 📂 utils/       # Utility functions
+│   └── 📂 web/         # Web automation, RPA & scraping
 └── 📄 requirements.txt # Dependencies
 ```
 
@@ -70,10 +75,77 @@ python scripts/jarvis_main.py
 - 🎤 **Voice Control** - Speech-to-text & text-to-speech
 - 🖥️ **Desktop Automation** - Window management, file operations
 - 📊 **Office Integration** - Word, Excel, PowerPoint automation
-- 🌐 **Web Automation** - Browser control & web scraping
-- 🧠 **AI Agent** - Intelligent task execution
+- 🌐 **Web Automation** - Browser control & web scraping (Selenium + Playwright)
+- 🧠 **AI Agent** - Intelligent task execution with autonomous decision making
 - 🤖 **Multi-Provider LLM** - OpenAI, Anthropic, Google, OpenRouter integration
-- 🔒 **Security** - Multi-level authentication & access control
+- 🔒 **Security Guardrails** - Multi-level authentication, command validation & access control
+- 📊 **GUI Dashboard** - Real-time monitoring and configuration interface
+- 🧬 **Self-Evolving Engine** - Adaptive learning and performance optimization
+- 🤖 **Web RPA** - Robotic Process Automation for web workflows
+
+## 🔥 Advanced Features
+
+### 📊 GUI Dashboard
+- **Real-time Monitoring**: Live system status and performance metrics
+- **Configuration Interface**: Easy settings management through intuitive GUI
+- **Task Visualization**: Visual representation of running processes and queues
+- **Resource Monitoring**: CPU, memory, and GPU usage tracking
+
+### 🧬 Self-Evolving Engine
+- **Adaptive Learning**: Automatically improves performance based on usage patterns
+- **Performance Optimization**: Dynamic resource allocation and task prioritization
+- **Memory Store**: Persistent learning from user interactions and outcomes
+- **Mutation & Reflection**: Continuous improvement through self-analysis
+
+### 🤖 Web RPA (Robotic Process Automation)
+- **Browser Automation**: Selenium and Playwright integration for robust web control
+- **Form Processing**: Automated form filling and data extraction
+- **Workflow Automation**: Complex multi-step web processes
+- **Cross-browser Support**: Compatible with Chrome, Firefox, Edge, and Safari
+
+### 🔒 Security Guardrails
+- **Command Validation**: Pre-execution security checks for all operations
+- **File Path Security**: Prevents unauthorized file system access
+- **Dangerous Operation Detection**: Automatic blocking of potentially harmful commands
+- **Multi-level Security**: Four configurable security levels (LOW, MEDIUM, HIGH, CRITICAL)
+- **Domain Allowlist**: Controlled web access with whitelist management
+- **Rate Limiting**: Prevents abuse through request throttling
+- **Audit Logging**: Comprehensive security event tracking
+- **Human-in-the-Loop**: Requires approval for sensitive operations
+
+#### Security Levels
+
+| Level | Use Case | Risk | Description |
+|-------|----------|------|-------------|
+| **LOW** | Development/Testing | High | Minimal validation, most operations allowed |
+| **MEDIUM** | Standard Production | Moderate | Balanced security with functionality (Default) |
+| **HIGH** | Sensitive Environments | Low | Strict validation, confirmation required |
+| **CRITICAL** | High-Security Systems | Very Low | Maximum security, minimal automation |
+
+#### Domain Allowlist Management
+
+```python
+from windows_use.security import GuardrailsEngine, SecurityLevel
+
+# Initialize security engine
+engine = GuardrailsEngine()
+
+# Set security level
+engine.set_security_level(SecurityLevel.HIGH)
+
+# Manage domain allowlist
+engine.add_allowed_domain("trusted-site.com")
+engine.remove_allowed_domain("old-site.com")
+
+# Check domain status
+if engine.is_domain_allowed("github.com"):
+    print("Domain is allowed")
+
+# Get all allowed domains
+allowed_domains = engine.get_allowed_domains()
+```
+
+**Default Allowed Domains**: `github.com`, `stackoverflow.com`, `python.org`, `microsoft.com`, `google.com`, `openai.com`, `huggingface.co`, `pypi.org`
 
 ## 📚 Documentation
 
@@ -81,9 +153,13 @@ python scripts/jarvis_main.py
 |----------|-------------|
 | [📖 User Guide](docs/PANDUAN_PENGGUNA.md) | Complete user manual |
 | [⚙️ Installation Guide](docs/PANDUAN_INSTALASI.md) | Step-by-step installation |
+| [🖥️ Hardware Requirements](docs/HARDWARE_REQUIREMENTS.md) | System requirements and optimization |
 | [🏗️ Project Structure](docs/PROJECT_STRUCTURE.md) | Detailed architecture |
 | [🔧 Jarvis AI Guide](docs/JARVIS_README.md) | Core AI functionality |
+| [🤖 Model Router & Policy](MODEL_ROUTER.md) | LLM routing and policy management |
+| [📊 Performance Monitoring](PERFORMANCE.md) | CPU/GPU performance monitoring and health checks |
 | [🔒 Security Evolution](docs/SECURITY_EVOLUTION.md) | Security features |
+| [🌐 OpenRouter Integration](docs/OPENROUTER_INTEGRATION.md) | OpenRouter API integration guide |
 | [🐍 Python Upgrade](docs/PANDUAN_UPGRADE_PYTHON.md) | Python 3.12+ migration |
 
 ## 🛠️ Development

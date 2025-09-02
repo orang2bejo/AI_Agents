@@ -29,15 +29,35 @@ Panduan ini akan membantu Anda menginstal Jarvis AI dengan mudah dan cepat. Kami
 - ❌ Windows 8.1 atau lebih lama (tidak didukung)
 
 **Hardware Minimum:**
-- **RAM:** 4 GB (8 GB direkomendasikan)
-- **Storage:** 3 GB ruang kosong
+- **RAM:** 4 GB (8 GB direkomendasikan untuk AI features)
+- **Storage:** 3 GB ruang kosong (5 GB untuk full features)
 - **Processor:** Intel Core i3 atau AMD Ryzen 3 (generasi 2017+)
+- **GPU:** 
+  - **CPU-only mode:** Tidak diperlukan GPU khusus
+  - **GPU acceleration (opsional):** NVIDIA GTX 1060+ atau AMD RX 580+
+  - **CUDA support:** NVIDIA GPU dengan CUDA 11.8+ untuk ML acceleration
 - **Mikrofon:** Untuk fitur voice control
 - **Speaker/Headphone:** Untuk feedback audio
 
+**Hardware Direkomendasikan untuk Performa Optimal:**
+- **RAM:** 16 GB+ untuk large model processing
+- **Storage:** SSD dengan 10 GB+ ruang kosong
+- **Processor:** Intel Core i7/AMD Ryzen 7 atau lebih tinggi
+- **GPU:** NVIDIA RTX 3060+ dengan 8GB+ VRAM untuk AI acceleration
+- **Network:** Koneksi internet stabil untuk cloud AI features
+
 **Koneksi Internet:**
-- Diperlukan untuk download dependencies
-- Diperlukan untuk fitur AI online (opsional)
+- Diperlukan untuk download dependencies (2-5 GB)
+- Diperlukan untuk fitur AI online dan model updates
+- Bandwidth minimum: 10 Mbps untuk real-time AI features
+
+**Deteksi Hardware Otomatis:**
+Jarvis AI akan secara otomatis mendeteksi:
+- ✅ Ketersediaan GPU dan CUDA support
+- ✅ Kapasitas RAM dan storage
+- ✅ CPU cores dan performance capabilities
+- ✅ Audio devices untuk voice features
+- ⚙️ Optimasi konfigurasi berdasarkan hardware yang tersedia
 
 ### Persiapan Akun dan Izin
 
@@ -376,6 +396,24 @@ cd jarvis-ai
 
 ## ✅ Verifikasi Instalasi
 
+### Quick System Check
+```cmd
+# Run system diagnostic
+python test_installation.py --full-check
+```
+
+### Hardware Verification
+```cmd
+# Check GPU availability
+python -c "import torch; print('CUDA:', torch.cuda.is_available()); print('GPU Count:', torch.cuda.device_count())"
+
+# Check system resources
+python -c "import psutil; print(f'RAM: {psutil.virtual_memory().total//1024**3}GB'); print(f'CPU Cores: {psutil.cpu_count()}')"
+
+# Check audio devices
+python -c "import sounddevice as sd; print('Audio Devices:'); print(sd.query_devices())"
+```
+
 ### Test Dasar
 
 1. **Test Python dan dependencies:**
@@ -619,7 +657,107 @@ com_error: (-2147221164, 'Class not registered')
    python Scripts/pywin32_postinstall.py -install
    ```
 
-#### 5. Antivirus Blocking
+#### 5. GPU/CUDA Issues
+
+**Gejala:**
+- "CUDA not available" warning
+- Slow AI processing performance
+- GPU not detected errors
+- Memory allocation errors
+
+**Solusi:**
+1. **Periksa GPU compatibility:**
+   ```cmd
+   # Check GPU info
+   nvidia-smi
+   # Or check in Device Manager
+   ```
+
+2. **Install CUDA Toolkit (untuk NVIDIA GPU):**
+   - Download dari [NVIDIA CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
+   - Install CUDA 11.8 atau 12.x
+   - Restart komputer setelah instalasi
+
+3. **Install GPU-specific dependencies:**
+   ```cmd
+   # For NVIDIA GPU
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+   
+   # For AMD GPU (ROCm)
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.4.2
+   
+   # For CPU-only (fallback)
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+   ```
+
+4. **Verify GPU detection:**
+   ```cmd
+   python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'GPU count: {torch.cuda.device_count()}')"
+   ```
+
+5. **GPU Memory issues:**
+   - Tutup aplikasi lain yang menggunakan GPU
+   - Kurangi batch size dalam konfigurasi
+   - Enable memory optimization dalam settings
+
+#### 6. CPU Performance Issues
+
+**Gejala:**
+- Proses AI sangat lambat
+- High CPU usage (>90%)
+- System freezing during AI tasks
+
+**Solusi:**
+1. **Optimize CPU usage:**
+   ```cmd
+   # Set CPU affinity untuk Jarvis AI
+   # Dalam Task Manager → Details → Set Affinity
+   ```
+
+2. **Enable multiprocessing:**
+   - Edit `config/jarvis_config.json`
+   - Set `"cpu_cores": "auto"` atau specify number
+   - Set `"enable_multiprocessing": true`
+
+3. **Memory optimization:**
+   ```cmd
+   # Increase virtual memory
+   # System Properties → Advanced → Performance → Settings → Advanced → Virtual Memory
+   ```
+
+4. **Background processes:**
+   - Tutup aplikasi tidak perlu
+   - Disable startup programs
+   - Check for malware/virus
+
+#### 7. Audio/Voice Issues
+
+**Gejala:**
+- Microphone tidak terdeteksi
+- Audio output tidak berfungsi
+- Voice recognition errors
+
+**Solusi:**
+1. **Check audio devices:**
+   ```cmd
+   # Test audio devices
+   python -c "import sounddevice as sd; print(sd.query_devices())"
+   ```
+
+2. **Install audio dependencies:**
+   ```cmd
+   pip install sounddevice pyaudio whisper
+   # For Windows, might need:
+   pip install pipwin
+   pipwin install pyaudio
+   ```
+
+3. **Audio driver issues:**
+   - Update audio drivers
+   - Check Windows Sound settings
+   - Test with different audio devices
+
+#### 8. Antivirus Blocking
 
 **Gejala:**
 - File hilang setelah download

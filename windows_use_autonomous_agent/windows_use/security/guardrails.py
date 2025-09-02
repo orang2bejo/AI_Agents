@@ -75,8 +75,18 @@ class GuardrailsEngine:
         # Audit log
         self.audit_log: List[Dict[str, Any]] = []
         
+        # Security level
+        self.security_level = SecurityLevel.MEDIUM
+        
+        # Domain allowlist
+        self.allowed_domains: Set[str] = set()
+        
         # Initialize security rules
         self._init_security_rules()
+        
+        # Initialize default allowed domains
+        for domain in self.config.get("default_allowed_domains", []):
+            self.allowed_domains.add(domain.lower())
     
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
         """Load security configuration
@@ -112,6 +122,10 @@ class GuardrailsEngine:
                 ActionType.FILE_DELETE.value,
                 ActionType.SYSTEM_COMMAND.value,
                 ActionType.REGISTRY_ACCESS.value
+            ],
+            "default_allowed_domains": [
+                "github.com", "stackoverflow.com", "python.org", "microsoft.com",
+                "google.com", "openai.com", "huggingface.co", "pypi.org"
             ]
         }
         
@@ -660,8 +674,64 @@ class GuardrailsEngine:
                 for action, entry in self.rate_limits.items()
             },
             "audit_log_size": len(self.audit_log),
+            "security_level": self.security_level.value,
+            "allowed_domains_count": len(self.allowed_domains),
             "config": self.config
         }
+    
+    def set_security_level(self, level: SecurityLevel):
+        """Set security level
+        
+        Args:
+            level: Security level to set
+        """
+        self.security_level = level
+        self.logger.info(f"Security level set to: {level.value}")
+    
+    def add_allowed_domain(self, domain: str):
+        """Add domain to allowlist
+        
+        Args:
+            domain: Domain to add (e.g., 'example.com')
+        """
+        domain = domain.lower().strip()
+        self.allowed_domains.add(domain)
+        self.logger.info(f"Added domain to allowlist: {domain}")
+    
+    def remove_allowed_domain(self, domain: str):
+        """Remove domain from allowlist
+        
+        Args:
+            domain: Domain to remove
+        """
+        domain = domain.lower().strip()
+        self.allowed_domains.discard(domain)
+        self.logger.info(f"Removed domain from allowlist: {domain}")
+    
+    def is_domain_allowed(self, domain: str) -> bool:
+        """Check if domain is in allowlist
+        
+        Args:
+            domain: Domain to check
+            
+        Returns:
+            True if domain is allowed
+        """
+        domain = domain.lower().strip()
+        return domain in self.allowed_domains
+    
+    def get_allowed_domains(self) -> List[str]:
+        """Get list of allowed domains
+        
+        Returns:
+            List of allowed domains
+        """
+        return sorted(list(self.allowed_domains))
+    
+    def clear_allowed_domains(self):
+        """Clear all allowed domains"""
+        self.allowed_domains.clear()
+        self.logger.info("Cleared all allowed domains")
 
 
 # Example usage
