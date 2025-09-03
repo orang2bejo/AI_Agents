@@ -128,22 +128,109 @@ pip install -e .
 ### 📦 **Optimized Dependencies**
 
 #### Core Dependencies (`requirements.txt` - 96 packages)
-- **AI & LLM**: `langchain>=0.1.0`, `langchain-core>=0.1.0`, `pydantic>=2.5.0`
-- **Desktop Automation**: `uiautomation>=2.0.0`, `pyautogui>=0.9.54`, `humancursor>=0.1.0`
-- **Voice Processing**: `sounddevice>=0.4.6`, `websockets>=11.0.0`, `webrtcvad>=2.0.10`
-- **Web & HTTP**: `requests>=2.31.0`, `beautifulsoup4>=4.12.0`, `aiohttp>=3.8.0`
-- **Data Processing**: `numpy>=1.24.0`, `scikit-learn>=1.3.0`
-- **System**: `psutil>=5.9.0`, `termcolor>=2.3.0`
-- **Image Processing**: `Pillow>=10.0.0`
-- **Text Processing**: `markdownify>=0.11.6`, `fuzzywuzzy>=0.18.0`
+
+**LLM & AI Framework:**
+```bash
+langchain>=0.1.0
+langchain-core>=0.1.0
+pydantic>=2.5.0
+```
+
+**Desktop Automation:**
+```bash
+uiautomation>=2.0.0
+pyautogui>=0.9.54
+humancursor>=0.1.0
+pyperclip>=1.8.2
+fuzzywuzzy>=0.18.0
+```
+
+**Voice Processing:**
+```bash
+sounddevice>=0.4.6
+websockets>=11.0.0
+webrtcvad>=2.0.10
+```
+
+**Web & HTTP:**
+```bash
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+readability-lxml>=0.8.1
+aiohttp>=3.8.0
+```
+
+**Data Processing & ML:**
+```bash
+numpy>=1.24.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+```
+
+**System & Utilities:**
+```bash
+psutil>=5.9.0
+termcolor>=2.3.0
+Pillow>=10.0.0
+markdownify>=0.11.6
+```
 
 #### Development Dependencies (`requirements-dev.txt` - 99 packages)
-- **Testing**: `pytest>=7.4.0`, `pytest-cov>=4.1.0`, `pytest-asyncio>=0.21.1`, `pytest-mock>=3.11.1`
-- **Code Quality**: `black>=23.7.0`, `flake8>=6.0.0`, `mypy>=1.5.0`, `pylint>=2.17.0`, `bandit>=1.7.5`
-- **Documentation**: `sphinx>=7.1.0`, `mkdocs>=1.5.0`, `mkdocs-material>=9.1.0`
-- **Development Tools**: `ipython>=8.14.0`, `jupyter>=1.0.0`, `notebook>=7.0.0`
-- **Performance**: `memory-profiler>=0.61.0`, `line-profiler>=4.1.0`, `py-spy>=0.3.14`
-- **Security**: `safety>=2.3.0`, `pip-audit>=2.6.0`
+
+**Testing Framework:**
+```bash
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.1
+pytest-asyncio>=0.21.1
+pytest-xdist>=3.3.1
+```
+
+**Code Quality & Linting:**
+```bash
+black>=23.7.0
+flake8>=6.0.0
+isort>=5.12.0
+mypy>=1.5.0
+pylint>=2.17.0
+bandit>=1.7.5
+```
+
+**Documentation:**
+```bash
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+mkdocs>=1.5.0
+mkdocs-material>=9.1.0
+```
+
+**Development Tools:**
+```bash
+ipython>=8.14.0
+jupyter>=1.0.0
+notebook>=7.0.0
+```
+
+**Performance Profiling:**
+```bash
+memory-profiler>=0.61.0
+line-profiler>=4.1.0
+py-spy>=0.3.14
+```
+
+**Security & Safety:**
+```bash
+safety>=2.3.0
+pip-audit>=2.6.0
+```
+
+**Build & Packaging:**
+```bash
+build>=0.10.0
+twine>=4.0.2
+wheel>=0.41.0
+setuptools>=68.0.0
+```
 
 > 🚀 **Performance Improvements**: Dependencies have been optimized - core installation is now ~40% faster with improved security through reduced attack surface.
 

@@ -2,20 +2,32 @@
 
 ## Selamat Datang!
 
-Panduan ini akan membantu Anda menginstal Jarvis AI dengan mudah dan cepat. Kami menyediakan beberapa metode instalasi untuk memastikan Anda dapat menjalankan Jarvis AI di sistem Anda.
+Panduan ini akan membantu Anda menginstal Jarvis AI dengan mudah dan cepat. Versi terbaru mendukung **15+ LLM providers**, **EVI (Empathic Voice Interface)**, dan **96+ optimized dependencies** untuk performa maksimal.
+
+---
+
+## 🆕 Fitur Terbaru (Januari 2025)
+
+- **Multi-Provider LLM Support**: OpenRouter, Gemini, Anthropic, Groq, Ollama
+- **EVI Integration**: Empathic Voice Interface dengan emotion detection
+- **Optimized Dependencies**: 96 core packages, 99 development packages
+- **Enhanced Voice Processing**: WebRTC VAD, Piper TTS
+- **Modular Installation**: Install hanya komponen yang dibutuhkan
+- **Auto-Configuration**: Deteksi hardware dan optimasi otomatis
 
 ---
 
 ## 📋 Daftar Isi
 
 1. [Persiapan Sebelum Instalasi](#persiapan-sebelum-instalasi)
-2. [Metode 1: Instalasi Otomatis (Direkomendasikan)](#metode-1-instalasi-otomatis-direkomendasikan)
-3. [Metode 2: Instalasi Semi-Otomatis](#metode-2-instalasi-semi-otomatis)
-4. [Metode 3: Instalasi Manual Lengkap](#metode-3-instalasi-manual-lengkap)
-5. [Verifikasi Instalasi](#verifikasi-instalasi)
-6. [Konfigurasi Awal](#konfigurasi-awal)
-7. [Mengatasi Masalah Instalasi](#mengatasi-masalah-instalasi)
-8. [Uninstall (Hapus Instalasi)](#uninstall-hapus-instalasi)
+2. [Konfigurasi API Keys](#konfigurasi-api-keys)
+3. [Metode 1: Instalasi Otomatis (Direkomendasikan)](#metode-1-instalasi-otomatis-direkomendasikan)
+4. [Metode 2: Instalasi Semi-Otomatis](#metode-2-instalasi-semi-otomatis)
+5. [Metode 3: Instalasi Manual Lengkap](#metode-3-instalasi-manual-lengkap)
+6. [Konfigurasi LLM Providers](#konfigurasi-llm-providers)
+7. [Verifikasi Instalasi](#verifikasi-instalasi)
+8. [Mengatasi Masalah Instalasi](#mengatasi-masalah-instalasi)
+9. [Uninstall (Hapus Instalasi)](#uninstall-hapus-instalasi)
 
 ---
 
@@ -29,22 +41,23 @@ Panduan ini akan membantu Anda menginstal Jarvis AI dengan mudah dan cepat. Kami
 - ❌ Windows 8.1 atau lebih lama (tidak didukung)
 
 **Hardware Minimum:**
-- **RAM:** 4 GB (8 GB direkomendasikan untuk AI features)
-- **Storage:** 3 GB ruang kosong (5 GB untuk full features)
-- **Processor:** Intel Core i3 atau AMD Ryzen 3 (generasi 2017+)
+- **RAM:** 8 GB (16 GB direkomendasikan untuk multi-provider LLM)
+- **Storage:** 5 GB ruang kosong (10 GB untuk full features + models)
+- **Processor:** Intel Core i5 atau AMD Ryzen 5 (generasi 2018+)
 - **GPU:** 
-  - **CPU-only mode:** Tidak diperlukan GPU khusus
-  - **GPU acceleration (opsional):** NVIDIA GTX 1060+ atau AMD RX 580+
-  - **CUDA support:** NVIDIA GPU dengan CUDA 11.8+ untuk ML acceleration
-- **Mikrofon:** Untuk fitur voice control
-- **Speaker/Headphone:** Untuk feedback audio
+  - **CPU-only mode:** Integrated graphics sufficient
+  - **GPU acceleration:** NVIDIA GTX 1660+ atau AMD RX 6600+
+  - **CUDA support:** NVIDIA GPU dengan CUDA 12.0+ untuk optimal ML performance
+  - **Local LLM:** NVIDIA RTX 4060+ dengan 8GB+ VRAM untuk Ollama models
+- **Audio:** Mikrofon dan speaker/headphone untuk EVI features
+- **Network:** Broadband internet untuk cloud LLM providers
 
 **Hardware Direkomendasikan untuk Performa Optimal:**
-- **RAM:** 16 GB+ untuk large model processing
-- **Storage:** SSD dengan 10 GB+ ruang kosong
-- **Processor:** Intel Core i7/AMD Ryzen 7 atau lebih tinggi
-- **GPU:** NVIDIA RTX 3060+ dengan 8GB+ VRAM untuk AI acceleration
-- **Network:** Koneksi internet stabil untuk cloud AI features
+- **RAM:** 32 GB+ untuk large model processing dan multi-provider switching
+- **Storage:** NVMe SSD dengan 20 GB+ ruang kosong
+- **Processor:** Intel Core i7-12700K/AMD Ryzen 7 5800X atau lebih tinggi
+- **GPU:** NVIDIA RTX 4070+ dengan 12GB+ VRAM untuk local LLM inference
+- **Network:** Fiber internet (100+ Mbps) untuk real-time AI features
 
 **Koneksi Internet:**
 - Diperlukan untuk download dependencies (2-5 GB)
@@ -71,6 +84,89 @@ Jarvis AI akan secara otomatis mendeteksi:
 
 3. **Firewall:**
    - Pastikan Python dan pip tidak diblokir firewall
+
+---
+
+## 🔑 Konfigurasi API Keys
+
+> **PENTING:** Sebelum instalasi, siapkan API keys untuk LLM providers yang ingin Anda gunakan.
+
+### Pilihan LLM Providers
+
+**Gratis/Local (Direkomendasikan untuk pemula):**
+- **Ollama** - Local LLM, tidak perlu API key
+- **Groq** - Free tier dengan rate limit
+- **Google Gemini** - Free tier tersedia
+
+**Berbayar (Untuk penggunaan intensif):**
+- **OpenRouter** - Akses 100+ model dengan satu API key
+- **OpenAI** - GPT-4o, GPT-4o-mini
+- **Anthropic** - Claude-3.5-Sonnet, Claude-3.5-Haiku
+
+### Cara Mendapatkan API Keys
+
+#### 1. OpenRouter (Direkomendasikan)
+```
+1. Kunjungi: https://openrouter.ai/
+2. Daftar akun baru
+3. Masuk ke dashboard
+4. Klik "API Keys" → "Create Key"
+5. Copy API key (format: sk-or-v1-...)
+```
+
+#### 2. Google Gemini
+```
+1. Kunjungi: https://makersuite.google.com/app/apikey
+2. Login dengan Google account
+3. Klik "Create API Key"
+4. Copy API key
+```
+
+#### 3. Groq
+```
+1. Kunjungi: https://console.groq.com/
+2. Daftar akun baru
+3. Masuk ke "API Keys"
+4. Klik "Create API Key"
+5. Copy API key
+```
+
+#### 4. Anthropic Claude
+```
+1. Kunjungi: https://console.anthropic.com/
+2. Daftar akun dan verifikasi
+3. Masuk ke "API Keys"
+4. Klik "Create Key"
+5. Copy API key
+```
+
+### Setup File .env
+
+1. **Copy template:**
+   ```cmd
+   copy config\.env-example .env
+   ```
+
+2. **Edit file .env:**
+   ```bash
+   # LLM Providers (pilih minimal satu)
+   OPENROUTER_API_KEY=sk-or-v1-your-openrouter-key
+   GOOGLE_API_KEY=your-gemini-api-key
+   GROQ_API_KEY=your-groq-api-key
+   ANTHROPIC_API_KEY=your-anthropic-api-key
+   
+   # Voice Services (opsional)
+   ELEVENLABS_API_KEY=your-elevenlabs-key
+   AZURE_SPEECH_KEY=your-azure-speech-key
+   
+   # Search Services (opsional)
+   GOOGLE_SEARCH_API_KEY=your-google-search-key
+   BING_SEARCH_API_KEY=your-bing-search-key
+   ```
+
+3. **Simpan file** dan lanjutkan ke instalasi
+
+> **Tips:** Anda bisa menambahkan API keys setelah instalasi jika belum siap.
 
 ---
 
@@ -391,6 +487,108 @@ cd jarvis-ai
    mkdir models\tts
    # Manual download dari Piper repository
    ```
+
+---
+
+## ⚙️ Konfigurasi LLM Providers
+
+> **Setelah instalasi selesai**, konfigurasikan LLM providers sesuai kebutuhan Anda.
+
+### Edit Konfigurasi LLM
+
+1. **Buka file konfigurasi:**
+   ```cmd
+   notepad config\llm_config.yaml
+   ```
+
+2. **Konfigurasi providers:**
+   ```yaml
+   providers:
+     # Local LLM (tidak perlu API key)
+     ollama:
+       enabled: true
+       priority: 1
+       base_url: "http://localhost:11434"
+       models: ["llama3.2:3b", "qwen2.5:7b", "gemma2:9b"]
+       timeout: 30
+       max_retries: 3
+   
+     # Cloud LLM dengan API keys
+     openrouter:
+       enabled: true
+       priority: 2
+       models: ["openai/gpt-4o", "anthropic/claude-3-5-sonnet"]
+       timeout: 30
+       max_retries: 3
+   
+     gemini:
+       enabled: true
+       priority: 3
+       models: ["gemini-1.5-pro", "gemini-1.5-flash"]
+       timeout: 30
+       max_retries: 3
+   
+     groq:
+       enabled: true
+       priority: 4
+       models: ["llama-3.1-70b-versatile", "mixtral-8x7b-32768"]
+       timeout: 15
+       max_retries: 2
+   
+     anthropic:
+       enabled: false  # Set true jika punya API key
+       priority: 5
+       models: ["claude-3-5-sonnet-20241022", "claude-3-5-haiku-20241022"]
+       timeout: 30
+       max_retries: 3
+   ```
+
+### Setup Ollama (Local LLM)
+
+**Jika ingin menggunakan local LLM:**
+
+1. **Install Ollama:**
+   ```cmd
+   # Download dari https://ollama.ai/
+   # Atau gunakan winget:
+   winget install Ollama.Ollama
+   ```
+
+2. **Download model:**
+   ```cmd
+   ollama pull llama3.2:3b
+   ollama pull qwen2.5:7b
+   ```
+
+3. **Test Ollama:**
+   ```cmd
+   ollama run llama3.2:3b
+   # Ketik pesan test, lalu exit dengan /bye
+   ```
+
+### Prioritas Provider
+
+**Cara kerja prioritas:**
+- Priority 1 = Dicoba pertama
+- Jika gagal, lanjut ke priority 2, dst.
+- Provider dengan `enabled: false` akan dilewati
+
+**Rekomendasi prioritas:**
+1. **Ollama** (gratis, cepat, offline)
+2. **OpenRouter** (banyak pilihan model)
+3. **Gemini** (gratis tier bagus)
+4. **Groq** (sangat cepat)
+5. **Anthropic** (kualitas tinggi)
+
+### Test Konfigurasi
+
+```cmd
+# Test koneksi ke semua providers
+python test_llm_providers.py
+
+# Test provider specific
+python -c "from jarvis_ai.llm import test_provider; test_provider('ollama')"
+```
 
 ---
 
