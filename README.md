@@ -22,6 +22,13 @@
 
 **Jarvis AI** is a powerful autonomous agent that combines Windows automation with advanced AI capabilities. Built on the Windows-Use foundation, it features a fully integrated AI system with voice control, office automation, learning capabilities, and comprehensive Windows system integration. The system bridges the gap between AI Agents and Windows OS through both GUI interaction and direct API integration.
 
+🎯 **Latest Updates (January 2025):**
+- ✅ **Multi-Provider LLM Support** - OpenRouter, Gemini, Anthropic, Groq, Ollama integration
+- ✅ **Voice Processing Enhanced** - EVI (Empathic Voice Interface) integration
+- ✅ **Dependency Optimization** - 96+ core packages, streamlined installation
+- ✅ **Configuration Management** - Comprehensive API key and provider setup
+- ✅ **Module Structure Improved** - Fixed import paths and module organization
+
 ## ✨ Integrated Features
 
 ### 🤖 Jarvis AI Core System
@@ -30,18 +37,22 @@
 - **Conversation Manager** - Context-aware dialogue management
 - **Task Coordinator** - Intelligent task scheduling and execution
 - **Learning Engine** - Machine learning models for continuous improvement
-- **Multi-Provider LLM Support** - OpenAI, Anthropic, Google, OpenRouter, and local models
+- **Multi-Provider LLM Support** - 15+ providers including OpenRouter, Gemini, Anthropic, Groq, Ollama
 - **Dashboard Interface** - Real-time monitoring and control panel with GUI
 - **Self-Evolution** - Continuous improvement and adaptation capabilities
+- **EVI Integration** - Empathic Voice Interface for emotional AI interactions
 
 ### 🎤 Voice & Language Processing
-- **Voice Interface** - Complete STT/TTS integration with Indonesian support
+- **Voice Interface** - Complete STT/TTS integration with multi-language support
+- **EVI (Empathic Voice Interface)** - Emotional AI voice interactions
 - **Language Manager** - Multi-language processing and translation
 - **Intent Recognition** - Advanced command understanding and routing
 - **Push-to-Talk** functionality with customizable hotkeys
 - **Voice Activity Detection** for hands-free operation
 - **Voice Authentication** - Security system based on voice recognition
 - **Voice Web Control** - Navigate and interact with web using voice commands
+- **WebRTC VAD** - Advanced voice activity detection
+- **Piper TTS** - High-quality text-to-speech synthesis
 
 ### 📊 Office & System Integration
 - **Office Automation** - Complete Excel, Word, PowerPoint control via COM
@@ -116,22 +127,92 @@ pip install -e .
 
 ### 📦 **Optimized Dependencies**
 
-#### Core Dependencies (`requirements.txt`)
-- **AI & LLM**: `langchain`, `pydantic`
-- **Desktop Automation**: `uiautomation`, `pyautogui`, `humancursor`
-- **Voice Processing**: `sounddevice`, `websockets`, `webrtcvad`
-- **Web & HTTP**: `requests`, `beautifulsoup4`, `aiohttp`
-- **Data Processing**: `numpy`, `scikit-learn`
-- **System**: `psutil`, `termcolor`
+#### Core Dependencies (`requirements.txt` - 96 packages)
+- **AI & LLM**: `langchain>=0.1.0`, `langchain-core>=0.1.0`, `pydantic>=2.5.0`
+- **Desktop Automation**: `uiautomation>=2.0.0`, `pyautogui>=0.9.54`, `humancursor>=0.1.0`
+- **Voice Processing**: `sounddevice>=0.4.6`, `websockets>=11.0.0`, `webrtcvad>=2.0.10`
+- **Web & HTTP**: `requests>=2.31.0`, `beautifulsoup4>=4.12.0`, `aiohttp>=3.8.0`
+- **Data Processing**: `numpy>=1.24.0`, `scikit-learn>=1.3.0`
+- **System**: `psutil>=5.9.0`, `termcolor>=2.3.0`
+- **Image Processing**: `Pillow>=10.0.0`
+- **Text Processing**: `markdownify>=0.11.6`, `fuzzywuzzy>=0.18.0`
 
-#### Development Dependencies (`requirements-dev.txt`)
-- **Testing**: `pytest`, `pytest-cov`, `pytest-asyncio`
-- **Code Quality**: `black`, `flake8`, `mypy`, `pylint`
-- **Optional Features**: `openai`, `selenium`, `torch`, `pandas`
+#### Development Dependencies (`requirements-dev.txt` - 99 packages)
+- **Testing**: `pytest>=7.4.0`, `pytest-cov>=4.1.0`, `pytest-asyncio>=0.21.1`, `pytest-mock>=3.11.1`
+- **Code Quality**: `black>=23.7.0`, `flake8>=6.0.0`, `mypy>=1.5.0`, `pylint>=2.17.0`, `bandit>=1.7.5`
+- **Documentation**: `sphinx>=7.1.0`, `mkdocs>=1.5.0`, `mkdocs-material>=9.1.0`
+- **Development Tools**: `ipython>=8.14.0`, `jupyter>=1.0.0`, `notebook>=7.0.0`
+- **Performance**: `memory-profiler>=0.61.0`, `line-profiler>=4.1.0`, `py-spy>=0.3.14`
+- **Security**: `safety>=2.3.0`, `pip-audit>=2.6.0`
 
 > 🚀 **Performance Improvements**: Dependencies have been optimized - core installation is now ~40% faster with improved security through reduced attack surface.
 
 **Note:** For Office automation features, ensure Microsoft Office is installed on your system.
+
+## 🔧 Configuration Setup
+
+### **API Keys Configuration**
+
+Copy the example environment file and configure your API keys:
+
+```bash
+cp config/.env-example .env
+notepad .env  # Edit with your API keys
+```
+
+**Required API Keys (choose one or more):**
+```bash
+# LLM Providers
+GOOGLE_API_KEY=your_google_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
+OPENROUTER_API_KEY=sk-or-v1-your-openrouter-key
+
+# Voice Services (optional)
+ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+AZURE_SPEECH_KEY=your_azure_speech_key_here
+
+# Search Services (optional)
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key_here
+BING_SEARCH_API_KEY=your_bing_search_api_key_here
+```
+
+### **LLM Provider Configuration**
+
+Edit `config/llm_config.yaml` to configure your preferred LLM providers:
+
+```yaml
+providers:
+  ollama:
+    enabled: true
+    priority: 1
+    base_url: "http://localhost:11434"
+    models: ["llama3.2:3b", "qwen2.5:7b"]
+    
+  openrouter:
+    enabled: true
+    priority: 2
+    models: ["openai/gpt-4o", "anthropic/claude-3-5-sonnet"]
+    
+  gemini:
+    enabled: true
+    priority: 3
+    models: ["gemini-1.5-pro", "gemini-1.5-flash"]
+```
+
+### **Quick Start Scripts**
+
+```bash
+# Auto-install with dependencies
+install_jarvis_auto.bat
+
+# Start Jarvis AI
+start_jarvis.bat
+
+# Test installation
+python test_installation.py
+```
 
 ## ⚙️ Basic Usage
 
@@ -210,30 +291,69 @@ office.word.add_text('Laporan dibuat oleh Jarvis AI')
 office.word.save_as('jarvis_document.docx')
 ```
 
-### 🌐 OpenRouter API Integration
+### 🌐 Multi-Provider LLM Integration
 
 ```python
-from jarvis_ai.llm import create_openrouter_provider, LLMRouter
+from jarvis_ai.llm import LLMRouter, create_provider
 
-# Initialize OpenRouter provider
-openrouter = create_openrouter_provider(
+# Initialize LLM Router with automatic provider selection
+router = LLMRouter()
+
+# OpenRouter - Access 100+ models through one API
+openrouter = create_provider(
+    "openrouter",
     api_key="sk-or-v1-your-api-key",
-    model="openai/gpt-4o"  # Access 100+ models
+    model="openai/gpt-4o"
 )
 
-# Use with LLM Router for automatic fallback
-router = LLMRouter()
+# Local Ollama models
+ollama = create_provider(
+    "ollama",
+    base_url="http://localhost:11434",
+    model="llama3.2:3b"
+)
+
+# Google Gemini
+gemini = create_provider(
+    "gemini",
+    api_key="your-gemini-key",
+    model="gemini-1.5-flash"
+)
+
+# Automatic provider selection with fallback
 response = await router.generate_response(
     messages=[{"role": "user", "content": "Hello from Jarvis AI!"}],
-    policy="unified_access"  # Prioritize OpenRouter
+    policy="cost_optimized"  # Auto-select cheapest available
 )
 
-# Available models include:
-# - OpenAI: gpt-4o, gpt-4o-mini, gpt-3.5-turbo
-# - Anthropic: claude-3-5-sonnet, claude-3-5-haiku
-# - Meta: llama-3.1-70b-instruct, llama-3.1-8b-instruct
-# - Google: gemini-pro-1.5, gemini-flash-1.5
-# - And many more...
+# Available providers:
+# - OpenRouter: 100+ models (GPT-4o, Claude-3.5, Llama-3.1, etc.)
+# - Ollama: Local models (Llama, Qwen, Gemma)
+# - Gemini: Google's latest models
+# - Anthropic: Claude family
+# - Groq: Ultra-fast inference
+```
+
+### 🎤 EVI (Empathic Voice Interface)
+
+```python
+from jarvis_ai.voice import EVIInterface
+
+# Initialize EVI for emotional voice interactions
+evi = EVIInterface(
+    api_key="your-evi-api-key",
+    voice_id="default",
+    empathy_level=0.7
+)
+
+# Start empathic conversation
+evi.start_conversation()
+evi.speak_with_emotion("Hello! How are you feeling today?", emotion="caring")
+
+# Process emotional responses
+response = evi.listen_with_emotion_detection()
+print(f"Detected emotion: {response.emotion}")
+print(f"Confidence: {response.confidence}")
 ```
 
 ### 🔧 Windows System Tools with Jarvis AI
