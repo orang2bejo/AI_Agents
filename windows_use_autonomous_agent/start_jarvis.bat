@@ -57,7 +57,7 @@ if exist "scripts\jarvis_main.py" (
         echo [ERROR] Tidak ada script yang dapat dijalankan!
         echo Silakan periksa instalasi Anda.
     )
-fi
+)
 
 echo.
 echo Jarvis AI telah berhenti.

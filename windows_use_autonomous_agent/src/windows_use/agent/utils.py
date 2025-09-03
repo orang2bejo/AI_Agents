@@ -1,5 +1,5 @@
 from langchain_core.messages import BaseMessage,HumanMessage
-from windows_use.agent.views import AgentData
+from .views import AgentData
 import ast
 import re
 

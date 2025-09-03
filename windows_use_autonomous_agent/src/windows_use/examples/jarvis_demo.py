@@ -23,8 +23,9 @@ from pathlib import Path
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
-from jarvis_ai import (
+from windows_use.jarvis_ai import (
     JarvisPersonality, PersonalityTrait, ResponseTone,
     ConversationManager, MessageType,
     LanguageManager, Language,

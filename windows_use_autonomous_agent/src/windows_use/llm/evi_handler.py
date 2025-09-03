@@ -15,7 +15,7 @@ from enum import Enum
 from .evi_client import EVIClient, EVIMessage
 from .evi_config import EVIConfig
 from .evi_streamer import EVIStreamer
-from ..utils.error_handler import handle_errors
+from ..utils.error_handling import handle_errors
 
 
 class ConversationState(Enum):

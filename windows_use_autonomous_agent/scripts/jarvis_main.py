@@ -32,12 +32,13 @@ from typing import Dict, Any, Optional
 # Add current directory to path
 sys.path.append(str(Path(__file__).parent))
 sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).parent.parent / "src"))
 
 # Import logging utilities
-from src.windows_use.utils import setup_logging, get_logger, LoggingManager
+from windows_use.utils import setup_logging, get_logger, LoggingManager
 
 # Import all Jarvis AI modules
-from src.windows_use.jarvis_ai import (
+from windows_use.jarvis_ai import (
     JarvisPersonality, PersonalityTrait, ResponseTone,
     ConversationManager, MessageType, Language,
     LanguageManager,
@@ -46,8 +47,8 @@ from src.windows_use.jarvis_ai import (
     LearningEngine,
     JarvisDashboard, DashboardTheme
 )
-from src.windows_use.jarvis_ai.dashboard_launcher import DashboardLauncher
-from src.windows_use.jarvis_ai.personality import PersonalityConfig
+from windows_use.jarvis_ai.dashboard_launcher import DashboardLauncher
+from windows_use.jarvis_ai.personality import PersonalityConfig
 
 # Import other modules
 # Note: These modules are integrated into jarvis_ai package
@@ -58,7 +59,7 @@ from src.windows_use.jarvis_ai.personality import PersonalityConfig
 # from self_evolving_agent import SelfEvolvingAgent
 # from multi_provider_llm import LLMRouter
 # from guardrails import GuardrailsManager
-from src.windows_use.web import SearchEngine, WebScraper
+from windows_use.web import SearchEngine, WebScraper
 
 class JarvisAIMain:
     """Main Jarvis AI System Controller"""
@@ -319,7 +320,7 @@ class JarvisAIMain:
             self.is_running = True
             
             # Welcome message
-            from jarvis_ai.language_manager import Language
+            from windows_use.jarvis_ai.language_manager import Language
             default_language = Language.ENGLISH
             welcome_msg = self.personality.generate_greeting(
                 default_language

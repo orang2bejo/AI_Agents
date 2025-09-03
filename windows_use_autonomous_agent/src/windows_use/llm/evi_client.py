@@ -15,7 +15,7 @@ import base64
 import numpy as np
 
 from .evi_config import EVIConfig
-from ..utils.error_handler import handle_errors
+from ..utils.error_handling import handle_errors
 
 
 @dataclass

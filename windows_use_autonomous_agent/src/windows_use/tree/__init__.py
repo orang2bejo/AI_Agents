@@ -1,6 +1,8 @@
-from windows_use.tree.views import TreeElementNode, TextElementNode, ScrollElementNode, Center, BoundingBox, TreeState
-from windows_use.tree.config import INTERACTIVE_CONTROL_TYPE_NAMES,INFORMATIVE_CONTROL_TYPE_NAMES
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from .views import TreeElementNode, TextElementNode, ScrollElementNode, Center, BoundingBox, TreeState
+from .config import INTERACTIVE_CONTROL_TYPE_NAMES,INFORMATIVE_CONTROL_TYPE_NAMES
+
+
+from ..desktop.config import AVOIDED_APPSThreadPoolExecutor, as_completed
 from uiautomation import GetRootControl,Control,ImageControl
 from windows_use.desktop.config import AVOIDED_APPS
 from PIL import Image, ImageFont, ImageDraw
@@ -9,7 +11,7 @@ from time import sleep
 import random
 
 if TYPE_CHECKING:
-    from windows_use.desktop import Desktop
+    from ..desktop import Desktop
 
 class Tree:
     def __init__(self,desktop:'Desktop'):
