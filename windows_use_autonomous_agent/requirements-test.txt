@@ -164,8 +164,11 @@ pytest-docker>=2.0.1
 moto>=4.2.0
 boto3>=1.28.0
 
-# Test OpenAI (if needed)
-openai>=0.27.0
+# Test LLM Providers (if needed)
+openai>=1.0.0
+anthropic>=0.7.0
+groq>=0.4.0
+google-generativeai>=0.3.0
 
 # Test LangChain (if needed)
 langchain>=0.0.200

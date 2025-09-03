@@ -2,6 +2,8 @@
 langchain>=0.1.0
 langchain-core>=0.1.0
 pydantic>=2.5.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
 
 # Data Processing & ML (Used)
 numpy>=1.24.0
@@ -62,11 +64,12 @@ webrtcvad>=2.0.10
 # torch>=2.1.0
 # transformers>=4.36.0
 
-# Additional LLM Providers (uncomment if needed)
-# google-generativeai>=0.3.0
-# anthropic>=0.7.0
-# groq>=0.4.0
-# openai>=1.0.0
+# LLM Providers (Required for multi-provider support)
+google-generativeai>=0.3.0
+anthropic>=0.7.0
+groq>=0.4.0
+openai>=1.0.0
+# Note: DeepSeek and Qwen use OpenAI-compatible API, no additional packages needed
 
 # Database (uncomment if needed)
 # sqlalchemy>=2.0.23

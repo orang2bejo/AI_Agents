@@ -306,7 +306,7 @@ echo [STEP 7] Membuat script startup...
     echo.
     echo :: Check if main script exists
     echo if exist scripts\jarvis_main.py (
-echo     python scripts\jarvis_main.py
+    echo     python scripts\jarvis_main.py
     echo ^) else (
     echo     echo [ERROR] Script utama tidak ditemukan!
     echo     echo Mencari file Python yang dapat dijalankan...

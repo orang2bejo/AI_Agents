@@ -79,9 +79,9 @@ aiofiles>=23.1.0
 
 # Additional Development Dependencies
 # Moved from main requirements.txt:
-pyyaml>=6.0.0
 html2text>=2020.1.16
 python-multipart>=0.0.6
+# Note: pyyaml moved back to main requirements.txt as it's required for core functionality
 
 # Optional LLM Providers for Development/Testing
 openai>=1.0.0

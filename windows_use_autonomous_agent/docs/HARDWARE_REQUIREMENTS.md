@@ -13,33 +13,87 @@ This guide provides detailed hardware requirements, optimization tips, and troub
 | Component | Specification | Purpose |
 |-----------|---------------|----------|
 | **OS** | Windows 10 (1903+) / Windows 11 | Core compatibility |
-| **CPU** | Intel Core i3-8100 / AMD Ryzen 3 2200G | Basic AI processing |
-| **RAM** | 4 GB | Core system operations |
-| **Storage** | 3 GB free space (HDD) | Basic installation |
-| **GPU** | Integrated graphics | CPU-only AI processing |
-| **Network** | 5 Mbps | Dependency downloads |
+| **CPU** | Intel Core i5-8400 / AMD Ryzen 5 2600 | Multi-provider LLM processing |
+| **RAM** | 8 GB DDR4 | Core system + LLM operations |
+| **Storage** | 5 GB free space (SSD recommended) | Basic installation + models |
+| **GPU** | Integrated graphics (Intel UHD 630+) | CPU-only AI processing |
+| **Network** | 10 Mbps | Cloud LLM providers + EVI |
+| **Audio** | Built-in microphone/speakers | Voice interaction (EVI) |
 
 ### Recommended Requirements (Optimal Performance)
 
 | Component | Specification | Purpose |
 |-----------|---------------|----------|
-| **OS** | Windows 11 (latest) | Best compatibility |
-| **CPU** | Intel Core i7-10700K / AMD Ryzen 7 3700X | Fast AI processing |
-| **RAM** | 16 GB DDR4 | Large model handling |
-| **Storage** | 10 GB free space (SSD) | Fast I/O operations |
-| **GPU** | NVIDIA RTX 3060 (8GB VRAM) | GPU acceleration |
-| **Network** | 25+ Mbps | Real-time AI features |
+| **OS** | Windows 11 (latest) | Best compatibility + features |
+| **CPU** | Intel Core i7-12700K / AMD Ryzen 7 5800X | Multi-provider switching + local LLM |
+| **RAM** | 16 GB DDR4/DDR5 | Large model handling + caching |
+| **Storage** | 15 GB free space (NVMe SSD) | Fast model loading + caching |
+| **GPU** | NVIDIA RTX 4060 (8GB VRAM) | Local LLM inference + acceleration |
+| **Network** | 50+ Mbps | Real-time cloud AI + EVI streaming |
+| **Audio** | Dedicated USB microphone + headset | High-quality voice processing |
 
 ### Professional Requirements (Maximum Performance)
 
 | Component | Specification | Purpose |
 |-----------|---------------|----------|
-| **OS** | Windows 11 Pro (latest) | Enterprise features |
-| **CPU** | Intel Core i9-12900K / AMD Ryzen 9 5900X | Maximum processing power |
-| **RAM** | 32+ GB DDR4/DDR5 | Large-scale AI operations |
-| **Storage** | 50+ GB free space (NVMe SSD) | Ultra-fast operations |
-| **GPU** | NVIDIA RTX 4070+ (12GB+ VRAM) | Advanced AI acceleration |
-| **Network** | 100+ Mbps | Cloud AI integration |
+| **OS** | Windows 11 Pro (latest) | Enterprise features + security |
+| **CPU** | Intel Core i9-13900K / AMD Ryzen 9 7900X | Maximum multi-provider performance |
+| **RAM** | 32+ GB DDR5 | Large-scale local LLM + multi-tasking |
+| **Storage** | 100+ GB free space (Gen4 NVMe SSD) | Multiple local models + fast caching |
+| **GPU** | NVIDIA RTX 4080+ (16GB+ VRAM) | Multiple local LLM + GPU acceleration |
+| **Network** | 1 Gbps+ | Enterprise cloud AI + real-time features |
+| **Audio** | Professional audio interface | Studio-quality voice processing |
+
+---
+
+## 🤖 Multi-Provider LLM Requirements
+
+### Local LLM (Ollama) Requirements
+
+| Model Size | RAM Required | GPU VRAM | Storage | Performance |
+|------------|--------------|----------|---------|-------------|
+| **7B models** | 8 GB | 6 GB+ | 5 GB | Good for basic tasks |
+| **13B models** | 16 GB | 10 GB+ | 8 GB | Better reasoning |
+| **30B+ models** | 32 GB | 20 GB+ | 20 GB | Professional quality |
+| **70B+ models** | 64 GB | 40 GB+ | 50 GB | Enterprise grade |
+
+### Cloud Provider Optimization
+
+| Provider | Latency Priority | Bandwidth | Concurrent Requests |
+|----------|------------------|-----------|--------------------|
+| **OpenRouter** | Medium | 25+ Mbps | 5-10 |
+| **Groq** | Ultra-low | 50+ Mbps | 10-20 |
+| **Gemini** | Low | 10+ Mbps | 3-5 |
+| **Anthropic** | Medium | 20+ Mbps | 5-10 |
+| **OpenAI** | Medium | 15+ Mbps | 5-15 |
+
+### Multi-Provider Switching Performance
+
+- **CPU:** 8+ cores for seamless provider switching
+- **RAM:** 16+ GB for caching multiple provider responses
+- **Network:** Stable 50+ Mbps for failover scenarios
+- **Storage:** Fast SSD for response caching
+
+---
+
+## 🎙️ EVI Integration Requirements
+
+### Voice Processing Hardware
+
+| Component | Minimum | Recommended | Professional |
+|-----------|---------|-------------|-------------|
+| **Microphone** | Built-in laptop mic | USB condenser mic | XLR audio interface |
+| **Audio Interface** | Integrated sound | Dedicated USB audio | Professional audio interface |
+| **Processing** | 4 cores | 6+ cores | 8+ cores |
+| **RAM** | 4 GB | 8 GB | 16+ GB |
+| **Latency** | <500ms | <200ms | <100ms |
+
+### Real-time Voice Features
+
+- **Network:** 25+ Mbps for real-time EVI streaming
+- **CPU:** Low-latency audio processing capabilities
+- **Audio Drivers:** ASIO drivers recommended for professional use
+- **Background Noise:** Noise cancellation hardware/software
 
 ---
 
@@ -47,11 +101,12 @@ This guide provides detailed hardware requirements, optimization tips, and troub
 
 ### NVIDIA GPU Setup
 
-#### Supported GPUs
-- **Entry Level:** GTX 1060 6GB, GTX 1660 Super
-- **Mid Range:** RTX 3060, RTX 3070, RTX 4060
-- **High End:** RTX 3080, RTX 4070, RTX 4080, RTX 4090
-- **Professional:** RTX A4000, RTX A5000, RTX A6000
+#### Supported GPUs (Updated for Local LLM)
+- **Entry Level:** GTX 1660 Super (6GB), RTX 3060 (8GB)
+- **Mid Range:** RTX 4060 (8GB), RTX 4060 Ti (16GB), RTX 3070 (8GB)
+- **High End:** RTX 4070 (12GB), RTX 4080 (16GB), RTX 4090 (24GB)
+- **Professional:** RTX A4000 (16GB), RTX A5000 (24GB), RTX A6000 (48GB)
+- **Data Center:** H100 (80GB), A100 (40GB/80GB), V100 (32GB)
 
 #### CUDA Installation
 ```bash
@@ -415,30 +470,106 @@ handlers:
 
 ### For Different Use Cases
 
-#### Basic Usage (Text Processing)
-- **CPU:** Any modern quad-core
+#### Cloud-Only LLM Usage
+- **CPU:** Intel i5-8400 / AMD Ryzen 5 2600
 - **RAM:** 8 GB
-- **GPU:** Not required
-- **Storage:** Standard SSD
+- **GPU:** Not required (integrated graphics sufficient)
+- **Storage:** Standard SSD (5 GB)
+- **Network:** 25+ Mbps stable connection
 
-#### Voice Processing
-- **CPU:** 6+ cores recommended
-- **RAM:** 12+ GB
-- **GPU:** Optional but helpful
-- **Audio:** Dedicated sound card recommended
+#### Hybrid Cloud + Local LLM
+- **CPU:** Intel i7-12700K / AMD Ryzen 7 5800X
+- **RAM:** 16 GB DDR4/DDR5
+- **GPU:** NVIDIA RTX 4060 (8GB VRAM)
+- **Storage:** NVMe SSD (20 GB)
+- **Network:** 50+ Mbps for seamless switching
 
-#### Advanced AI Features
-- **CPU:** 8+ cores
-- **RAM:** 16+ GB
-- **GPU:** NVIDIA RTX 3060+ required
-- **Storage:** Fast NVMe SSD
+#### Local LLM + EVI Integration
+- **CPU:** Intel i9-13900K / AMD Ryzen 9 7900X
+- **RAM:** 32 GB DDR5
+- **GPU:** NVIDIA RTX 4080 (16GB VRAM)
+- **Storage:** Gen4 NVMe SSD (50 GB)
+- **Audio:** Professional USB audio interface
+- **Network:** 100+ Mbps for cloud fallback
 
-#### Enterprise/Professional
-- **CPU:** 12+ cores (i9/Ryzen 9)
-- **RAM:** 32+ GB
-- **GPU:** RTX 4070+ or multiple GPUs
-- **Storage:** Enterprise NVMe SSD
-- **Network:** Dedicated high-speed connection
+#### Enterprise Multi-Provider Setup
+- **CPU:** Intel i9-13900KS / AMD Ryzen 9 7950X
+- **RAM:** 64+ GB DDR5
+- **GPU:** Multiple RTX 4090 or H100
+- **Storage:** Enterprise NVMe RAID (200+ GB)
+- **Network:** Dedicated 1 Gbps+ connection
+- **Audio:** Professional XLR audio setup
+
+#### Development & Testing Environment
+- **CPU:** 12+ cores for parallel testing
+- **RAM:** 32+ GB for multiple model loading
+- **GPU:** RTX 4070+ for model testing
+- **Storage:** Fast NVMe with 100+ GB free
+- **Network:** Stable high-speed for API testing
+
+---
+
+## 📊 Performance Benchmarks
+
+### LLM Inference Speed (Tokens/Second)
+
+| Hardware Configuration | 7B Model | 13B Model | 30B Model | 70B Model |
+|------------------------|----------|-----------|-----------|----------|
+| **RTX 3060 (8GB)** | 25-30 | 15-20 | N/A | N/A |
+| **RTX 4060 (8GB)** | 35-40 | 20-25 | N/A | N/A |
+| **RTX 4070 (12GB)** | 45-50 | 30-35 | 15-20 | N/A |
+| **RTX 4080 (16GB)** | 60-70 | 40-50 | 25-30 | 10-15 |
+| **RTX 4090 (24GB)** | 80-100 | 60-70 | 40-50 | 20-25 |
+| **H100 (80GB)** | 150-200 | 120-150 | 80-100 | 50-60 |
+
+### Multi-Provider Response Times
+
+| Provider | Average Latency | 95th Percentile | Throughput (req/min) |
+|----------|-----------------|-----------------|---------------------|
+| **Groq** | 200-500ms | 800ms | 100-200 |
+| **OpenRouter** | 1-3s | 5s | 50-100 |
+| **Gemini** | 2-4s | 8s | 30-60 |
+| **Anthropic** | 3-6s | 10s | 20-40 |
+| **Local Ollama** | 500ms-5s | 10s | 10-30 |
+
+### EVI Voice Processing Latency
+
+| Hardware Setup | Voice-to-Text | Processing | Text-to-Speech | Total Latency |
+|----------------|---------------|------------|----------------|---------------|
+| **Basic Setup** | 200-500ms | 1-3s | 200-500ms | 1.4-4s |
+| **Recommended** | 100-200ms | 500ms-1s | 100-200ms | 700ms-1.4s |
+| **Professional** | 50-100ms | 200-500ms | 50-100ms | 300-700ms |
+
+---
+
+## 💰 Cost Analysis & ROI
+
+### Hardware Investment Tiers
+
+| Tier | Initial Cost | Monthly Cloud Cost | Break-even | Use Case |
+|------|--------------|-------------------|------------|----------|
+| **Cloud-Only** | $0-500 | $50-200 | Immediate | Light usage |
+| **Hybrid Setup** | $1,500-3,000 | $20-100 | 6-12 months | Regular usage |
+| **Local-First** | $3,000-8,000 | $10-50 | 12-24 months | Heavy usage |
+| **Enterprise** | $10,000+ | $0-100 | 24+ months | Professional |
+
+### Operating Cost Comparison (Monthly)
+
+| Usage Pattern | Cloud-Only | Hybrid | Local-First |
+|---------------|------------|--------|-------------|
+| **Light (100 requests/day)** | $30-50 | $20-30 | $15-25 |
+| **Medium (500 requests/day)** | $100-200 | $50-100 | $25-50 |
+| **Heavy (2000 requests/day)** | $400-800 | $100-200 | $50-100 |
+| **Enterprise (10k+ requests/day)** | $2000+ | $500-1000 | $100-300 |
+
+### Power Consumption
+
+| Hardware | Idle Power | Load Power | Monthly Cost (24/7) |
+|----------|------------|------------|--------------------|
+| **CPU-only setup** | 50-100W | 150-250W | $15-30 |
+| **RTX 4060 setup** | 80-120W | 200-300W | $25-40 |
+| **RTX 4080 setup** | 100-150W | 350-450W | $40-60 |
+| **RTX 4090 setup** | 120-180W | 450-600W | $50-80 |
 
 ---
 
