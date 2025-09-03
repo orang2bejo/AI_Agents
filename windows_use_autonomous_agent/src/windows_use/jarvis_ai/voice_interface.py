@@ -190,6 +190,21 @@ class VoiceInterface:
         
         logger.info("Voice interface initialized")
     
+    def is_available(self) -> bool:
+        """Check if voice interface is available and ready to use"""
+        try:
+            # Check if basic components are initialized
+            if self.state == VoiceState.ERROR or self.state == VoiceState.DISABLED:
+                return False
+            
+            # Check if at least one engine is available
+            has_stt = self.stt_engine is not None
+            has_tts = self.tts_engine is not None or self.config.tts_engine == TTSEngine.SYSTEM
+            
+            return has_stt or has_tts
+        except Exception:
+            return False
+    
     async def initialize(self):
         """Initialize voice interface components"""
         try:

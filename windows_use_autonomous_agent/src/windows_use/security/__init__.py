@@ -8,8 +8,8 @@ Modules:
 - hitl: Human-in-the-Loop approval system
 
 Usage:
-    from windows_use.security import GuardrailsEngine, HITLManager
-    from windows_use.security import SecurityLevel, ActionType, ApprovalStatus
+    from . import GuardrailsEngine, HITLManager
+from . import SecurityLevel, ActionType, ApprovalStatus
     
     # Initialize security components
     guardrails = GuardrailsEngine()

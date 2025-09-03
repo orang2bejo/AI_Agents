@@ -1,6 +1,6 @@
-from windows_use.agent.registry.views import ToolResult
-from windows_use.agent.views import AgentStep, AgentData
-from windows_use.desktop.views import DesktopState
+from ..registry.views import ToolResult
+from ..views import AgentStep, AgentData
+from ...desktop.views import DesktopState
 from langchain.prompts import PromptTemplate
 from importlib.resources import files
 from datetime import datetime

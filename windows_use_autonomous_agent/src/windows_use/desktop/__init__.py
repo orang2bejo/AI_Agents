@@ -1,8 +1,8 @@
 from uiautomation import GetScreenSize, Control, GetRootControl, ControlType, GetFocusedControl
-from windows_use.desktop.views import DesktopState,App,Size
-from windows_use.desktop.config import EXCLUDED_APPS
+from .views import DesktopState,App,Size
+from .config import EXCLUDED_APPS
 from PIL.Image import Image as PILImage
-from windows_use.tree import Tree
+from ..tree import Tree
 from fuzzywuzzy import process
 from time import sleep
 from io import BytesIO

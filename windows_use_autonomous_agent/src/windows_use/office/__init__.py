@@ -9,7 +9,7 @@ Modules:
 - powerpoint_handler: PowerPoint automation
 
 Usage:
-    from windows_use.office import ExcelHandler, WordHandler, PowerPointHandler
+    from . import ExcelHandler, WordHandler, PowerPointHandler
     
     # Excel
     with ExcelHandler() as excel:

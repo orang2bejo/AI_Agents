@@ -2,9 +2,9 @@ from .views import TreeElementNode, TextElementNode, ScrollElementNode, Center, 
 from .config import INTERACTIVE_CONTROL_TYPE_NAMES,INFORMATIVE_CONTROL_TYPE_NAMES
 
 
-from ..desktop.config import AVOIDED_APPSThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from uiautomation import GetRootControl,Control,ImageControl
-from windows_use.desktop.config import AVOIDED_APPS
+from ..desktop.config import AVOIDED_APPS
 from PIL import Image, ImageFont, ImageDraw
 from typing import TYPE_CHECKING
 from time import sleep
