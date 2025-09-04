@@ -1,0 +1,4 @@
+planner: gpt-4
+judge: gpt-4
+offline: small
+vision: null

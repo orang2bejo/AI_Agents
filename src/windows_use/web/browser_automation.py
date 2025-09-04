@@ -16,6 +16,9 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel
 
+from ..utils.rate_limit import rate_limit
+from ..utils.retry import retry
+
 try:
     from ..security import SecurityManager, SecurityLevel, ActionType
     SECURITY_AVAILABLE = True
@@ -126,6 +129,7 @@ class SeleniumBrowser:
         self.driver = None
         self.wait = None
         
+    @retry((Exception,), tries=3, backoff=0.2)
     def start(self):
         """Start browser session"""
         try:
@@ -228,6 +232,7 @@ class SeleniumBrowser:
             
             return options
     
+    @rate_limit(5, 1)
     def navigate_to(self, url: str) -> BrowserAction:
         """Navigate to URL"""
         start_time = time.time()

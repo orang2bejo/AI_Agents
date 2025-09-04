@@ -8,7 +8,11 @@
 
 ## Recommended Patches
 ```python
+ codex/conduct-comprehensive-audit-for-jarvis-ai-project-8yncbg
+# obs/device_telemetry.py (new)
+=======
 # utils/device_telemetry.py (new)
+ main
 import psutil, json
 
 def snapshot() -> dict:
@@ -19,7 +23,11 @@ def snapshot() -> dict:
 ```
 ```python
 # scripts/healthcheck.py (new)
+ codex/conduct-comprehensive-audit-for-jarvis-ai-project-8yncbg
+from obs.device_telemetry import snapshot
+=======
 from utils.device_telemetry import snapshot
+ main
 
 if __name__ == "__main__":
     stats = snapshot()

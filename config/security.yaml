@@ -1,0 +1,5 @@
+mode_default: ASSISTIVE
+web:
+  allowlist:
+    - example.com
+  require_confirm_on_submit: true
