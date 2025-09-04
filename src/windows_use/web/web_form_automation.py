@@ -150,6 +150,15 @@ class RPAConfig:
     auto_save_progress: bool = True
     voice_confirmation: bool = True
     safety_checks: bool = True
+    # Security settings
+    domain_allowlist: List[str] = field(default_factory=lambda: [
+        "ekinerja.bkn.go.id",
+        "simpeg.bkn.go.id",
+        "localhost",
+        "127.0.0.1"
+    ])
+    require_confirmation: bool = True
+    confirmation_timeout: int = 30  # seconds
 
 class WebFormAutomation:
     """Sistem otomasi form web dengan Playwright"""
@@ -175,6 +184,96 @@ class WebFormAutomation:
         
         # Initialize built-in templates
         self._init_builtin_templates()
+    
+    def _is_domain_allowed(self, url: str) -> bool:
+        """Check if domain is in allowlist"""
+        from urllib.parse import urlparse
+        
+        try:
+            parsed_url = urlparse(url)
+            domain = parsed_url.netloc.lower()
+            
+            # Remove port if present
+            if ':' in domain:
+                domain = domain.split(':')[0]
+            
+            return any(allowed_domain in domain or domain == allowed_domain 
+                      for allowed_domain in self.config.domain_allowlist)
+        except Exception as e:
+            self.logger.error(f"Error parsing URL {url}: {e}")
+            return False
+    
+    def _get_user_confirmation(self, message: str) -> bool:
+        """Get user confirmation for automation action"""
+        if not self.config.require_confirmation:
+            return True
+        
+        try:
+            import signal
+            
+            def timeout_handler(signum, frame):
+                raise TimeoutError("Confirmation timeout")
+            
+            # Set timeout for confirmation
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(self.config.confirmation_timeout)
+            
+            try:
+                response = input(f"\n{message}\nProceed? (y/N): ").strip().lower()
+                signal.alarm(0)  # Cancel timeout
+                return response in ['y', 'yes', 'ya']
+            except TimeoutError:
+                print("\nConfirmation timeout. Automation cancelled.")
+                return False
+            
+        except Exception as e:
+            self.logger.error(f"Error getting user confirmation: {e}")
+            return False
+    
+    def _is_domain_allowed(self, url: str) -> bool:
+        """Check if domain is in allowlist"""
+        from urllib.parse import urlparse
+        
+        try:
+            parsed_url = urlparse(url)
+            domain = parsed_url.netloc.lower()
+            
+            # Remove port if present
+            if ':' in domain:
+                domain = domain.split(':')[0]
+            
+            return any(allowed_domain in domain or domain == allowed_domain 
+                      for allowed_domain in self.config.domain_allowlist)
+        except Exception as e:
+            self.logger.error(f"Error parsing URL {url}: {e}")
+            return False
+    
+    def _get_user_confirmation(self, message: str) -> bool:
+        """Get user confirmation for automation action"""
+        if not self.config.require_confirmation:
+            return True
+        
+        try:
+            import signal
+            
+            def timeout_handler(signum, frame):
+                raise TimeoutError("Confirmation timeout")
+            
+            # Set timeout for confirmation
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(self.config.confirmation_timeout)
+            
+            try:
+                response = input(f"\n{message}\nProceed? (y/N): ").strip().lower()
+                signal.alarm(0)  # Cancel timeout
+                return response in ['y', 'yes', 'ya']
+            except TimeoutError:
+                print("\nConfirmation timeout. Automation cancelled.")
+                return False
+            
+        except Exception as e:
+            self.logger.error(f"Error getting user confirmation: {e}")
+            return False
     
     def _setup_directories(self):
         """Setup direktori yang diperlukan"""
@@ -342,6 +441,20 @@ class WebFormAutomation:
             self.logger.error(f"Template {session.template_name} not found")
             return False
         
+        # Security checks
+        if not self._is_domain_allowed(template.url):
+            self.logger.error(f"Domain not allowed: {template.url}")
+            session.status = AutomationStatus.FAILED
+            session.errors.append(f"Domain not in allowlist: {template.url}")
+            return False
+        
+        # Get user confirmation
+        confirmation_msg = f"About to run automation '{template.name}' on {template.url}"
+        if not self._get_user_confirmation(confirmation_msg):
+            self.logger.info(f"User cancelled automation for session {session_id}")
+            session.status = AutomationStatus.CANCELLED
+            return False
+        
         try:
             session.status = AutomationStatus.RUNNING
             session.current_step = "Starting automation"
@@ -463,7 +576,8 @@ class WebFormAutomation:
                 try:
                     await self.page.wait_for_selector(f"text={indicator}", timeout=5000)
                     return True
-                except:
+                except (PlaywrightTimeoutError, Exception) as e:
+                    self.logger.debug(f"Success indicator '{indicator}' not found: {e}")
                     continue
             
             # Check for error indicators
@@ -471,7 +585,8 @@ class WebFormAutomation:
                 try:
                     await self.page.wait_for_selector(f"text={indicator}", timeout=1000)
                     return False
-                except:
+                except (PlaywrightTimeoutError, Exception) as e:
+                    self.logger.debug(f"Error indicator '{indicator}' not found: {e}")
                     continue
             
             return True
@@ -504,6 +619,34 @@ class WebFormAutomation:
     def get_template(self, name: str) -> Optional[FormTemplate]:
         """Get template by name"""
         return self.templates.get(name)
+    
+    def add_allowed_domain(self, domain: str) -> bool:
+        """Add domain to allowlist"""
+        try:
+            if domain not in self.config.domain_allowlist:
+                self.config.domain_allowlist.append(domain)
+                self.logger.info(f"Added domain to allowlist: {domain}")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"Error adding domain to allowlist: {e}")
+            return False
+    
+    def remove_allowed_domain(self, domain: str) -> bool:
+        """Remove domain from allowlist"""
+        try:
+            if domain in self.config.domain_allowlist:
+                self.config.domain_allowlist.remove(domain)
+                self.logger.info(f"Removed domain from allowlist: {domain}")
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f"Error removing domain from allowlist: {e}")
+            return False
+    
+    def get_allowed_domains(self) -> List[str]:
+        """Get list of allowed domains"""
+        return self.config.domain_allowlist.copy()
     
     async def cancel_session(self, session_id: str) -> bool:
         """Cancel running session"""

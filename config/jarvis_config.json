@@ -39,13 +39,13 @@
     "noise_reduction": true,
     "echo_cancellation": true,
     "evi_enabled": true,
-    "evi_api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
+    "evi_api_key": "${EVI_API_KEY}",
     "evi_voice_id": "default",
     "evi_empathy_level": 0.7
   },
   "evi": {
     "enabled": true,
-    "api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
+    "api_key": "${EVI_API_KEY}",
     "base_url": "https://api.hume.ai",
     "voice_settings": {
       "voice_id": "default",
@@ -239,8 +239,8 @@
     "engines": {
       "google": {
         "enabled": false,
-        "api_key": "",
-        "search_engine_id": ""
+        "api_key": "${GOOGLE_API_KEY}",
+        "search_engine_id": "${GOOGLE_SEARCH_ENGINE_ID}"
       },
       "duckduckgo": {
         "enabled": true,
@@ -248,7 +248,7 @@
       },
       "bing": {
         "enabled": false,
-        "api_key": ""
+        "api_key": "${BING_API_KEY}"
       }
     }
   },
@@ -263,23 +263,23 @@
     "providers": {
       "openai": {
         "enabled": false,
-        "api_key": "",
+        "api_key": "${OPENAI_API_KEY}",
         "model": "gpt-3.5-turbo",
         "base_url": "https://api.openai.com/v1"
       },
       "anthropic": {
         "enabled": false,
-        "api_key": "",
+        "api_key": "${ANTHROPIC_API_KEY}",
         "model": "claude-3-sonnet-20240229"
       },
       "groq": {
         "enabled": false,
-        "api_key": "",
+        "api_key": "${GROQ_API_KEY}",
         "model": "mixtral-8x7b-32768"
       },
       "gemini": {
         "enabled": false,
-        "api_key": "",
+        "api_key": "${GEMINI_API_KEY}",
         "model": "gemini-pro"
       },
       "ollama": {
@@ -327,7 +327,7 @@
     "authentication": {
       "enabled": false,
       "method": "api_key",
-      "api_key": ""
+      "api_key": "${API_KEY}"
     }
   },
   "plugins": {

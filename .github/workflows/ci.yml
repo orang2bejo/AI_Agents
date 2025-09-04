@@ -44,10 +44,15 @@ jobs:
       run: |
         pip install pytest-xdist pytest-timeout pytest-mock
     
-    - name: Lint with flake8
+    - name: Lint with ruff
       run: |
-        flake8 windows_use/ scripts/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 windows_use/ scripts/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pip install ruff
+        ruff check windows_use/ scripts/ tests/ --output-format=github
+    
+    - name: Format check with black
+      run: |
+        pip install black
+        black --check --diff windows_use/ scripts/ tests/
     
     - name: Type check with mypy
       run: |
@@ -64,11 +69,12 @@ jobs:
       run: |
         python -c "import windows_use; print('Core imports successful')"
     
-    - name: Run tests with pytest
+    - name: Run tests with pytest (skip Office if unavailable)
       run: |
-        pytest tests/ -v --tb=short --maxfail=5 --timeout=300
+        pytest tests/ -v --tb=short --maxfail=5 --timeout=300 -m "not office or office_available"
       env:
         PYTHONPATH: ${{ github.workspace }}
+        SKIP_OFFICE_TESTS: "true"
     
     - name: Run installation test
       run: |
@@ -76,7 +82,11 @@ jobs:
 
     - name: Upload audit reports
       if: always()
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
       uses: actions/upload-artifact@v4
+=======
+      uses: actions/upload-artifact@v3
+main
       with:
         name: audit-reports
         path: audit_reports/
@@ -191,7 +201,11 @@ jobs:
         pip-audit > cve-report.txt || true
 
     - name: Upload supply-chain artifacts
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
       uses: actions/upload-artifact@v4
+=======
+      uses: actions/upload-artifact@v3
+main
       with:
         name: supply-chain
         path: |

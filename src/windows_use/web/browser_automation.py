@@ -12,12 +12,30 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Union, Any, Callable
+from urllib.parse import urlparse
 
 from pydantic import BaseModel
 
 from ..utils.rate_limit import rate_limit
 from ..utils.retry import retry
 
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
+=======
+try:
+    from ..security import SecurityManager, SecurityLevel, ActionType
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+    SecurityManager = None
+
+try:
+    from ..security import SecurityManager, SecurityLevel, ActionType
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+    SecurityManager = None
+
+main
 try:
     from selenium import webdriver
     from selenium.webdriver.common.by import By
