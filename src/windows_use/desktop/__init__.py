@@ -12,6 +12,7 @@ import pyautogui
 import base64
 import csv
 import io
+import shlex
 
 class Desktop:
     def __init__(self):
@@ -58,8 +59,11 @@ class Desktop:
     
     def execute_command(self,command:str)->tuple[str,int]:
         try:
-            result = subprocess.run(['powershell', '-Command']+command.split(), 
-            capture_output=True, check=True)
+            # Sanitize command to prevent injection attacks
+            # Use shlex.split for proper command parsing
+            sanitized_command = shlex.quote(command)
+            result = subprocess.run(['powershell', '-Command', sanitized_command], 
+                                  capture_output=True, check=True, shell=False)
             return (result.stdout.decode('latin1'),result.returncode)
         except subprocess.CalledProcessError as e:
             return (e.stdout.decode('latin1'),e.returncode)

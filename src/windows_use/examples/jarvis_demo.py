@@ -265,8 +265,8 @@ class JarvisAISystem:
         # Create a demo task
         task = self.task_coordinator.create_task(
             name=f"User Request: {user_input[:50]}",
+            user_input=user_input,
             executor=self._demo_task_executor,
-            user_input,
             task_type=TaskType.USER_INTERACTION,
             priority=TaskPriority.HIGH
         )
