@@ -41,6 +41,7 @@ termcolor>=2.3.0
 sounddevice>=0.4.6
 websockets>=11.0.0
 webrtcvad>=2.0.10
+keyring>=24.3.0
 
 # Optional Dependencies (install only if needed)
 # Voice Recognition (uncomment if voice features needed)

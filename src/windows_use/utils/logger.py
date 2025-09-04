@@ -25,6 +25,8 @@ import traceback
 import threading
 from contextlib import contextmanager
 
+from ..obs.log_sanitizer import redact
+
 class LogLevel(Enum):
     """Log levels untuk structured logging"""
     DEBUG = "debug"
@@ -165,19 +167,20 @@ class StructuredLogger:
             component: Component name
             trace_id: Trace ID for request tracking
         """
-        # Merge context
         merged_context = self._get_context().copy()
         if context:
             merged_context.update(context)
-        
-        # Create log entry
+
+        sanitized_context = {k: redact(str(v)) for k, v in merged_context.items()}
+        message = redact(message)
+
         entry = LogEntry(
             timestamp=datetime.utcnow().isoformat() + "Z",
             session_id=self.session_id,
             event_type=event_type.value,
             level=level.value,
             message=message,
-            context=merged_context,
+            context=sanitized_context,
             duration_ms=duration_ms,
             error_details=error_details,
             user_id=user_id,

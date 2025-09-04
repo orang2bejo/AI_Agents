@@ -7,34 +7,44 @@ Module ini menyediakan fungsi untuk:
 - Audio recording dan preprocessing
 """
 
-import asyncio
-import threading
 import time
-from typing import Optional, Callable, Dict, Any
+from typing import Optional, Callable
 import logging
+import os
+
+try:
+    import torch
+except ImportError:
+    torch = None
 
 try:
     import sounddevice as sd
     import numpy as np
     import whisper
     import webrtcvad
-except ImportError as e:
+except (ImportError, OSError) as e:
     logging.warning(f"Voice dependencies not installed: {e}")
-    logging.warning("Install with: pip install sounddevice numpy openai-whisper webrtcvad")
+    logging.warning(
+        "Install with: pip install sounddevice numpy openai-whisper webrtcvad"
+    )
+
 
 class VoiceInput:
     """Voice Input handler dengan STT dan VAD"""
-    
-    def __init__(self, 
-                 model_name: str = "base",
-                 sample_rate: int = 16000,
-                 chunk_duration: float = 0.03,  # 30ms chunks untuk VAD
-                 vad_aggressiveness: int = 2,
-                 silence_threshold: float = 2.0,  # detik silence sebelum stop
-                 push_to_talk_key: str = "space"):
+
+    def __init__(
+        self,
+        model_name: str = "base",
+        sample_rate: int = 16000,
+        chunk_duration: float = 0.03,  # 30ms chunks untuk VAD
+        vad_aggressiveness: int = 2,
+        silence_threshold: float = 2.0,  # detik silence sebelum stop
+        push_to_talk_key: str = "space",
+        device: str = "auto",
+    ):
         """
         Initialize Voice Input
-        
+
         Args:
             model_name: Whisper model (tiny, base, small, medium, large)
             sample_rate: Audio sample rate (16kHz optimal untuk Whisper)
@@ -49,51 +59,60 @@ class VoiceInput:
         self.chunk_size = int(sample_rate * chunk_duration)
         self.silence_threshold = silence_threshold
         self.push_to_talk_key = push_to_talk_key
-        
+        self.device = device
+
         # Initialize components
         self.whisper_model = None
         self.vad = None
         self.is_recording = False
         self.audio_buffer = []
         self.last_speech_time = 0
-        
+
         # Callbacks
         self.on_speech_start: Optional[Callable] = None
         self.on_speech_end: Optional[Callable] = None
         self.on_transcription: Optional[Callable[[str], None]] = None
-        
+
         self._setup_components()
-        
+
     def _setup_components(self):
         """Setup Whisper dan VAD components"""
         try:
             # Check if whisper is available
-            if 'whisper' in globals():
+            if "whisper" in globals():
                 # Load Whisper model
                 logging.info(f"Loading Whisper model: {self.model_name}")
-                self.whisper_model = whisper.load_model(self.model_name)
+                device = os.getenv("JARVIS_STT_DEVICE", self.device)
+                if device == "auto":
+                    if torch and torch.cuda.is_available():
+                        device = "cuda"
+                    else:
+                        device = "cpu"
+                self.whisper_model = whisper.load_model(self.model_name, device=device)
             else:
                 logging.warning("Whisper not available, voice recognition disabled")
                 self.whisper_model = None
-            
+
             # Setup VAD
-            if 'webrtcvad' in globals():
+            if "webrtcvad" in globals():
                 self.vad = webrtcvad.Vad()
                 self.vad.set_mode(2)  # Aggressiveness mode
             else:
-                logging.warning("WebRTC VAD not available, voice activity detection disabled")
+                logging.warning(
+                    "WebRTC VAD not available, voice activity detection disabled"
+                )
                 self.vad = None
-            
+
             logging.info("Voice components initialized successfully")
-            
+
         except Exception as e:
             logging.error(f"Failed to setup voice components: {e}")
             self.whisper_model = None
             self.vad = None
-    
+
     def start_listening(self, mode: str = "vad") -> None:
         """Start listening untuk voice input
-        
+
         Args:
             mode: "vad" untuk voice activity detection, "ptt" untuk push-to-talk
         """
@@ -103,19 +122,20 @@ class VoiceInput:
             self._start_ptt_listening()
         else:
             raise ValueError("Mode must be 'vad' or 'ptt'")
-    
+
     def _start_vad_listening(self):
         """Start VAD-based listening"""
+
         def audio_callback(indata, frames, time, status):
             if status:
                 logging.warning(f"Audio callback status: {status}")
-            
+
             # Convert to int16 untuk VAD
             audio_int16 = (indata[:, 0] * 32767).astype(np.int16)
-            
+
             # Check voice activity
             is_speech = self.vad.is_speech(audio_int16.tobytes(), self.sample_rate)
-            
+
             if is_speech:
                 if not self.is_recording:
                     self.is_recording = True
@@ -123,28 +143,30 @@ class VoiceInput:
                     if self.on_speech_start:
                         self.on_speech_start()
                     logging.info("Speech detected, starting recording")
-                
+
                 self.audio_buffer.append(audio_int16)
                 self.last_speech_time = time.time()
-                
+
             elif self.is_recording:
                 # Check if silence duration exceeded threshold
                 silence_duration = time.time() - self.last_speech_time
                 if silence_duration > self.silence_threshold:
                     self._process_recorded_audio()
-        
+
         # Start audio stream
         logging.info("Starting VAD listening...")
-        with sd.InputStream(callback=audio_callback,
-                          channels=1,
-                          samplerate=self.sample_rate,
-                          blocksize=self.chunk_size):
+        with sd.InputStream(
+            callback=audio_callback,
+            channels=1,
+            samplerate=self.sample_rate,
+            blocksize=self.chunk_size,
+        ):
             try:
                 while True:
                     time.sleep(0.1)
             except KeyboardInterrupt:
                 logging.info("Stopping VAD listening")
-    
+
     def _start_ptt_listening(self):
         """Start Push-to-Talk listening"""
         try:
@@ -153,7 +175,7 @@ class VoiceInput:
             logging.error("keyboard library required for PTT mode")
             logging.error("Install with: pip install keyboard")
             return
-        
+
         def on_key_press():
             if not self.is_recording:
                 self.is_recording = True
@@ -162,83 +184,86 @@ class VoiceInput:
                     self.on_speech_start()
                 logging.info("PTT activated, recording...")
                 self._start_recording()
-        
+
         def on_key_release():
             if self.is_recording:
                 self._process_recorded_audio()
-        
+
         # Setup keyboard hooks
         keyboard.on_press_key(self.push_to_talk_key, lambda _: on_key_press())
         keyboard.on_release_key(self.push_to_talk_key, lambda _: on_key_release())
-        
+
         logging.info(f"PTT mode active. Hold '{self.push_to_talk_key}' to talk")
         keyboard.wait()  # Keep listening
-    
+
     def _start_recording(self):
         """Start recording audio untuk PTT mode"""
+
         def audio_callback(indata, frames, time, status):
             if self.is_recording:
                 audio_int16 = (indata[:, 0] * 32767).astype(np.int16)
                 self.audio_buffer.append(audio_int16)
-        
-        self.stream = sd.InputStream(callback=audio_callback,
-                                   channels=1,
-                                   samplerate=self.sample_rate,
-                                   blocksize=self.chunk_size)
+
+        self.stream = sd.InputStream(
+            callback=audio_callback,
+            channels=1,
+            samplerate=self.sample_rate,
+            blocksize=self.chunk_size,
+        )
         self.stream.start()
-    
+
     def _process_recorded_audio(self):
         """Process recorded audio dengan Whisper STT"""
         if not self.audio_buffer:
             return
-        
+
         self.is_recording = False
-        if hasattr(self, 'stream'):
+        if hasattr(self, "stream"):
             self.stream.stop()
             self.stream.close()
-        
+
         if self.on_speech_end:
             self.on_speech_end()
-        
+
         # Combine audio chunks
         audio_data = np.concatenate(self.audio_buffer)
-        
+
         # Convert to float32 untuk Whisper
         audio_float32 = audio_data.astype(np.float32) / 32767.0
-        
+
         # Transcribe dengan Whisper
         try:
             logging.info("Transcribing audio...")
             result = self.whisper_model.transcribe(audio_float32, language="id")
             text = result["text"].strip()
-            
+
             if text:
                 logging.info(f"Transcription: {text}")
                 if self.on_transcription:
                     self.on_transcription(text)
             else:
                 logging.info("No speech detected in audio")
-                
+
         except Exception as e:
             logging.error(f"Transcription failed: {e}")
-        
+
         # Clear buffer
         self.audio_buffer = []
-    
+
     def stop_listening(self):
         """Stop voice input"""
         self.is_recording = False
-        if hasattr(self, 'stream'):
+        if hasattr(self, "stream"):
             self.stream.stop()
             self.stream.close()
         logging.info("Voice input stopped")
-    
+
     def transcribe_file(self, audio_file_path: str) -> str:
         """Transcribe audio file
-        
+
         Args:
             audio_file_path: Path ke audio file
-            
+
         Returns:
             Transcribed text
         """
@@ -253,28 +278,28 @@ class VoiceInput:
 # Example usage dan testing
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    
+
     def on_transcription(text: str):
         print(f"\n🎤 Transcription: {text}\n")
-    
+
     def on_speech_start():
         print("🔴 Recording started...")
-    
+
     def on_speech_end():
         print("⏹️ Recording stopped, processing...")
-    
+
     # Initialize voice input
     voice = VoiceInput(model_name="base")
     voice.on_transcription = on_transcription
     voice.on_speech_start = on_speech_start
     voice.on_speech_end = on_speech_end
-    
+
     print("Voice Input Test")
     print("1. VAD mode (automatic)")
     print("2. PTT mode (press space)")
-    
+
     choice = input("Choose mode (1/2): ")
-    
+
     try:
         if choice == "1":
             voice.start_listening("vad")
