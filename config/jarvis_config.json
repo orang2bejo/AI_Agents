@@ -1,0 +1,350 @@
+{
+  "system": {
+    "name": "Jarvis AI",
+    "version": "1.0.0",
+    "description": "Advanced AI Assistant with Voice Interface and Task Management",
+    "default_user": "user",
+    "language": "english",
+    "timezone": "UTC",
+    "log_level": "INFO"
+  },
+  "features": {
+    "voice_enabled": true,
+    "gui_enabled": true,
+    "demo_mode": false,
+    "learning_enabled": true,
+    "web_search_enabled": true,
+    "office_automation_enabled": true,
+    "system_tools_enabled": true
+  },
+  "personality": {
+    "traits": ["helpful", "professional", "adaptive", "proactive"],
+    "tone": "friendly",
+    "proactive": true,
+    "humor_level": "moderate",
+    "formality": "balanced",
+    "response_style": "conversational"
+  },
+  "voice": {
+    "input_mode": "voice_activation",
+    "stt_engine": "whisper",
+    "tts_engine": "piper",
+    "language": "english",
+    "voice_activation_threshold": 0.7,
+    "silence_timeout": 2.0,
+    "max_recording_duration": 30.0,
+    "audio_sample_rate": 16000,
+    "audio_channels": 1,
+    "voice_activity_detection": true,
+    "noise_reduction": true,
+    "echo_cancellation": true,
+    "evi_enabled": true,
+    "evi_api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
+    "evi_voice_id": "default",
+    "evi_empathy_level": 0.7
+  },
+  "evi": {
+    "enabled": true,
+    "api_key": "i36hDAWLnMDzVTieNA5qno1yrQ1OITRARRIF7pxIK49I9aZ2",
+    "base_url": "https://api.hume.ai",
+    "voice_settings": {
+      "voice_id": "default",
+      "speed": 1.0,
+      "pitch": 1.0,
+      "volume": 1.0,
+      "empathy_level": 0.7,
+      "emotional_range": 0.8
+    },
+    "audio_settings": {
+      "sample_rate": 16000,
+      "channels": 1,
+      "format": "wav",
+      "chunk_size": 1024,
+      "buffer_size": 4096
+    },
+    "conversation_settings": {
+      "max_turn_duration": 30.0,
+      "silence_timeout": 3.0,
+      "interruption_sensitivity": 0.5,
+      "context_retention": true,
+      "emotion_tracking": true
+    },
+    "emotional_intelligence": {
+      "emotion_detection": true,
+      "emotion_response": true,
+      "empathy_adjustment": true,
+      "mood_tracking": true,
+      "emotional_memory": true,
+      "supported_emotions": [
+        "joy", "sadness", "anger", "fear", "surprise", "disgust",
+        "excitement", "contentment", "frustration", "anxiety",
+        "confidence", "confusion", "curiosity", "boredom"
+      ]
+    },
+    "performance": {
+      "timeout_seconds": 30,
+      "retry_attempts": 3,
+      "connection_pool_size": 5,
+      "max_concurrent_conversations": 3,
+      "rate_limit_per_minute": 100,
+      "cache_responses": false
+    },
+    "security": {
+      "validate_ssl": true,
+      "api_key_rotation": false,
+      "encrypt_audio": true,
+      "log_conversations": false,
+      "data_retention_hours": 24
+    }
+  },
+  "conversation": {
+    "max_history_length": 100,
+    "context_window_size": 10,
+    "session_timeout": 3600,
+    "auto_save_interval": 300,
+    "memory_cleanup_interval": 1800,
+    "enable_context_awareness": true,
+    "enable_emotion_detection": true,
+    "enable_intent_tracking": true
+  },
+  "language": {
+    "supported_languages": ["english", "indonesian"],
+    "auto_detect": true,
+    "translation_enabled": true,
+    "confidence_threshold": 0.8,
+    "fallback_language": "english",
+    "localization": {
+      "date_format": "YYYY-MM-DD",
+      "time_format": "HH:mm:ss",
+      "number_format": "en-US",
+      "currency": "USD"
+    }
+  },
+  "learning": {
+    "enabled": true,
+    "auto_save": true,
+    "model_update_interval": 3600,
+    "data_retention_days": 30,
+    "privacy_mode": false,
+    "learning_rate": 0.01,
+    "batch_size": 32,
+    "max_training_iterations": 1000,
+    "feature_extraction": {
+      "text_features": true,
+      "temporal_features": true,
+      "behavioral_features": true,
+      "context_features": true
+    },
+    "models": {
+      "intent_classification": "naive_bayes",
+      "sentiment_analysis": "logistic_regression",
+      "user_clustering": "kmeans",
+      "response_optimization": "linear_regression"
+    }
+  },
+  "tasks": {
+    "max_concurrent_tasks": 10,
+    "default_priority": "medium",
+    "timeout_seconds": 300,
+    "retry_attempts": 3,
+    "queue_size": 100,
+    "enable_scheduling": true,
+    "enable_dependencies": true,
+    "auto_cleanup": true,
+    "task_history_limit": 1000
+  },
+  "security": {
+    "guardrails_enabled": true,
+    "human_in_loop": true,
+    "safe_mode": true,
+    "input_validation": true,
+    "output_filtering": true,
+    "rate_limiting": {
+      "enabled": true,
+      "max_requests_per_minute": 60,
+      "max_requests_per_hour": 1000
+    },
+    "content_filtering": {
+      "enabled": true,
+      "block_harmful_content": true,
+      "block_personal_info": true,
+      "block_sensitive_data": true
+    }
+  },
+  "dashboard": {
+    "theme": "dark",
+    "auto_refresh_interval": 5,
+    "show_metrics": true,
+    "show_logs": true,
+    "show_tasks": true,
+    "show_voice_visualizer": true,
+    "window_size": [1200, 800],
+    "window_position": [100, 100],
+    "always_on_top": false,
+    "minimize_to_tray": true
+  },
+  "office_automation": {
+    "enabled": true,
+    "excel": {
+      "auto_save": true,
+      "backup_files": true,
+      "macro_security": "medium"
+    },
+    "word": {
+      "auto_save": true,
+      "track_changes": false,
+      "spell_check": true
+    },
+    "powerpoint": {
+      "auto_save": true,
+      "slide_transitions": true,
+      "presenter_mode": false
+    },
+    "outlook": {
+      "auto_send": false,
+      "read_receipts": false,
+      "spam_filtering": true
+    }
+  },
+  "system_tools": {
+    "enabled": true,
+    "allowed_operations": [
+      "file_management",
+      "process_monitoring",
+      "system_info",
+      "network_status",
+      "disk_usage",
+      "memory_usage"
+    ],
+    "restricted_operations": [
+      "system_shutdown",
+      "registry_modification",
+      "service_control",
+      "user_management"
+    ],
+    "powershell": {
+      "enabled": true,
+      "execution_policy": "restricted",
+      "timeout_seconds": 30
+    }
+  },
+  "web_search": {
+    "enabled": true,
+    "default_engine": "duckduckgo",
+    "max_results": 10,
+    "timeout_seconds": 10,
+    "user_agent": "Jarvis AI Assistant",
+    "respect_robots_txt": true,
+    "rate_limit_delay": 1.0,
+    "engines": {
+      "google": {
+        "enabled": false,
+        "api_key": "",
+        "search_engine_id": ""
+      },
+      "duckduckgo": {
+        "enabled": true,
+        "safe_search": "moderate"
+      },
+      "bing": {
+        "enabled": false,
+        "api_key": ""
+      }
+    }
+  },
+  "llm": {
+    "enabled": true,
+    "default_provider": "openai",
+    "fallback_providers": ["anthropic", "groq"],
+    "max_tokens": 2048,
+    "temperature": 0.7,
+    "timeout_seconds": 30,
+    "retry_attempts": 3,
+    "providers": {
+      "openai": {
+        "enabled": false,
+        "api_key": "",
+        "model": "gpt-3.5-turbo",
+        "base_url": "https://api.openai.com/v1"
+      },
+      "anthropic": {
+        "enabled": false,
+        "api_key": "",
+        "model": "claude-3-sonnet-20240229"
+      },
+      "groq": {
+        "enabled": false,
+        "api_key": "",
+        "model": "mixtral-8x7b-32768"
+      },
+      "gemini": {
+        "enabled": false,
+        "api_key": "",
+        "model": "gemini-pro"
+      },
+      "ollama": {
+        "enabled": false,
+        "base_url": "http://localhost:11434",
+        "model": "llama2"
+      }
+    }
+  },
+  "self_evolving": {
+    "enabled": true,
+    "evaluation_interval": 3600,
+    "reflection_threshold": 0.7,
+    "mutation_rate": 0.1,
+    "memory_retention_days": 7,
+    "auto_improvement": true,
+    "performance_tracking": true,
+    "adaptation_learning": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file_path": "jarvis_ai.log",
+    "max_file_size": "10MB",
+    "backup_count": 5,
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "console_output": true,
+    "file_output": true,
+    "structured_logging": false
+  },
+  "performance": {
+    "max_memory_usage": "1GB",
+    "cpu_usage_threshold": 80,
+    "response_time_target": 2.0,
+    "cache_enabled": true,
+    "cache_size": "100MB",
+    "garbage_collection": true,
+    "profiling_enabled": false
+  },
+  "api": {
+    "enabled": false,
+    "host": "localhost",
+    "port": 8000,
+    "cors_enabled": true,
+    "rate_limiting": true,
+    "authentication": {
+      "enabled": false,
+      "method": "api_key",
+      "api_key": ""
+    }
+  },
+  "plugins": {
+    "enabled": true,
+    "auto_load": true,
+    "plugin_directory": "plugins",
+    "allowed_plugins": [],
+    "blocked_plugins": [],
+    "sandbox_mode": true
+  },
+  "backup": {
+    "enabled": true,
+    "interval_hours": 24,
+    "backup_directory": "backups",
+    "max_backups": 7,
+    "compress_backups": true,
+    "include_logs": false,
+    "include_models": true
+  }
+}

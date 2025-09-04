@@ -1,0 +1,119 @@
+# Logging Configuration for Jarvis AI
+# This file configures the logging system for the entire application
+
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  detailed:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(funcName)s() - %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  json:
+    class: windows_use.utils.logging_config.StructuredFormatter
+    format: json
+  
+  colored:
+    class: windows_use.utils.logging_config.ColoredFormatter
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+filters:
+  performance:
+    class: windows_use.utils.logging_config.PerformanceFilter
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: colored
+    stream: ext://sys.stdout
+  
+  file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: detailed
+    filename: logs/jarvis.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+    encoding: utf8
+  
+  error_file:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: detailed
+    filename: logs/jarvis_errors.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 3
+    encoding: utf8
+  
+  performance_file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: json
+    filename: logs/jarvis_performance.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 3
+    encoding: utf8
+    filters: [performance]
+
+loggers:
+  windows_use:
+    level: DEBUG
+    handlers: [console, file, error_file]
+    propagate: false
+  
+  windows_use.agent:
+    level: DEBUG
+    handlers: [console, file]
+    propagate: false
+  
+  windows_use.desktop:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+  
+  windows_use.llm:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+  
+  windows_use.security:
+    level: WARNING
+    handlers: [console, file, error_file]
+    propagate: false
+  
+  windows_use.performance:
+    level: DEBUG
+    handlers: [performance_file]
+    propagate: false
+  
+  # Third-party libraries
+  urllib3:
+    level: WARNING
+    handlers: [file]
+    propagate: false
+  
+  requests:
+    level: WARNING
+    handlers: [file]
+    propagate: false
+  
+  openai:
+    level: INFO
+    handlers: [file]
+    propagate: false
+
+root:
+  level: INFO
+  handlers: [console, file]
+
+# Environment-specific overrides
+# These can be overridden by environment variables:
+# JARVIS_LOG_LEVEL - Override root log level
+# JARVIS_LOG_FILE - Override log file path
+# JARVIS_LOG_CONSOLE - Enable/disable console logging (true/false)
