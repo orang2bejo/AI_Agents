@@ -73,6 +73,13 @@ jobs:
     - name: Run installation test
       run: |
         python test_installation.py
+
+    - name: Upload audit reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: audit-reports
+        path: audit_reports/
     
     - name: Generate coverage report
       run: |
@@ -162,3 +169,31 @@ jobs:
     - name: Notify on failure
       if: ${{ needs.test.result == 'failure' }}
       run: echo "❌ Tests failed. Please check the logs."
+
+  supply-chain:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Generate SBOM
+      run: |
+        pip install cyclonedx-bom
+        cyclonedx-py --format json --output sbom.json
+
+    - name: Scan secrets
+      uses: gitleaks/gitleaks-action@v2
+      with:
+        args: '--no-git --path .'
+
+    - name: CVE audit
+      run: |
+        pip install pip-audit
+        pip-audit > cve-report.txt || true
+
+    - name: Upload supply-chain artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: supply-chain
+        path: |
+          sbom.json
+          cve-report.txt
