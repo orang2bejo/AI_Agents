@@ -141,6 +141,32 @@ src/data/.jarvis_initialized
 
 # Personality state (may contain sensitive data)
 config/personality_state.json
+personality_state.json
+
+# Runtime and session data
+*.session
+*.runtime
+session_*.json
+runtime_*.json
+cache_*.json
+temp_*.json
+sessions/
+runtime/
+.sessions/
+.runtime/
+
+# Application state files
+*.state
+app_state.json
+user_state.json
+conversation_state.json
+
+# Telemetry and monitoring data
+telemetry/
+metrics/
+*.metrics
+device_telemetry.json
+system_metrics.json
 
 # Test outputs
 tests/outputs/
