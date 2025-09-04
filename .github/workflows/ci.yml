@@ -82,7 +82,11 @@ jobs:
 
     - name: Upload audit reports
       if: always()
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
+      uses: actions/upload-artifact@v4
+=======
       uses: actions/upload-artifact@v3
+main
       with:
         name: audit-reports
         path: audit_reports/
@@ -197,7 +201,11 @@ jobs:
         pip-audit > cve-report.txt || true
 
     - name: Upload supply-chain artifacts
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
+      uses: actions/upload-artifact@v4
+=======
       uses: actions/upload-artifact@v3
+main
       with:
         name: supply-chain
         path: |

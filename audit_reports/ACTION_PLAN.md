@@ -7,11 +7,15 @@
 - Resolve `jarvis_demo.py` syntax error to restore build.
 
 ## P1 – Near Term
+codex/conduct-comprehensive-audit-for-jarvis-ai-project-5clmg5
+- Implement `obs/device_telemetry.py` and `scripts/healthcheck.py` for CPU/GPU metrics.
+=======
 codex/conduct-comprehensive-audit-for-jarvis-ai-project-8yncbg
 - Implement `obs/device_telemetry.py` and `scripts/healthcheck.py` for CPU/GPU metrics.
 =======
 - Implement `utils/device_telemetry.py` and `scripts/healthcheck.py` for CPU/GPU metrics.
  main
+main
 - Add CI workflow running `ruff`, `black --check`, `mypy`, `pytest` (skip Office if unavailable).
 - Refactor large modules (`web_form_automation.py`, `hitl.py`).
 - Ensure `personality_state.json` and other runtime data are gitignored.
