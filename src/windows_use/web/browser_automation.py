@@ -12,8 +12,23 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Union, Any, Callable
+from urllib.parse import urlparse
 
 from pydantic import BaseModel
+
+try:
+    from ..security import SecurityManager, SecurityLevel, ActionType
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+    SecurityManager = None
+
+try:
+    from ..security import SecurityManager, SecurityLevel, ActionType
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+    SecurityManager = None
 
 try:
     from selenium import webdriver

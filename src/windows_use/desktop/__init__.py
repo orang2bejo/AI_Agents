@@ -58,7 +58,8 @@ class Desktop:
     
     def execute_command(self,command:str)->tuple[str,int]:
         try:
-            result = subprocess.run(['powershell', '-Command']+command.split(), 
+            # Use shell=True with proper command to avoid injection via split()
+            result = subprocess.run(['powershell', '-Command', command], 
             capture_output=True, check=True)
             return (result.stdout.decode('latin1'),result.returncode)
         except subprocess.CalledProcessError as e:
