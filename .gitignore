@@ -29,6 +29,7 @@ ENV/
 env.bak/
 venv.bak/
 .venv/
+jarvis_env/
 
 # IDE
 .vscode/
@@ -85,11 +86,19 @@ Pipfile.lock
 # uv.lock
 
 # Project specific
-data/jarvis_ai.log
+*.log
 data/learning_data/*
 data/models/*
 !data/learning_data/.gitkeep
 !data/models/.gitkeep
+!data/learning_data/learning_data.json
+!data/models/*.pkl
+learning_data/*
+models/*
+!learning_data/.gitkeep
+!models/.gitkeep
+!learning_data/learning_data.json
+!models/*.pkl
 
 # Temporary files
 temp/
@@ -124,3 +133,15 @@ screenshots/
 config/.env
 config/secrets.json
 config/api_keys.json
+
+# Jarvis specific files
+.jarvis_initialized
+data/.jarvis_initialized
+src/data/.jarvis_initialized
+
+# Personality state (may contain sensitive data)
+config/personality_state.json
+
+# Test outputs
+tests/outputs/
+test_outputs/
